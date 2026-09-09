@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRICKROGA E.A.S. — Terrenos</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brick:#BF4E2C;
+    --brick-dark:#8A3620;
+    --clay:#DE9C5C;
+    --olive:#5C6B3E;
+    --sand:#DFCFA6;
+    --paper:#F5EFE1;
+    --ink:#2B2620;
+    --ink-soft:#6b6154;
+    --good:#5C6B3E;
+    --mid:#C99A3A;
+    --bad:#BF4E2C;
+    --line: rgba(43,38,32,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{
+    padding:22px 28px;
+    border-bottom:2px solid var(--ink);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-text h1{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:26px;
+    margin:0;
+    letter-spacing:-0.01em;
+    line-height:1.1;
+  }
+  .brand-text h1 span{color:var(--brick);}
+  .brand-text p{margin:2px 0 0; color:var(--ink-soft); font-size:13px;}
+  .layout{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap:0;
+  }
+  @media (max-width: 880px){
+    .layout{grid-template-columns:1fr;}
+  }
+  #map{
+    height:520px;
+    width:100%;
+    border-right:2px solid var(--ink);
+    filter: sepia(6%) saturate(92%);
+  }
+  @media (max-width: 880px){ #map{border-right:none; border-bottom:2px solid var(--ink); height:340px;} }
+
+  .panel{
+    padding:20px 24px 40px;
+    max-height:520px;
+    overflow-y:auto;
+  }
+  @media (max-width: 880px){ .panel{max-height:none;} }
+
+  .controls{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .controls label{font-size:13px; color:var(--ink-soft);}
+  select{
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    padding:6px 10px;
+    border:1px solid var(--ink);
+    background:var(--paper);
+    border-radius:2px;
+  }
+  button{
+    font-family:'Work Sans', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    padding:9px 16px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:2px;
+    cursor:pointer;
+  }
+  button.secondary{
+    background:transparent;
+    color:var(--ink);
+  }
+  button.ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border-color:var(--line);
+    font-weight:500;
+  }
+  button:hover{opacity:0.85;}
+  .toolbar-row{display:flex; gap:8px; flex-wrap:wrap; margin-left:auto;}
+
+  .card{
+    border:1px solid var(--line);
+    border-left:4px solid var(--mid);
+    border-radius:3px;
+    padding:14px 16px;
+    margin-bottom:12px;
+    background:rgba(255,255,255,0.4);
+  }
+  .card h3{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    margin:0 0 2px;
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .card .precio{font-weight:600; color:var(--brick-dark); white-space:nowrap;}
+  .card .direccion{font-size:13px; color:var(--ink-soft); margin-bottom:8px;}
+  .metrics{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:8px;
+  }
+  .pill{
+    font-size:11.5px;
+    padding:3px 8px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+  }
+  .infoline{font-size:12px; color:var(--ink-soft); margin-bottom:6px; line-height:1.6;}
+  .infoline b{color:var(--ink);}
+  .card .notas{font-size:13px; color:var(--ink); margin-top:4px; white-space:pre-wrap;}
+  .card .meta{font-size:11px; color:var(--ink-soft); margin-top:8px; display:flex; justify-content:space-between;}
+  .card .del{cursor:pointer; color:var(--brick); text-decoration:underline; background:none; border:none; padding:0; font-size:11px; font-weight:600;}
+
+  dialog{
+    border:1px solid var(--ink);
+    border-radius:4px;
+    padding:0;
+    width:min(520px, 92vw);
+    background:var(--paper);
+  }
+  dialog::backdrop{background:rgba(43,38,32,0.45);}
+  .dlg-inner{padding:22px 24px 24px; max-height:85vh; overflow-y:auto;}
+  .dlg-inner h2{font-family:'Fraunces', serif; font-size:20px; margin:0 0 4px;}
+  .dlg-inner .hint{font-size:12.5px; color:var(--ink-soft); margin-bottom:16px;}
+  .dlg-inner .subhead{font-family:'Fraunces', serif; font-size:14px; margin:18px 0 8px; color:var(--brick-dark); border-top:1px solid var(--line); padding-top:14px;}
+  .field{margin-bottom:12px;}
+  .field label{display:block; font-size:12.5px; color:var(--ink-soft); margin-bottom:4px;}
+  .field input, .field textarea, .field select{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    padding:8px 10px;
+    border:1px solid var(--ink);
+    border-radius:2px;
+    background:#fff;
+  }
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .row4{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+  .stars{display:flex; gap:4px; font-size:20px; cursor:pointer;}
+  .stars span{color:#ccc;}
+  .stars span.on{color:var(--mid);}
+  .dlg-actions{display:flex; justify-content:flex-end; gap:8px; margin-top:18px;}
+  .empty{color:var(--ink-soft); font-size:14px; padding:30px 0; text-align:center;}
+  .legend{
+    display:flex; gap:14px; align-items:center; font-size:12px; color:var(--ink-soft); margin-bottom:14px; flex-wrap:wrap;
+  }
+  .dot{width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:5px; vertical-align:middle;}
+  .note-share{font-size:11.5px; color:var(--ink-soft); margin-top:6px;}
+  #status{font-size:12px; color:var(--ink-soft);}
+  #fileImport{display:none;}
+  .cfg-bar{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    flex-wrap:wrap;
+    padding:10px 28px;
+    background:rgba(255,255,255,0.5);
+    border-bottom:1px solid var(--line);
+  }
+  .cfg-bar label{font-size:12px; color:var(--ink-soft); white-space:nowrap;}
+  .cfg-bar input{
+    flex:1;
+    min-width:220px;
+    font-family:'Work Sans', sans-serif;
+    font-size:12.5px;
+    padding:7px 9px;
+    border:1px solid var(--ink);
+    border-radius:2px;
+    background:#fff;
+    color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="50" height="50" rx="13" fill="#BF4E2C" stroke="#2B2620" stroke-width="2"/>
+      <path d="M9 27 L26 11 L43 27" fill="none" stroke="#F5EFE1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="14" y="27" width="24" height="15" fill="none" stroke="#F5EFE1" stroke-width="3"/>
+      <line x1="14" y1="32.5" x2="38" y2="32.5" stroke="#F5EFE1" stroke-width="1.3" opacity="0.65"/>
+      <line x1="14" y1="37.3" x2="38" y2="37.3" stroke="#F5EFE1" stroke-width="1.3" opacity="0.65"/>
+      <rect x="22" y="33.5" width="8" height="8.5" fill="#F5EFE1"/>
+    </svg>
+    <div class="brand-text">
+      <h1>BRICK<span>ROGA</span> E.A.S.</h1>
+      <p>Casas y terrenos en seguimiento — Romina, Johanna &amp; Osvaldo</p>
+    </div>
+  </div>
+  <div id="status">cargando…</div>
+</header>
+
+<div class="cfg-bar">
+  <label for="scriptUrlInput">Link de Google Apps Script</label>
+  <input id="scriptUrlInput" type="text" placeholder="https://script.google.com/macros/s/.../exec" spellcheck="false">
+  <button type="button" id="btnGuardarCargarUrl">Guardar / Cargar</button>
+</div>
+
+<div class="layout">
+  <div id="map"></div>
+  <div class="panel">
+    <div class="controls">
+      <label for="colorBy">Colorear pines por</label>
+      <select id="colorBy">
+        <option value="calidad">Calidad de vida</option>
+        <option value="rentabilidad">Rentabilidad</option>
+        <option value="precio">Precio</option>
+      </select>
+      <div class="toolbar-row">
+        <button type="button" class="ghost" id="btnExportar">Exportar CSV</button>
+        <button type="button" class="ghost" id="btnImportar">Importar CSV</button>
+        <input type="file" id="fileImport" accept=".csv">
+        <button id="btnNuevo">+ Agregar inmueble</button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--good)"></span>Bueno</span>
+      <span><span class="dot" style="background:var(--mid)"></span>Medio</span>
+      <span><span class="dot" style="background:var(--bad)"></span>Bajo</span>
+    </div>
+    <div id="list"></div>
+    <p class="note-share">Los datos se guardan compartidos: los tres ven y editan el mismo listado en este archivo.</p>
+  </div>
+</div>
+
+<dialog id="dlg">
+  <div class="dlg-inner">
+    <h2 id="dlgTitulo">Nuevo inmueble</h2>
+    <p class="hint">Cargá lo que Johanna manda por WhatsApp, acá queda ordenado para todos.</p>
+
+    <div class="field">
+      <label>Nombre / referencia del inmueble</label>
+      <input id="f_nombre" placeholder="Ej: Lote Ñemby - Barrio San Antonio">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Ciudad</label>
+        <input id="f_ciudad" placeholder="Ej: Luque">
+      </div>
+      <div class="field">
+        <label>Barrio / Compañía</label>
+        <input id="f_direccion" placeholder="Ej: Loma Merlo">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Latitud</label>
+        <input id="f_lat" placeholder="-25.3970" inputmode="decimal">
+      </div>
+      <div class="field">
+        <label>Longitud</label>
+        <input id="f_lng" placeholder="-57.5342" inputmode="decimal">
+      </div>
+    </div>
+    <p class="hint" style="margin-top:-6px;">Tip: buscá el lugar en Google Maps, clic derecho sobre el punto y copiá las coordenadas.</p>
+
+    <div class="row2">
+      <div class="field">
+        <label>Precio total (Gs)</label>
+        <input id="f_precio" placeholder="80000000" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label>Cuota mensual estimada (Gs)</label>
+        <input id="f_cuota" placeholder="1200000" inputmode="numeric">
+      </div>
+    </div>
+    <div class="field">
+      <label>Precio de referencia por m² (rango de la zona)</label>
+      <input id="f_precio_m2" placeholder="Ej: USD 70 a USD 110 por m²">
+    </div>
+
+    <div class="subhead">Ubicación y contexto</div>
+    <div class="row2">
+      <div class="field">
+        <label>Cerca de ruta principal</label>
+        <select id="f_ruta">
+          <option value="">Sin dato</option>
+          <option value="Sí">Sí</option>
+          <option value="Parcial">Parcial</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Cerca de polo de desarrollo</label>
+        <input id="f_polo" placeholder="Ej: eje comercial, shopping, hospital...">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Tipo de servicio de agua</label>
+        <input id="f_tipo_agua" placeholder="Ej: ESSAP / Junta de Saneamiento / Pozo">
+      </div>
+      <div class="field">
+        <label>Tipo de servicio de luz</label>
+        <input id="f_tipo_luz" placeholder="Ej: ANDE trifásica / monofásica">
+      </div>
+    </div>
+
+    <div class="subhead">Puntuaciones (definen el color del pin)</div>
+    <div class="field">
+      <label>Rentabilidad / potencial de alquiler estimado</label>
+      <div class="stars" data-field="rentabilidad">
+        <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+      </div>
+    </div>
+    <div class="row4">
+      <div class="field">
+        <label>Seguridad</label>
+        <div class="stars" data-field="seguridad">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Agua potable</label>
+        <div class="stars" data-field="agua">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Electricidad</label>
+        <div class="stars" data-field="electricidad">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Colegios cerca</label>
+        <div class="stars" data-field="colegio">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subhead">Otros datos</div>
+    <div class="field">
+      <label>Notas (loteadora, plan de cuotas, potencial de uso, etc)</label>
+      <textarea id="f_notas" rows="3" placeholder="Ej: Loteadora XX, 36 cuotas sin interés, escritura al finalizar..."></textarea>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Contacto</label>
+        <input id="f_contacto" placeholder="Nombre / teléfono del vendedor o loteadora">
+      </div>
+      <div class="field">
+        <label>Quién lo cargó</label>
+        <input id="f_autor" placeholder="Tu nombre">
+      </div>
+    </div>
+
+    <div class="dlg-actions">
+      <button type="button" class="secondary" id="btnCancelar">Cancelar</button>
+      <button type="button" id="btnGuardar">Guardar</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYnyy4Muisen2Dqzkr78AmKojkONtkYjVqlLd1GlBXqGvDQko2Vw4hdJcLstXOpzAg/exec';
+let SCRIPT_URL = DEFAULT_SCRIPT_URL;
+const CSV_HEADERS = ['id','nombre','ciudad','direccion','lat','lng','precio','cuota','precio_m2','ruta','polo','tipo_agua','tipo_luz','rentabilidad','seguridad','agua','electricidad','colegio','notas','contacto','autor','fecha'];
+let terrenos = [];
+let map, markersLayer;
+let stars = {rentabilidad:0, seguridad:0, agua:0, electricidad:0, colegio:0};
+let editingId = null;
+
+// Rango aproximado de Paraguay, para detectar coordenadas mal formateadas al importar
+const PY_LAT_RANGE = [-28, -19];
+const PY_LNG_RANGE = [-63, -53];
+
+function parseCoord(raw){
+  if(raw === '' || raw === undefined || raw === null) return null;
+  let s = String(raw).trim();
+  if(s === '') return null;
+  // si viene en formato regional con coma decimal ("-25,3378") y sin punto, la coma es el decimal
+  if(s.includes(',') && !s.includes('.')) s = s.replace(',', '.');
+  // si tiene ambos, la coma es separador de miles: la sacamos
+  else if(s.includes(',') && s.includes('.')) s = s.replace(/,/g, '');
+  const n = Number(s);
+  return isNaN(n) ? null : n;
+}
+
+function coordsValidas(lat, lng){
+  if(lat === null || lng === null) return false;
+  return lat >= PY_LAT_RANGE[0] && lat <= PY_LAT_RANGE[1] && lng >= PY_LNG_RANGE[0] && lng <= PY_LNG_RANGE[1];
+}
+
+function initMap(){
+  map = L.map('map').setView([-25.30, -57.55], 11); // Asunción / Central, Paraguay
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap',
+    maxZoom: 18
+  }).addTo(map);
+  markersLayer = L.layerGroup().addTo(map);
+}
+
+function colorFor(t, mode){
+  let score;
+  if(mode === 'rentabilidad'){
+    score = t.rentabilidad || 0; // 1-5
+  } else if(mode === 'precio'){
+    const prices = terrenos.map(x=>Number(x.precio)||0).filter(p=>p>0);
+    if(!prices.length) return '#C99A3A';
+    const min = Math.min(...prices), max = Math.max(...prices);
+    const p = Number(t.precio)||0;
+    if(max===min) return '#C99A3A';
+    const norm = 1 - (p - min)/(max - min); // 1 = más barato
+    score = norm*4 + 1;
+  } else {
+    const vals = [t.seguridad, t.agua, t.electricidad, t.colegio].map(v=>Number(v)||0);
+    const filled = vals.filter(v=>v>0);
+    score = filled.length ? filled.reduce((a,b)=>a+b,0)/filled.length : 0;
+  }
+  if(score >= 3.6) return '#5C6B3E';
+  if(score >= 2.2) return '#C99A3A';
+  return '#BF4E2C';
+}
+
+function makePinIcon(color){
+  return L.divIcon({
+    className: '',
+    html: `<div style="width:18px;height:18px;border-radius:50% 50% 50% 0;background:${color};border:2px solid #2B2620;transform:rotate(-45deg);box-shadow:0 1px 3px rgba(0,0,0,0.35);"></div>`,
+    iconSize: [18,18],
+    iconAnchor: [9,17]
+  });
+}
+
+function fmtGs(n){
+  n = Number(n)||0;
+  if(!n) return '';
+  return 'Gs. ' + n.toLocaleString('es-PY');
+}
+
+function starsStr(n){
+  n = Number(n)||0;
+  return '★'.repeat(n) + '☆'.repeat(5-n);
+}
+
+function render(){
+  const mode = document.getElementById('colorBy').value;
+  markersLayer.clearLayers();
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+
+  if(!terrenos.length){
+    list.innerHTML = '<div class="empty">Todavía no hay terrenos cargados.<br>Agregá el primero con "+ Agregar terreno" o importá un CSV.</div>';
+  }
+
+  terrenos.slice().reverse().forEach(t=>{
+    const color = colorFor(t, mode);
+    if(t.lat && t.lng){
+      const marker = L.marker([t.lat, t.lng], {icon: makePinIcon(color)}).addTo(markersLayer);
+      marker.bindPopup(`<strong>${escapeHtml(t.nombre||'Sin nombre')}</strong><br>${escapeHtml([t.ciudad,t.direccion].filter(Boolean).join(' — '))}<br>${fmtGs(t.precio)}`);
+    }
+
+    const zona = [t.ciudad, t.direccion].filter(Boolean).join(' — ') || 'Sin ubicación';
+    const contextBits = [];
+    if(t.ruta) contextBits.push('Ruta principal: <b>'+escapeHtml(t.ruta)+'</b>');
+    if(t.polo) contextBits.push('Polo cercano: <b>'+escapeHtml(t.polo)+'</b>');
+    if(t.tipo_agua) contextBits.push('Agua: <b>'+escapeHtml(t.tipo_agua)+'</b>');
+    if(t.tipo_luz) contextBits.push('Luz: <b>'+escapeHtml(t.tipo_luz)+'</b>');
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.borderLeftColor = color;
+    card.innerHTML = `
+      <h3><span>${escapeHtml(t.nombre||'Sin nombre')}</span><span class="precio">${fmtGs(t.precio)}</span></h3>
+      <div class="direccion">${escapeHtml(zona)}${t.cuota?(' · Cuota ~'+fmtGs(t.cuota)):''}${t.precio_m2?(' · '+escapeHtml(t.precio_m2)):''}</div>
+      ${contextBits.length ? `<div class="infoline">${contextBits.join(' &nbsp;·&nbsp; ')}</div>` : ''}
+      <div class="metrics">
+        <span class="pill">Rentabilidad ${starsStr(t.rentabilidad)}</span>
+        <span class="pill">Seguridad ${starsStr(t.seguridad)}</span>
+        <span class="pill">Agua ${starsStr(t.agua)}</span>
+        <span class="pill">Luz ${starsStr(t.electricidad)}</span>
+        <span class="pill">Colegio ${starsStr(t.colegio)}</span>
+      </div>
+      ${t.notas ? `<div class="notas">${escapeHtml(t.notas)}</div>` : ''}
+      <div class="meta"><span>${t.contacto ? ('Contacto: '+escapeHtml(t.contacto)+' · ') : ''}Cargado por ${escapeHtml(t.autor||'—')}</span><span><button class="edit" data-id="${t.id}" style="margin-right:10px;">editar</button><button class="del" data-id="${t.id}">eliminar</button></span></div>
+    `;
+    list.appendChild(card);
+  });
+
+  list.querySelectorAll('.del').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      const id = e.target.getAttribute('data-id');
+      terrenos = terrenos.filter(x=>x.id !== id);
+      await save();
+      render();
+    });
+  });
+
+  list.querySelectorAll('.edit').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      abrirParaEditar(btn.getAttribute('data-id'));
+    });
+  });
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+async function load(){
+  const statusEl = document.getElementById('status');
+  if(!SCRIPT_URL){
+    statusEl.textContent = 'pegá el link del Apps Script arriba y tocá "Guardar / Cargar"';
+    terrenos = [];
+    render();
+    return;
+  }
+  statusEl.textContent = 'cargando…';
+  try{
+    const res = await fetch(SCRIPT_URL, { method: 'GET' });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    const filas = Array.isArray(json) ? json : (Array.isArray(json.data) ? json.data : []);
+    terrenos = filas.map(normalizeRow);
+    statusEl.textContent = terrenos.length + ' terreno(s) cargado(s)';
+  }catch(err){
+    console.error(err);
+    terrenos = [];
+    statusEl.textContent = 'no se pudo cargar (revisá el link del script y que esté publicado como "Cualquiera")';
+  }
+  render();
+}
+
+async function save(){
+  const statusEl = document.getElementById('status');
+  if(!SCRIPT_URL){
+    statusEl.textContent = 'pegá el link del Apps Script arriba antes de guardar';
+    return;
+  }
+  statusEl.textContent = 'guardando…';
+  try{
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita el preflight CORS que Apps Script no maneja bien
+      body: JSON.stringify({ action: 'save', data: terrenos })
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    statusEl.textContent = 'guardado ✓';
+  }catch(err){
+    statusEl.textContent = 'error al guardar, intentá de nuevo';
+    console.error(err);
+  }
+}
+
+function escapeCsv(v){
+  const s = String(v === null || v === undefined ? '' : v);
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+
+function exportarCSV(){
+  const lines = [CSV_HEADERS.join(',')];
+  terrenos.forEach(t=>{
+    lines.push(CSV_HEADERS.map(h=>escapeCsv(t[h])).join(','));
+  });
+  const csv = lines.join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'terrenos_brickroga_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function normalizeRow(row){
+  const num = (v) => (v === '' || v === undefined || v === null) ? 0 : Number(v);
+  let lat = parseCoord(row.lat);
+  let lng = parseCoord(row.lng);
+  if(!coordsValidas(lat, lng)){ lat = null; lng = null; }
+  return {
+    id: (row.id && String(row.id).trim()) || ('lt_' + Date.now() + '_' + Math.random().toString(36).slice(2,7)),
+    nombre: row.nombre || '',
+    ciudad: row.ciudad || '',
+    direccion: row.direccion || '',
+    lat: lat,
+    lng: lng,
+    precio: row.precio || '',
+    cuota: row.cuota || '',
+    precio_m2: row.precio_m2 || '',
+    ruta: row.ruta || '',
+    polo: row.polo || '',
+    tipo_agua: row.tipo_agua || '',
+    tipo_luz: row.tipo_luz || '',
+    rentabilidad: num(row.rentabilidad),
+    seguridad: num(row.seguridad),
+    agua: num(row.agua),
+    electricidad: num(row.electricidad),
+    colegio: num(row.colegio),
+    notas: row.notas || '',
+    contacto: row.contacto || '',
+    autor: row.autor || '',
+    fecha: row.fecha || new Date().toISOString()
+  };
+}
+
+function importarCSV(file){
+  Papa.parse(file, {
+    header: true,
+    skipEmptyLines: true,
+    complete: async function(results){
+      const nuevos = results.data.map(normalizeRow).filter(t=>t.nombre || t.direccion);
+      if(!nuevos.length){ alert('No se encontraron filas válidas en el CSV.'); return; }
+      const sinCoords = nuevos.filter(t=>t.lat === null || t.lng === null).length;
+      let msg = 'Se reemplazarán los ' + terrenos.length + ' inmueble(s) actuales por los ' + nuevos.length + ' del archivo.';
+      if(sinCoords){ msg += '\n\nOjo: ' + sinCoords + ' fila(s) tienen latitud/longitud vacía o fuera del rango de Paraguay, así que no van a aparecer en el mapa (sí en la lista). Revisá esas coordenadas en tu Google Sheet.'; }
+      const ok = confirm(msg + '\n\n¿Continuar?');
+      if(!ok) return;
+      terrenos = nuevos;
+      await save();
+      render();
+    },
+    error: function(err){
+      alert('No se pudo leer el archivo CSV.');
+      console.error(err);
+    }
+  });
+}
+
+function resetForm(){
+  ['f_nombre','f_ciudad','f_direccion','f_lat','f_lng','f_precio','f_cuota','f_precio_m2','f_polo','f_tipo_agua','f_tipo_luz','f_notas','f_contacto','f_autor'].forEach(id=>{
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f_ruta').value = '';
+  stars = {rentabilidad:0, seguridad:0, agua:0, electricidad:0, colegio:0};
+  document.querySelectorAll('.stars').forEach(group=>{
+    group.querySelectorAll('span').forEach(s=>s.classList.remove('on'));
+  });
+  editingId = null;
+  document.getElementById('dlgTitulo').textContent = 'Nuevo inmueble';
+  document.getElementById('btnGuardar').textContent = 'Guardar';
+}
+
+function setStars(field, value){
+  stars[field] = Number(value) || 0;
+  const group = document.querySelector('.stars[data-field="'+field+'"]');
+  if(!group) return;
+  group.querySelectorAll('span').forEach(x=>{
+    x.classList.toggle('on', Number(x.getAttribute('data-v')) <= stars[field]);
+  });
+}
+
+function abrirParaEditar(id){
+  const t = terrenos.find(x=>x.id === id);
+  if(!t) return;
+  resetForm();
+  editingId = id;
+  document.getElementById('dlgTitulo').textContent = 'Editar inmueble';
+  document.getElementById('btnGuardar').textContent = 'Guardar cambios';
+  document.getElementById('f_nombre').value = t.nombre || '';
+  document.getElementById('f_ciudad').value = t.ciudad || '';
+  document.getElementById('f_direccion').value = t.direccion || '';
+  document.getElementById('f_lat').value = t.lat ?? '';
+  document.getElementById('f_lng').value = t.lng ?? '';
+  document.getElementById('f_precio').value = t.precio || '';
+  document.getElementById('f_cuota').value = t.cuota || '';
+  document.getElementById('f_precio_m2').value = t.precio_m2 || '';
+  document.getElementById('f_ruta').value = t.ruta || '';
+  document.getElementById('f_polo').value = t.polo || '';
+  document.getElementById('f_tipo_agua').value = t.tipo_agua || '';
+  document.getElementById('f_tipo_luz').value = t.tipo_luz || '';
+  document.getElementById('f_notas').value = t.notas || '';
+  document.getElementById('f_contacto').value = t.contacto || '';
+  document.getElementById('f_autor').value = t.autor || '';
+  setStars('rentabilidad', t.rentabilidad);
+  setStars('seguridad', t.seguridad);
+  setStars('agua', t.agua);
+  setStars('electricidad', t.electricidad);
+  setStars('colegio', t.colegio);
+  document.getElementById('dlg').showModal();
+}
+
+document.querySelectorAll('.stars').forEach(group=>{
+  const field = group.getAttribute('data-field');
+  group.querySelectorAll('span').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      const v = Number(s.getAttribute('data-v'));
+      stars[field] = v;
+      group.querySelectorAll('span').forEach(x=>{
+        x.classList.toggle('on', Number(x.getAttribute('data-v')) <= v);
+      });
+    });
+  });
+});
+
+document.getElementById('btnNuevo').addEventListener('click', ()=>{
+  resetForm();
+  document.getElementById('dlg').showModal();
+});
+document.getElementById('btnCancelar').addEventListener('click', ()=>{
+  document.getElementById('dlg').close();
+});
+document.getElementById('btnGuardar').addEventListener('click', async ()=>{
+  const nombre = document.getElementById('f_nombre').value.trim();
+  const lat = parseCoord(document.getElementById('f_lat').value);
+  const lng = parseCoord(document.getElementById('f_lng').value);
+  if(!nombre){ alert('Poné al menos un nombre o referencia del inmueble.'); return; }
+  const datos = {
+    nombre,
+    ciudad: document.getElementById('f_ciudad').value.trim(),
+    direccion: document.getElementById('f_direccion').value.trim(),
+    lat: coordsValidas(lat, lng) ? lat : null,
+    lng: coordsValidas(lat, lng) ? lng : null,
+    precio: document.getElementById('f_precio').value,
+    cuota: document.getElementById('f_cuota').value,
+    precio_m2: document.getElementById('f_precio_m2').value.trim(),
+    ruta: document.getElementById('f_ruta').value,
+    polo: document.getElementById('f_polo').value.trim(),
+    tipo_agua: document.getElementById('f_tipo_agua').value.trim(),
+    tipo_luz: document.getElementById('f_tipo_luz').value.trim(),
+    rentabilidad: stars.rentabilidad,
+    seguridad: stars.seguridad,
+    agua: stars.agua,
+    electricidad: stars.electricidad,
+    colegio: stars.colegio,
+    notas: document.getElementById('f_notas').value.trim(),
+    contacto: document.getElementById('f_contacto').value.trim(),
+    autor: document.getElementById('f_autor').value.trim()
+  };
+
+  if(editingId){
+    const idx = terrenos.findIndex(x=>x.id === editingId);
+    if(idx > -1){
+      terrenos[idx] = { ...terrenos[idx], ...datos };
+    }
+  } else {
+    terrenos.push({
+      id: 'lt_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+      ...datos,
+      fecha: new Date().toISOString()
+    });
+  }
+  await save();
+  render();
+  document.getElementById('dlg').close();
+});
+
+document.getElementById('colorBy').addEventListener('change', render);
+document.getElementById('btnExportar').addEventListener('click', exportarCSV);
+document.getElementById('btnImportar').addEventListener('click', ()=> document.getElementById('fileImport').click());
+document.getElementById('fileImport').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(file) importarCSV(file);
+  e.target.value = '';
+});
+
+document.getElementById('btnGuardarCargarUrl').addEventListener('click', ()=>{
+  const url = document.getElementById('scriptUrlInput').value.trim();
+  if(!url){ alert('Pegá el link de tu Google Apps Script (termina en /exec).'); return; }
+  SCRIPT_URL = url;
+  load();
+});
+
+document.getElementById('scriptUrlInput').value = DEFAULT_SCRIPT_URL;
+initMap();
+load();
+</script>
+</body>
+</html>
