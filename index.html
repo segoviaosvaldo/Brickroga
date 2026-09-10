@@ -135,6 +135,20 @@
     justify-content:space-between;
     gap:8px;
   }
+  .card-title-btn{
+    background:transparent;
+    border:0;
+    padding:0;
+    margin:0;
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    font-weight:600;
+    color:var(--ink);
+    text-align:left;
+    cursor:pointer;
+    border-bottom:1px dotted transparent;
+  }
+  .card-title-btn:hover{color:var(--brick-dark); border-bottom-color:var(--brick-dark); opacity:1;}
   .card .precio{font-weight:600; color:var(--brick-dark); white-space:nowrap;}
   .card .direccion{font-size:13px; color:var(--ink-soft); margin-bottom:8px;}
   .metrics{
@@ -391,6 +405,14 @@
   .maps-link-row{display:flex; gap:8px; align-items:flex-end; margin-bottom:12px;}
   .maps-link-row .field{flex:1; margin-bottom:0;}
   .maps-link-row button{white-space:nowrap;}
+  #pickerMap{
+    width:100%;
+    height:320px;
+    border:1px solid var(--ink);
+    border-radius:4px;
+    margin:10px 0 6px;
+  }
+  #pickerMap .leaflet-marker-icon{cursor:grab;}
 </style>
 </head>
 <body>
@@ -475,6 +497,7 @@
         <input id="f_maps_link" placeholder="https://www.google.com/maps/place/...">
       </div>
       <button type="button" class="secondary" id="btnUsarMapsLink">Usar link</button>
+      <button type="button" class="secondary" id="btnUbicar">📍 Ubicar</button>
     </div>
     <div class="row2">
       <div class="field">
@@ -613,6 +636,20 @@
   </div>
 </dialog>
 
+<dialog id="dlgUbicar">
+  <div class="dlg-inner">
+    <button type="button" class="dlg-close-btn" id="btnCerrarUbicarX" title="Cerrar" aria-label="Cerrar">✕</button>
+    <h2>Ubicar en el mapa</h2>
+    <p class="hint" style="margin-top:0;">Tocá el mapa en el punto exacto del inmueble. Podés mover el pin las veces que quieras antes de confirmar.</p>
+    <div id="pickerMap"></div>
+    <p class="cfg-hint" id="pickerCoords" style="text-align:center;">Todavía no tocaste el mapa.</p>
+    <div class="dlg-actions">
+      <button type="button" class="secondary" id="btnCancelarUbicar">Cancelar</button>
+      <button type="button" id="btnConfirmarUbicar">Usar esta ubicación</button>
+    </div>
+  </div>
+</dialog>
+
 <dialog id="dlgConfig">
   <div class="dlg-inner">
     <button type="button" class="dlg-close-btn" id="btnCerrarConfigX" title="Cerrar" aria-label="Cerrar">✕</button>
@@ -690,7 +727,7 @@ const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYnyy4Muise
 let SCRIPT_URL = DEFAULT_SCRIPT_URL;
 const CSV_HEADERS = ['id','nombre','ciudad','direccion','lat','lng','precio','cuota','precio_m2','ruta','polo','tipo_agua','tipo_luz','rentabilidad','seguridad','agua','electricidad','colegio','notas','contacto','autor','fecha'];
 let inmuebles = [];
-let map, markersLayer;
+let map, markersLayer, markersById = {};
 let stars = {rentabilidad:0, seguridad:0, agua:0, electricidad:0, colegio:0};
 let editingId = null;
 
@@ -807,6 +844,7 @@ function scoreBadge(label, n){
 function render(){
   const mode = document.getElementById('colorBy').value;
   markersLayer.clearLayers();
+  markersById = {};
   const list = document.getElementById('list');
   list.innerHTML = '';
 
@@ -825,6 +863,7 @@ function render(){
     if(t.lat && t.lng){
       const marker = L.marker([t.lat, t.lng], {icon: makePinIcon(color)}).addTo(markersLayer);
       marker.bindPopup(`<strong>${escapeHtml(t.nombre||'Sin nombre')}</strong><br>${escapeHtml([t.ciudad,t.direccion].filter(Boolean).join(' — '))}<br>${fmtGs(t.precio)}`);
+      markersById[t.id] = marker;
     }
 
     const zona = [t.ciudad, t.direccion].filter(Boolean).join(' — ') || 'Sin ubicación';
@@ -838,7 +877,7 @@ function render(){
     card.className = 'card';
     card.style.borderLeftColor = color;
     card.innerHTML = `
-      <h3><span>${escapeHtml(t.nombre||'Sin nombre')}</span><span class="precio">${fmtGs(t.precio)}</span></h3>
+      <h3><button type="button" class="card-title-btn" data-id="${t.id}">${escapeHtml(t.nombre||'Sin nombre')}</button><span class="precio">${fmtGs(t.precio)}</span></h3>
       <div class="direccion">${escapeHtml(zona)}${t.cuota?(' · Cuota ~'+fmtGs(t.cuota)):''}${t.precio_m2?(' · '+escapeHtml(t.precio_m2)):''}</div>
       ${contextBits.length ? `<div class="infoline">${contextBits.join(' &nbsp;·&nbsp; ')}</div>` : ''}
       <div class="metrics">
@@ -861,6 +900,12 @@ function render(){
       </div>
     `;
     list.appendChild(card);
+  });
+
+  list.querySelectorAll('.card-title-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      irAlPinDelMapa(btn.getAttribute('data-id'));
+    });
   });
 
   list.querySelectorAll('.menu-btn').forEach(btn=>{
@@ -889,6 +934,19 @@ function render(){
       document.getElementById('dlgConfirmDelete').showModal();
     });
   });
+}
+
+function irAlPinDelMapa(id){
+  const marker = markersById[id];
+  const mapEl = document.getElementById('map');
+  if(!marker){
+    mapEl.scrollIntoView({behavior:'smooth', block:'start'});
+    alert('Este inmueble todavía no tiene una ubicación cargada en el mapa.');
+    return;
+  }
+  mapEl.scrollIntoView({behavior:'smooth', block:'start'});
+  map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 15), {duration:0.6});
+  setTimeout(()=>{ marker.openPopup(); }, 350);
 }
 
 // Cerrar cualquier menú de tres puntos abierto al tocar fuera
@@ -1180,7 +1238,74 @@ document.getElementById('btnCerrarDlgX').addEventListener('click', ()=>{
   document.getElementById('dlg').close();
 });
 document.getElementById('btnInfoMapsLink').addEventListener('click', ()=>{
-  alert('Funciona tanto con el link largo como con el link corto (el que sale al tocar "Compartir" desde el celular).\n\nPegalo y tocá "Usar link". Si por algún motivo no lo puede leer, buscá el lugar en Google Maps, clic derecho sobre el punto, y copiá las coordenadas manualmente.');
+  alert('Funciona tanto con el link largo como con el link corto (el que sale al tocar "Compartir" desde el celular).\n\nPegalo y tocá "Usar link". Si por algún motivo no lo puede leer, usá el botón "📍 Ubicar" para marcar el punto directamente en el mapa, o buscá el lugar en Google Maps, clic derecho sobre el punto, y copiá las coordenadas manualmente.');
+});
+
+// --- Ubicar el pin directamente en un mapa, sin salir del formulario ---
+let pickerMap = null;
+let pickerMarker = null;
+
+function pintarCoordsPicker(latlng){
+  document.getElementById('pickerCoords').textContent =
+    'Punto elegido: ' + latlng.lat.toFixed(6) + ', ' + latlng.lng.toFixed(6);
+}
+
+function colocarPickerMarker(latlng){
+  if(pickerMarker){
+    pickerMarker.setLatLng(latlng);
+  } else {
+    pickerMarker = L.marker(latlng, {draggable:true}).addTo(pickerMap);
+    pickerMarker.on('dragend', ()=> pintarCoordsPicker(pickerMarker.getLatLng()));
+  }
+  pintarCoordsPicker(latlng);
+}
+
+document.getElementById('btnUbicar').addEventListener('click', ()=>{
+  const dlgUbicar = document.getElementById('dlgUbicar');
+  dlgUbicar.showModal();
+
+  const latActual = parseCoord(document.getElementById('f_lat').value);
+  const lngActual = parseCoord(document.getElementById('f_lng').value);
+  const centro = (latActual && lngActual) ? [latActual, lngActual] : map.getCenter();
+  const zoomInicial = (latActual && lngActual) ? 16 : map.getZoom();
+
+  if(!pickerMap){
+    pickerMap = L.map('pickerMap').setView(centro, zoomInicial);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap',
+      maxZoom: 18
+    }).addTo(pickerMap);
+    pickerMap.on('click', (e)=> colocarPickerMarker(e.latlng));
+  } else {
+    pickerMap.setView(centro, zoomInicial);
+  }
+
+  if(latActual && lngActual){
+    colocarPickerMarker(L.latLng(latActual, lngActual));
+  } else {
+    pickerMarker = null;
+    document.getElementById('pickerCoords').textContent = 'Todavía no tocaste el mapa.';
+  }
+
+  setTimeout(()=> pickerMap.invalidateSize(), 50);
+});
+
+document.getElementById('btnConfirmarUbicar').addEventListener('click', ()=>{
+  if(!pickerMarker){
+    alert('Tocá primero un punto en el mapa para marcar la ubicación.');
+    return;
+  }
+  const latlng = pickerMarker.getLatLng();
+  document.getElementById('f_lat').value = latlng.lat.toFixed(6);
+  document.getElementById('f_lng').value = latlng.lng.toFixed(6);
+  document.getElementById('dlgUbicar').close();
+});
+
+document.getElementById('btnCancelarUbicar').addEventListener('click', ()=>{
+  document.getElementById('dlgUbicar').close();
+});
+document.getElementById('btnCerrarUbicarX').addEventListener('click', ()=>{
+  document.getElementById('dlgUbicar').close();
 });
 document.getElementById('btnGuardar').addEventListener('click', async ()=>{
   const nombre = document.getElementById('f_nombre').value.trim();
