@@ -208,6 +208,56 @@
     background:#fff;
     color:var(--ink-soft);
   }
+  .gear-btn{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:1px solid var(--ink);
+    background:transparent;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    flex-shrink:0;
+  }
+  .gear-btn:hover{background:rgba(43,38,32,0.06); opacity:1;}
+  .header-right{display:flex; align-items:center; gap:14px;}
+  .btn-primary-lg{
+    background:var(--brick);
+    color:var(--paper);
+    border:1px solid var(--brick-dark);
+    border-radius:4px;
+    font-size:14.5px;
+    font-weight:700;
+    padding:12px 22px;
+    letter-spacing:0.01em;
+  }
+  .btn-primary-lg:hover{background:var(--brick-dark); opacity:1;}
+  .cfg-section{margin-bottom:8px;}
+  .cfg-section .subhead{margin-top:0;}
+  .cfg-section:not(:first-child) .subhead{border-top:1px solid var(--line); padding-top:14px; margin-top:18px;}
+  .threshold-grid{
+    display:grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap:8px 10px;
+    align-items:center;
+  }
+  .threshold-grid .th-label{font-size:12.5px; color:var(--ink-soft);}
+  .threshold-grid .th-head{font-size:11px; color:var(--ink-soft); font-weight:600; text-transform:uppercase; letter-spacing:0.03em;}
+  .threshold-grid input{
+    width:100%;
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    padding:6px 8px;
+    border:1px solid var(--ink);
+    border-radius:2px;
+    background:#fff;
+  }
+  .cfg-hint{font-size:11.5px; color:var(--ink-soft); margin:4px 0 10px;}
+  .maps-link-row{display:flex; gap:8px; align-items:flex-end; margin-bottom:12px;}
+  .maps-link-row .field{flex:1; margin-bottom:0;}
+  .maps-link-row button{white-space:nowrap;}
 </style>
 </head>
 <body>
@@ -227,14 +277,16 @@
       <p>Casas y terrenos en seguimiento — Romina, Johanna &amp; Osvaldo</p>
     </div>
   </div>
-  <div id="status">cargando…</div>
+  <div class="header-right">
+    <div id="status">cargando…</div>
+    <button type="button" class="gear-btn" id="btnConfig" title="Configuración" aria-label="Configuración">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M12 3.4v-.8M12 21.4v-.8M4.4 12h-.8M20.4 12h-.8M6.7 6.7l-.56-.56M18.26 18.26l-.56-.56M6.7 17.3l-.56.56M18.26 5.74l-.56.56M9.5 3.7l-.3-.78M14.5 3.7l.3-.78M9.5 20.3l-.3.78M14.5 20.3l.3.78M3.7 9.5l-.78-.3M3.7 14.5l-.78.3M20.3 9.5l.78-.3M20.3 14.5l.78.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
 </header>
-
-<div class="cfg-bar">
-  <label for="scriptUrlInput">Link de Google Apps Script</label>
-  <input id="scriptUrlInput" type="text" placeholder="https://script.google.com/macros/s/.../exec" spellcheck="false">
-  <button type="button" id="btnGuardarCargarUrl">Guardar / Cargar</button>
-</div>
 
 <div class="layout">
   <div id="map"></div>
@@ -242,15 +294,12 @@
     <div class="controls">
       <label for="colorBy">Colorear pines por</label>
       <select id="colorBy">
+        <option value="rentabilidad" selected>Rentabilidad</option>
         <option value="calidad">Calidad de vida</option>
-        <option value="rentabilidad">Rentabilidad</option>
         <option value="precio">Precio</option>
       </select>
       <div class="toolbar-row">
-        <button type="button" class="ghost" id="btnExportar">Exportar CSV</button>
-        <button type="button" class="ghost" id="btnImportar">Importar CSV</button>
-        <input type="file" id="fileImport" accept=".csv">
-        <button id="btnNuevo">+ Agregar inmueble</button>
+        <button id="btnNuevo" class="btn-primary-lg">+ Agregar inmueble</button>
       </div>
     </div>
     <div class="legend">
@@ -282,6 +331,13 @@
         <input id="f_direccion" placeholder="Ej: Loma Merlo">
       </div>
     </div>
+    <div class="maps-link-row">
+      <div class="field">
+        <label>Pegar link de Google Maps (opcional)</label>
+        <input id="f_maps_link" placeholder="https://www.google.com/maps/place/...">
+      </div>
+      <button type="button" class="secondary" id="btnUsarMapsLink">Usar link</button>
+    </div>
     <div class="row2">
       <div class="field">
         <label>Latitud</label>
@@ -292,7 +348,7 @@
         <input id="f_lng" placeholder="-57.5342" inputmode="decimal">
       </div>
     </div>
-    <p class="hint" style="margin-top:-6px;">Tip: buscá el lugar en Google Maps, clic derecho sobre el punto y copiá las coordenadas.</p>
+    <p class="hint" style="margin-top:-6px;">Tip: pegá el link de Google Maps y tocá "Usar link", o si preferís, buscá el lugar en Google Maps, clic derecho sobre el punto y copiá las coordenadas manualmente.</p>
 
     <div class="row2">
       <div class="field">
@@ -393,6 +449,63 @@
   </div>
 </dialog>
 
+<dialog id="dlgConfig">
+  <div class="dlg-inner">
+    <h2>Configuración</h2>
+    <p class="hint">Ajustes generales — no hace falta tocar esto para cargar inmuebles.</p>
+
+    <div class="cfg-section">
+      <div class="subhead">1) Conexión con Google Sheet</div>
+      <div class="field">
+        <label for="scriptUrlInput">Link de Google Apps Script</label>
+        <input id="scriptUrlInput" type="text" placeholder="https://script.google.com/macros/s/.../exec" spellcheck="false">
+      </div>
+      <div class="dlg-actions" style="margin-top:0; justify-content:flex-start;">
+        <button type="button" id="btnGuardarCargarUrl">Guardar / Cargar</button>
+      </div>
+    </div>
+
+    <div class="cfg-section">
+      <div class="subhead">2) Importar / Exportar datos</div>
+      <p class="cfg-hint">Exportá una copia en CSV, o importá un CSV para reemplazar todos los inmuebles actuales.</p>
+      <div class="dlg-actions" style="margin-top:0; justify-content:flex-start;">
+        <button type="button" class="secondary" id="btnExportar">Exportar CSV</button>
+        <button type="button" class="secondary" id="btnImportar">Importar CSV</button>
+        <input type="file" id="fileImport" accept=".csv">
+      </div>
+    </div>
+
+    <div class="cfg-section">
+      <div class="subhead">3) Valores de Bueno / Medio / Malo</div>
+      <p class="cfg-hint">Definí a partir de qué puntuación (escala 1 a 5) un pin se pinta de cada color. "Medio" es todo lo que queda entre esos dos valores.</p>
+      <div class="threshold-grid">
+        <span class="th-label"></span>
+        <span class="th-head">Bueno desde</span>
+        <span class="th-head">Malo hasta</span>
+
+        <span class="th-label">Rentabilidad</span>
+        <input id="th_rentabilidad_bueno" type="number" min="0" max="5" step="0.1">
+        <input id="th_rentabilidad_malo" type="number" min="0" max="5" step="0.1">
+
+        <span class="th-label">Calidad de vida</span>
+        <input id="th_calidad_bueno" type="number" min="0" max="5" step="0.1">
+        <input id="th_calidad_malo" type="number" min="0" max="5" step="0.1">
+
+        <span class="th-label">Precio (más barato = más alto)</span>
+        <input id="th_precio_bueno" type="number" min="0" max="5" step="0.1">
+        <input id="th_precio_malo" type="number" min="0" max="5" step="0.1">
+      </div>
+      <div class="dlg-actions" style="justify-content:flex-start;">
+        <button type="button" id="btnGuardarUmbrales">Guardar umbrales</button>
+      </div>
+    </div>
+
+    <div class="dlg-actions">
+      <button type="button" class="secondary" id="btnCerrarConfig">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
@@ -403,6 +516,35 @@ let terrenos = [];
 let map, markersLayer;
 let stars = {rentabilidad:0, seguridad:0, agua:0, electricidad:0, colegio:0};
 let editingId = null;
+
+// Umbrales de color (escala 1-5), guardados en este navegador
+const THRESHOLDS_KEY = 'brickroga_thresholds';
+const DEFAULT_THRESHOLDS = {
+  rentabilidad: {bueno: 3.6, malo: 2.2},
+  calidad: {bueno: 3.6, malo: 2.2},
+  precio: {bueno: 3.6, malo: 2.2}
+};
+let THRESHOLDS = loadThresholds();
+
+function loadThresholds(){
+  try{
+    const raw = localStorage.getItem(THRESHOLDS_KEY);
+    if(!raw) return JSON.parse(JSON.stringify(DEFAULT_THRESHOLDS));
+    const parsed = JSON.parse(raw);
+    return {
+      rentabilidad: { bueno: Number(parsed?.rentabilidad?.bueno) || DEFAULT_THRESHOLDS.rentabilidad.bueno, malo: Number(parsed?.rentabilidad?.malo) || DEFAULT_THRESHOLDS.rentabilidad.malo },
+      calidad: { bueno: Number(parsed?.calidad?.bueno) || DEFAULT_THRESHOLDS.calidad.bueno, malo: Number(parsed?.calidad?.malo) || DEFAULT_THRESHOLDS.calidad.malo },
+      precio: { bueno: Number(parsed?.precio?.bueno) || DEFAULT_THRESHOLDS.precio.bueno, malo: Number(parsed?.precio?.malo) || DEFAULT_THRESHOLDS.precio.malo }
+    };
+  }catch(err){
+    console.error(err);
+    return JSON.parse(JSON.stringify(DEFAULT_THRESHOLDS));
+  }
+}
+
+function saveThresholds(){
+  localStorage.setItem(THRESHOLDS_KEY, JSON.stringify(THRESHOLDS));
+}
 
 // Rango aproximado de Paraguay, para detectar coordenadas mal formateadas al importar
 const PY_LAT_RANGE = [-28, -19];
@@ -451,8 +593,9 @@ function colorFor(t, mode){
     const filled = vals.filter(v=>v>0);
     score = filled.length ? filled.reduce((a,b)=>a+b,0)/filled.length : 0;
   }
-  if(score >= 3.6) return '#5C6B3E';
-  if(score >= 2.2) return '#C99A3A';
+  const t2 = THRESHOLDS[mode] || DEFAULT_THRESHOLDS.rentabilidad;
+  if(score >= t2.bueno) return '#5C6B3E';
+  if(score >= t2.malo) return '#C99A3A';
   return '#BF4E2C';
 }
 
@@ -486,7 +629,13 @@ function render(){
     list.innerHTML = '<div class="empty">Todavía no hay terrenos cargados.<br>Agregá el primero con "+ Agregar terreno" o importá un CSV.</div>';
   }
 
-  terrenos.slice().reverse().forEach(t=>{
+  const ordenados = terrenos.slice().sort((a,b)=>{
+    const diff = (Number(b.rentabilidad)||0) - (Number(a.rentabilidad)||0);
+    if(diff !== 0) return diff;
+    return new Date(b.fecha||0) - new Date(a.fecha||0);
+  });
+
+  ordenados.forEach(t=>{
     const color = colorFor(t, mode);
     if(t.lat && t.lng){
       const marker = L.marker([t.lat, t.lng], {icon: makePinIcon(color)}).addTo(markersLayer);
@@ -662,7 +811,7 @@ function importarCSV(file){
 }
 
 function resetForm(){
-  ['f_nombre','f_ciudad','f_direccion','f_lat','f_lng','f_precio','f_cuota','f_precio_m2','f_polo','f_tipo_agua','f_tipo_luz','f_notas','f_contacto','f_autor'].forEach(id=>{
+  ['f_nombre','f_ciudad','f_direccion','f_maps_link','f_lat','f_lng','f_precio','f_cuota','f_precio_m2','f_polo','f_tipo_agua','f_tipo_luz','f_notas','f_contacto','f_autor'].forEach(id=>{
     document.getElementById(id).value = '';
   });
   document.getElementById('f_ruta').value = '';
@@ -793,6 +942,82 @@ document.getElementById('btnGuardarCargarUrl').addEventListener('click', ()=>{
   if(!url){ alert('Pegá el link de tu Google Apps Script (termina en /exec).'); return; }
   SCRIPT_URL = url;
   load();
+});
+
+function pintarInputsUmbrales(){
+  document.getElementById('th_rentabilidad_bueno').value = THRESHOLDS.rentabilidad.bueno;
+  document.getElementById('th_rentabilidad_malo').value = THRESHOLDS.rentabilidad.malo;
+  document.getElementById('th_calidad_bueno').value = THRESHOLDS.calidad.bueno;
+  document.getElementById('th_calidad_malo').value = THRESHOLDS.calidad.malo;
+  document.getElementById('th_precio_bueno').value = THRESHOLDS.precio.bueno;
+  document.getElementById('th_precio_malo').value = THRESHOLDS.precio.malo;
+}
+
+document.getElementById('btnConfig').addEventListener('click', ()=>{
+  pintarInputsUmbrales();
+  document.getElementById('dlgConfig').showModal();
+});
+document.getElementById('btnCerrarConfig').addEventListener('click', ()=>{
+  document.getElementById('dlgConfig').close();
+});
+
+document.getElementById('btnGuardarUmbrales').addEventListener('click', ()=>{
+  const leer = (id, fallback) => { const v = Number(document.getElementById(id).value); return isNaN(v) ? fallback : v; };
+  const nuevos = {
+    rentabilidad: { bueno: leer('th_rentabilidad_bueno', THRESHOLDS.rentabilidad.bueno), malo: leer('th_rentabilidad_malo', THRESHOLDS.rentabilidad.malo) },
+    calidad: { bueno: leer('th_calidad_bueno', THRESHOLDS.calidad.bueno), malo: leer('th_calidad_malo', THRESHOLDS.calidad.malo) },
+    precio: { bueno: leer('th_precio_bueno', THRESHOLDS.precio.bueno), malo: leer('th_precio_malo', THRESHOLDS.precio.malo) }
+  };
+  for(const key of ['rentabilidad','calidad','precio']){
+    if(nuevos[key].malo > nuevos[key].bueno){
+      alert('En "' + key + '", el valor de "Malo hasta" no puede ser mayor que "Bueno desde".');
+      return;
+    }
+  }
+  THRESHOLDS = nuevos;
+  saveThresholds();
+  render();
+  alert('Umbrales guardados. Se guardan en este navegador — si Johanna o Romina abren el HTML en otra compu, van a ver los umbrales por defecto hasta que los ajusten ahí también.');
+});
+
+// --- Link de Google Maps -> latitud/longitud ---
+function parseGoogleMapsLink(url){
+  if(!url) return null;
+  url = url.trim();
+  // Patrón de lugar con pin exacto: !3d{lat}!4d{lng}
+  let m = url.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
+  if(m) return { lat: Number(m[1]), lng: Number(m[2]) };
+  // Patrón del centro del mapa: /@{lat},{lng},{zoom}
+  m = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if(m) return { lat: Number(m[1]), lng: Number(m[2]) };
+  // Patrón de búsqueda: ?q={lat},{lng} o &q={lat},{lng}
+  m = url.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if(m) return { lat: Number(m[1]), lng: Number(m[2]) };
+  // Patrón ll={lat},{lng}
+  m = url.match(/[?&]ll=(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if(m) return { lat: Number(m[1]), lng: Number(m[2]) };
+  return null;
+}
+
+document.getElementById('btnUsarMapsLink').addEventListener('click', ()=>{
+  const input = document.getElementById('f_maps_link');
+  const url = input.value.trim();
+  if(!url){ alert('Pegá primero un link de Google Maps.'); return; }
+  const coords = parseGoogleMapsLink(url);
+  if(!coords){
+    if(/goo\.gl|maps\.app\.goo\.gl/.test(url)){
+      alert('Ese es un link corto de Google Maps y no se puede leer directamente desde el navegador.\n\nAbrilo primero en Google Maps, esperá a que cargue, y copiá el link completo que queda en la barra de direcciones (o tocá "Compartir" y elegí "Copiar link"). Después pegalo acá.');
+    } else {
+      alert('No se pudieron detectar coordenadas en ese link. Probá abriendo el lugar en Google Maps y copiando el link completo de la barra de direcciones.');
+    }
+    return;
+  }
+  if(!coordsValidas(coords.lat, coords.lng)){
+    alert('Las coordenadas encontradas (' + coords.lat + ', ' + coords.lng + ') están fuera del rango esperado para Paraguay. Revisá el link.');
+    return;
+  }
+  document.getElementById('f_lat').value = coords.lat;
+  document.getElementById('f_lng').value = coords.lng;
 });
 
 document.getElementById('scriptUrlInput').value = DEFAULT_SCRIPT_URL;
