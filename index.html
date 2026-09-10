@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BRICKROGA E.A.S. — Terrenos</title>
+<title>BRICKROGA E.A.S. — Inmuebles</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -156,9 +156,48 @@
     padding:0;
     width:min(520px, 92vw);
     background:var(--paper);
+    position:relative;
   }
   dialog::backdrop{background:rgba(43,38,32,0.45);}
   .dlg-inner{padding:22px 24px 24px; max-height:85vh; overflow-y:auto;}
+  .dlg-close-btn{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    font-size:16px;
+    line-height:1;
+    z-index:2;
+  }
+  .dlg-close-btn:hover{background:rgba(43,38,32,0.06); color:var(--ink); opacity:1;}
+  .info-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    border:1px solid var(--ink-soft);
+    background:transparent;
+    color:var(--ink-soft);
+    font-size:10.5px;
+    font-weight:700;
+    font-style:italic;
+    padding:0;
+    margin-left:4px;
+    vertical-align:middle;
+    cursor:pointer;
+  }
+  .info-btn:hover{background:var(--ink-soft); color:var(--paper); opacity:1;}
   .dlg-inner h2{font-family:'Fraunces', serif; font-size:20px; margin:0 0 4px;}
   .dlg-inner .hint{font-size:12.5px; color:var(--ink-soft); margin-bottom:16px;}
   .dlg-inner .subhead{font-family:'Fraunces', serif; font-size:14px; margin:18px 0 8px; color:var(--brick-dark); border-top:1px solid var(--line); padding-top:14px;}
@@ -185,6 +224,16 @@
   }
   .dot{width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:5px; vertical-align:middle;}
   .note-share{font-size:11.5px; color:var(--ink-soft); margin-top:6px;}
+  .site-footer{
+    text-align:center;
+    font-size:11px;
+    color:var(--ink-soft);
+    padding:14px 20px;
+    border-top:1px solid var(--line);
+    letter-spacing:0.01em;
+  }
+  .site-footer a{color:var(--ink-soft); text-decoration:none; border-bottom:1px dotted var(--ink-soft);}
+  .site-footer a:hover{color:var(--brick-dark); border-bottom-color:var(--brick-dark);}
   #status{font-size:12px; color:var(--ink-soft);}
   #fileImport{display:none;}
   .cfg-bar{
@@ -312,10 +361,14 @@
   </div>
 </div>
 
+<footer class="site-footer">
+  Hecho por Osvaldo Segovia · 2026 · <a href="mailto:contacto.brickroga@gmail.com">contacto.brickroga@gmail.com</a>
+</footer>
+
 <dialog id="dlg">
   <div class="dlg-inner">
+    <button type="button" class="dlg-close-btn" id="btnCerrarDlgX" title="Cerrar" aria-label="Cerrar">✕</button>
     <h2 id="dlgTitulo">Nuevo inmueble</h2>
-    <p class="hint">Cargá lo que Johanna manda por WhatsApp, acá queda ordenado para todos.</p>
 
     <div class="field">
       <label>Nombre / referencia del inmueble</label>
@@ -333,7 +386,7 @@
     </div>
     <div class="maps-link-row">
       <div class="field">
-        <label>Pegar link de Google Maps (opcional)</label>
+        <label>Pegar link de Google Maps (opcional) <button type="button" class="info-btn" id="btnInfoMapsLink" title="Más información" aria-label="Más información">i</button></label>
         <input id="f_maps_link" placeholder="https://www.google.com/maps/place/...">
       </div>
       <button type="button" class="secondary" id="btnUsarMapsLink">Usar link</button>
@@ -348,7 +401,6 @@
         <input id="f_lng" placeholder="-57.5342" inputmode="decimal">
       </div>
     </div>
-    <p class="hint" style="margin-top:-6px;">Tip: funciona tanto con el link largo como con el link corto (el que sale al tocar "Compartir" desde el celular). Pegalo y tocá "Usar link". Si por algún motivo no lo puede leer, buscá el lugar en Google Maps, clic derecho sobre el punto, y copiá las coordenadas manualmente.</p>
 
     <div class="row2">
       <div class="field">
@@ -458,7 +510,14 @@
       </div>
       <div class="field">
         <label>Quién lo cargó</label>
-        <input id="f_autor" placeholder="Tu nombre">
+        <select id="f_autor">
+          <option value="">Sin dato</option>
+          <option value="Osvaldo">Osvaldo</option>
+          <option value="Romina">Romina</option>
+          <option value="Johanna">Johanna</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <input id="f_autor_otro" placeholder="Escribí el nombre" style="margin-top:6px; display:none;">
       </div>
     </div>
 
@@ -471,6 +530,7 @@
 
 <dialog id="dlgConfig">
   <div class="dlg-inner">
+    <button type="button" class="dlg-close-btn" id="btnCerrarConfigX" title="Cerrar" aria-label="Cerrar">✕</button>
     <h2>Configuración</h2>
     <p class="hint">Ajustes generales — no hace falta tocar esto para cargar inmuebles.</p>
 
@@ -532,7 +592,7 @@
 const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYnyy4Muisen2Dqzkr78AmKojkONtkYjVqlLd1GlBXqGvDQko2Vw4hdJcLstXOpzAg/exec';
 let SCRIPT_URL = DEFAULT_SCRIPT_URL;
 const CSV_HEADERS = ['id','nombre','ciudad','direccion','lat','lng','precio','cuota','precio_m2','ruta','polo','tipo_agua','tipo_luz','rentabilidad','seguridad','agua','electricidad','colegio','notas','contacto','autor','fecha'];
-let terrenos = [];
+let inmuebles = [];
 let map, markersLayer;
 let stars = {rentabilidad:0, seguridad:0, agua:0, electricidad:0, colegio:0};
 let editingId = null;
@@ -601,7 +661,7 @@ function colorFor(t, mode){
   if(mode === 'rentabilidad'){
     score = t.rentabilidad || 0; // 1-5
   } else if(mode === 'precio'){
-    const prices = terrenos.map(x=>Number(x.precio)||0).filter(p=>p>0);
+    const prices = inmuebles.map(x=>Number(x.precio)||0).filter(p=>p>0);
     if(!prices.length) return '#C99A3A';
     const min = Math.min(...prices), max = Math.max(...prices);
     const p = Number(t.precio)||0;
@@ -645,11 +705,11 @@ function render(){
   const list = document.getElementById('list');
   list.innerHTML = '';
 
-  if(!terrenos.length){
-    list.innerHTML = '<div class="empty">Todavía no hay terrenos cargados.<br>Agregá el primero con "+ Agregar terreno" o importá un CSV.</div>';
+  if(!inmuebles.length){
+    list.innerHTML = '<div class="empty">Todavía no hay inmuebles cargados.<br>Agregá el primero con "+ Agregar inmueble" o importá un CSV.</div>';
   }
 
-  const ordenados = terrenos.slice().sort((a,b)=>{
+  const ordenados = inmuebles.slice().sort((a,b)=>{
     const diff = (Number(b.rentabilidad)||0) - (Number(a.rentabilidad)||0);
     if(diff !== 0) return diff;
     return new Date(b.fecha||0) - new Date(a.fecha||0);
@@ -692,7 +752,7 @@ function render(){
   list.querySelectorAll('.del').forEach(btn=>{
     btn.addEventListener('click', async (e)=>{
       const id = e.target.getAttribute('data-id');
-      terrenos = terrenos.filter(x=>x.id !== id);
+      inmuebles = inmuebles.filter(x=>x.id !== id);
       await save();
       render();
     });
@@ -713,7 +773,7 @@ async function load(){
   const statusEl = document.getElementById('status');
   if(!SCRIPT_URL){
     statusEl.textContent = 'pegá el link del Apps Script arriba y tocá "Guardar / Cargar"';
-    terrenos = [];
+    inmuebles = [];
     render();
     return;
   }
@@ -723,11 +783,11 @@ async function load(){
     if(!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
     const filas = Array.isArray(json) ? json : (Array.isArray(json.data) ? json.data : []);
-    terrenos = filas.map(normalizeRow);
-    statusEl.textContent = terrenos.length + ' terreno(s) cargado(s)';
+    inmuebles = filas.map(normalizeRow);
+    statusEl.textContent = inmuebles.length + ' inmueble(s) cargado(s)';
   }catch(err){
     console.error(err);
-    terrenos = [];
+    inmuebles = [];
     statusEl.textContent = 'no se pudo cargar (revisá el link del script y que esté publicado como "Cualquiera")';
   }
   render();
@@ -744,7 +804,7 @@ async function save(){
     const res = await fetch(SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita el preflight CORS que Apps Script no maneja bien
-      body: JSON.stringify({ action: 'save', data: terrenos })
+      body: JSON.stringify({ action: 'save', data: inmuebles })
     });
     if(!res.ok) throw new Error('HTTP ' + res.status);
     statusEl.textContent = 'guardado ✓';
@@ -761,7 +821,7 @@ function escapeCsv(v){
 
 function exportarCSV(){
   const lines = [CSV_HEADERS.join(',')];
-  terrenos.forEach(t=>{
+  inmuebles.forEach(t=>{
     lines.push(CSV_HEADERS.map(h=>escapeCsv(t[h])).join(','));
   });
   const csv = lines.join('\n');
@@ -769,7 +829,7 @@ function exportarCSV(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'terrenos_brickroga_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.download = 'inmuebles_brickroga_' + new Date().toISOString().slice(0,10) + '.csv';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -815,11 +875,11 @@ function importarCSV(file){
       const nuevos = results.data.map(normalizeRow).filter(t=>t.nombre || t.direccion);
       if(!nuevos.length){ alert('No se encontraron filas válidas en el CSV.'); return; }
       const sinCoords = nuevos.filter(t=>t.lat === null || t.lng === null).length;
-      let msg = 'Se reemplazarán los ' + terrenos.length + ' inmueble(s) actuales por los ' + nuevos.length + ' del archivo.';
+      let msg = 'Se reemplazarán los ' + inmuebles.length + ' inmueble(s) actuales por los ' + nuevos.length + ' del archivo.';
       if(sinCoords){ msg += '\n\nOjo: ' + sinCoords + ' fila(s) tienen latitud/longitud vacía o fuera del rango de Paraguay, así que no van a aparecer en el mapa (sí en la lista). Revisá esas coordenadas en tu Google Sheet.'; }
       const ok = confirm(msg + '\n\n¿Continuar?');
       if(!ok) return;
-      terrenos = nuevos;
+      inmuebles = nuevos;
       await save();
       render();
     },
@@ -831,13 +891,14 @@ function importarCSV(file){
 }
 
 function resetForm(){
-  ['f_nombre','f_ciudad','f_direccion','f_maps_link','f_lat','f_lng','f_precio','f_cuota','f_precio_m2','f_polo','f_polo_otro','f_tipo_agua','f_tipo_agua_otro','f_tipo_luz','f_tipo_luz_otro','f_notas','f_contacto','f_autor'].forEach(id=>{
+  ['f_nombre','f_ciudad','f_direccion','f_maps_link','f_lat','f_lng','f_precio','f_cuota','f_precio_m2','f_polo','f_polo_otro','f_tipo_agua','f_tipo_agua_otro','f_tipo_luz','f_tipo_luz_otro','f_notas','f_contacto','f_autor','f_autor_otro'].forEach(id=>{
     document.getElementById(id).value = '';
   });
   document.getElementById('f_ruta').value = '';
   document.getElementById('f_polo_otro').style.display = 'none';
   document.getElementById('f_tipo_agua_otro').style.display = 'none';
   document.getElementById('f_tipo_luz_otro').style.display = 'none';
+  document.getElementById('f_autor_otro').style.display = 'none';
   stars = {rentabilidad:0, seguridad:0, agua:0, electricidad:0, colegio:0};
   document.querySelectorAll('.stars').forEach(group=>{
     group.querySelectorAll('span').forEach(s=>s.classList.remove('on'));
@@ -860,11 +921,12 @@ function formatMiles(digitos){
   });
 });
 
-// --- Selects con opción "Otro" (polo, tipo de agua, tipo de luz) ---
+// --- Selects con opción "Otro" (polo, tipo de agua, tipo de luz, quién lo cargó) ---
 const SELECTS_CON_OTRO = [
   { select: 'f_polo', otro: 'f_polo_otro' },
   { select: 'f_tipo_agua', otro: 'f_tipo_agua_otro' },
-  { select: 'f_tipo_luz', otro: 'f_tipo_luz_otro' }
+  { select: 'f_tipo_luz', otro: 'f_tipo_luz_otro' },
+  { select: 'f_autor', otro: 'f_autor_otro' }
 ];
 SELECTS_CON_OTRO.forEach(({select, otro})=>{
   document.getElementById(select).addEventListener('change', (e)=>{
@@ -914,7 +976,7 @@ function setStars(field, value){
 }
 
 function abrirParaEditar(id){
-  const t = terrenos.find(x=>x.id === id);
+  const t = inmuebles.find(x=>x.id === id);
   if(!t) return;
   resetForm();
   editingId = id;
@@ -934,7 +996,7 @@ function abrirParaEditar(id){
   setSelectConOtro('f_tipo_luz', 'f_tipo_luz_otro', t.tipo_luz || '');
   document.getElementById('f_notas').value = t.notas || '';
   document.getElementById('f_contacto').value = t.contacto || '';
-  document.getElementById('f_autor').value = t.autor || '';
+  setSelectConOtro('f_autor', 'f_autor_otro', t.autor || '');
   setStars('rentabilidad', t.rentabilidad);
   setStars('seguridad', t.seguridad);
   setStars('agua', t.agua);
@@ -963,6 +1025,12 @@ document.getElementById('btnNuevo').addEventListener('click', ()=>{
 document.getElementById('btnCancelar').addEventListener('click', ()=>{
   document.getElementById('dlg').close();
 });
+document.getElementById('btnCerrarDlgX').addEventListener('click', ()=>{
+  document.getElementById('dlg').close();
+});
+document.getElementById('btnInfoMapsLink').addEventListener('click', ()=>{
+  alert('Funciona tanto con el link largo como con el link corto (el que sale al tocar "Compartir" desde el celular).\n\nPegalo y tocá "Usar link". Si por algún motivo no lo puede leer, buscá el lugar en Google Maps, clic derecho sobre el punto, y copiá las coordenadas manualmente.');
+});
 document.getElementById('btnGuardar').addEventListener('click', async ()=>{
   const nombre = document.getElementById('f_nombre').value.trim();
   const lat = parseCoord(document.getElementById('f_lat').value);
@@ -988,16 +1056,16 @@ document.getElementById('btnGuardar').addEventListener('click', async ()=>{
     colegio: stars.colegio,
     notas: document.getElementById('f_notas').value.trim(),
     contacto: document.getElementById('f_contacto').value.trim(),
-    autor: document.getElementById('f_autor').value.trim()
+    autor: valorDeSelectConOtro('f_autor', 'f_autor_otro')
   };
 
   if(editingId){
-    const idx = terrenos.findIndex(x=>x.id === editingId);
+    const idx = inmuebles.findIndex(x=>x.id === editingId);
     if(idx > -1){
-      terrenos[idx] = { ...terrenos[idx], ...datos };
+      inmuebles[idx] = { ...inmuebles[idx], ...datos };
     }
   } else {
-    terrenos.push({
+    inmuebles.push({
       id: 'lt_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
       ...datos,
       fecha: new Date().toISOString()
@@ -1038,6 +1106,9 @@ document.getElementById('btnConfig').addEventListener('click', ()=>{
   document.getElementById('dlgConfig').showModal();
 });
 document.getElementById('btnCerrarConfig').addEventListener('click', ()=>{
+  document.getElementById('dlgConfig').close();
+});
+document.getElementById('btnCerrarConfigX').addEventListener('click', ()=>{
   document.getElementById('dlgConfig').close();
 });
 
