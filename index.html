@@ -126,6 +126,11 @@
     padding:14px 16px;
     margin-bottom:12px;
     background:rgba(255,255,255,0.4);
+    transition:background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card.card-resaltada{
+    background:rgba(223,207,166,0.55);
+    box-shadow:0 0 0 2px var(--brick);
   }
   .card h3{
     font-family:'Fraunces', serif;
@@ -149,6 +154,21 @@
     border-bottom:1px dotted transparent;
   }
   .card-title-btn:hover{color:var(--brick-dark); border-bottom-color:var(--brick-dark); opacity:1;}
+  .popup-title-btn{
+    background:transparent;
+    border:0;
+    padding:0;
+    margin:0 0 2px;
+    display:block;
+    font-family:'Fraunces', serif;
+    font-size:14px;
+    font-weight:700;
+    color:var(--brick-dark);
+    text-align:left;
+    cursor:pointer;
+    border-bottom:1px dotted var(--brick-dark);
+  }
+  .popup-title-btn:hover{opacity:0.75;}
   .card .precio{font-weight:600; color:var(--brick-dark); white-space:nowrap;}
   .card .direccion{font-size:13px; color:var(--ink-soft); margin-bottom:8px;}
   .metrics{
@@ -862,7 +882,7 @@ function render(){
     const color = colorFor(t, mode);
     if(t.lat && t.lng){
       const marker = L.marker([t.lat, t.lng], {icon: makePinIcon(color)}).addTo(markersLayer);
-      marker.bindPopup(`<strong>${escapeHtml(t.nombre||'Sin nombre')}</strong><br>${escapeHtml([t.ciudad,t.direccion].filter(Boolean).join(' — '))}<br>${fmtGs(t.precio)}`);
+      marker.bindPopup(`<button type="button" class="popup-title-btn" onclick="irATarjeta('${t.id}')">${escapeHtml(t.nombre||'Sin nombre')}</button><br>${escapeHtml([t.ciudad,t.direccion].filter(Boolean).join(' — '))}<br>${fmtGs(t.precio)}`);
       markersById[t.id] = marker;
     }
 
@@ -875,6 +895,7 @@ function render(){
 
     const card = document.createElement('div');
     card.className = 'card';
+    card.id = 'card-' + t.id;
     card.style.borderLeftColor = color;
     card.innerHTML = `
       <h3><button type="button" class="card-title-btn" data-id="${t.id}">${escapeHtml(t.nombre||'Sin nombre')}</button><span class="precio">${fmtGs(t.precio)}</span></h3>
@@ -934,6 +955,18 @@ function render(){
       document.getElementById('dlgConfirmDelete').showModal();
     });
   });
+}
+
+function irATarjeta(id){
+  const card = document.getElementById('card-' + id);
+  if(!card){
+    alert('No se encontró la tarjeta de este inmueble (puede que se haya eliminado).');
+    return;
+  }
+  map.closePopup();
+  card.scrollIntoView({behavior:'smooth', block:'center'});
+  card.classList.add('card-resaltada');
+  setTimeout(()=> card.classList.remove('card-resaltada'), 1600);
 }
 
 function irAlPinDelMapa(id){
