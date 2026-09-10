@@ -280,9 +280,9 @@
   <div class="header-right">
     <div id="status">cargando…</div>
     <button type="button" class="gear-btn" id="btnConfig" title="Configuración" aria-label="Configuración">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M12 3.4v-.8M12 21.4v-.8M4.4 12h-.8M20.4 12h-.8M6.7 6.7l-.56-.56M18.26 18.26l-.56-.56M6.7 17.3l-.56.56M18.26 5.74l-.56.56M9.5 3.7l-.3-.78M14.5 3.7l.3-.78M9.5 20.3l-.3.78M14.5 20.3l.3.78M3.7 9.5l-.78-.3M3.7 14.5l-.78.3M20.3 9.5l.78-.3M20.3 14.5l.78.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
       </svg>
     </button>
   </div>
@@ -348,16 +348,16 @@
         <input id="f_lng" placeholder="-57.5342" inputmode="decimal">
       </div>
     </div>
-    <p class="hint" style="margin-top:-6px;">Tip: pegá el link de Google Maps y tocá "Usar link", o si preferís, buscá el lugar en Google Maps, clic derecho sobre el punto y copiá las coordenadas manualmente.</p>
+    <p class="hint" style="margin-top:-6px;">Tip: funciona tanto con el link largo como con el link corto (el que sale al tocar "Compartir" desde el celular). Pegalo y tocá "Usar link". Si por algún motivo no lo puede leer, buscá el lugar en Google Maps, clic derecho sobre el punto, y copiá las coordenadas manualmente.</p>
 
     <div class="row2">
       <div class="field">
         <label>Precio total (Gs)</label>
-        <input id="f_precio" placeholder="80000000" inputmode="numeric">
+        <input id="f_precio" placeholder="80.000.000" inputmode="numeric">
       </div>
       <div class="field">
         <label>Cuota mensual estimada (Gs)</label>
-        <input id="f_cuota" placeholder="1200000" inputmode="numeric">
+        <input id="f_cuota" placeholder="1.200.000" inputmode="numeric">
       </div>
     </div>
     <div class="field">
@@ -378,17 +378,37 @@
       </div>
       <div class="field">
         <label>Cerca de polo de desarrollo</label>
-        <input id="f_polo" placeholder="Ej: eje comercial, shopping, hospital...">
+        <select id="f_polo">
+          <option value="">Sin dato</option>
+          <option value="Eje comercial">Eje comercial</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Hospital">Hospital</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <input id="f_polo_otro" placeholder="Especificá cuál" style="margin-top:6px; display:none;">
       </div>
     </div>
     <div class="row2">
       <div class="field">
         <label>Tipo de servicio de agua</label>
-        <input id="f_tipo_agua" placeholder="Ej: ESSAP / Junta de Saneamiento / Pozo">
+        <select id="f_tipo_agua">
+          <option value="">Sin dato</option>
+          <option value="ESSAP">ESSAP</option>
+          <option value="Junta de Saneamiento">Junta de Saneamiento</option>
+          <option value="Pozo">Pozo</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <input id="f_tipo_agua_otro" placeholder="Especificá cuál" style="margin-top:6px; display:none;">
       </div>
       <div class="field">
         <label>Tipo de servicio de luz</label>
-        <input id="f_tipo_luz" placeholder="Ej: ANDE trifásica / monofásica">
+        <select id="f_tipo_luz">
+          <option value="">Sin dato</option>
+          <option value="ANDE monofásica">ANDE monofásica</option>
+          <option value="ANDE trifásica">ANDE trifásica</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <input id="f_tipo_luz_otro" placeholder="Especificá cuál" style="margin-top:6px; display:none;">
       </div>
     </div>
 
@@ -811,10 +831,13 @@ function importarCSV(file){
 }
 
 function resetForm(){
-  ['f_nombre','f_ciudad','f_direccion','f_maps_link','f_lat','f_lng','f_precio','f_cuota','f_precio_m2','f_polo','f_tipo_agua','f_tipo_luz','f_notas','f_contacto','f_autor'].forEach(id=>{
+  ['f_nombre','f_ciudad','f_direccion','f_maps_link','f_lat','f_lng','f_precio','f_cuota','f_precio_m2','f_polo','f_polo_otro','f_tipo_agua','f_tipo_agua_otro','f_tipo_luz','f_tipo_luz_otro','f_notas','f_contacto','f_autor'].forEach(id=>{
     document.getElementById(id).value = '';
   });
   document.getElementById('f_ruta').value = '';
+  document.getElementById('f_polo_otro').style.display = 'none';
+  document.getElementById('f_tipo_agua_otro').style.display = 'none';
+  document.getElementById('f_tipo_luz_otro').style.display = 'none';
   stars = {rentabilidad:0, seguridad:0, agua:0, electricidad:0, colegio:0};
   document.querySelectorAll('.stars').forEach(group=>{
     group.querySelectorAll('span').forEach(s=>s.classList.remove('on'));
@@ -822,6 +845,63 @@ function resetForm(){
   editingId = null;
   document.getElementById('dlgTitulo').textContent = 'Nuevo inmueble';
   document.getElementById('btnGuardar').textContent = 'Guardar';
+}
+
+// --- Formato de miles para Precio total / Cuota mensual ---
+function soloDigitos(s){
+  return String(s || '').replace(/\D/g, '');
+}
+function formatMiles(digitos){
+  return digitos ? Number(digitos).toLocaleString('es-PY') : '';
+}
+['f_precio', 'f_cuota'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', (e)=>{
+    e.target.value = formatMiles(soloDigitos(e.target.value));
+  });
+});
+
+// --- Selects con opción "Otro" (polo, tipo de agua, tipo de luz) ---
+const SELECTS_CON_OTRO = [
+  { select: 'f_polo', otro: 'f_polo_otro' },
+  { select: 'f_tipo_agua', otro: 'f_tipo_agua_otro' },
+  { select: 'f_tipo_luz', otro: 'f_tipo_luz_otro' }
+];
+SELECTS_CON_OTRO.forEach(({select, otro})=>{
+  document.getElementById(select).addEventListener('change', (e)=>{
+    const otroInput = document.getElementById(otro);
+    if(e.target.value === 'Otro'){
+      otroInput.style.display = '';
+      otroInput.focus();
+    } else {
+      otroInput.style.display = 'none';
+      otroInput.value = '';
+    }
+  });
+});
+
+function setSelectConOtro(selectId, otroId, valor){
+  const select = document.getElementById(selectId);
+  const otroInput = document.getElementById(otroId);
+  const valoresConocidos = Array.from(select.options).map(o=>o.value).filter(v=>v && v !== 'Otro');
+  if(!valor){
+    select.value = '';
+    otroInput.style.display = 'none';
+    otroInput.value = '';
+  } else if(valoresConocidos.includes(valor)){
+    select.value = valor;
+    otroInput.style.display = 'none';
+    otroInput.value = '';
+  } else {
+    select.value = 'Otro';
+    otroInput.style.display = '';
+    otroInput.value = valor;
+  }
+}
+
+function valorDeSelectConOtro(selectId, otroId){
+  const select = document.getElementById(selectId);
+  if(select.value === 'Otro') return document.getElementById(otroId).value.trim();
+  return select.value;
 }
 
 function setStars(field, value){
@@ -845,13 +925,13 @@ function abrirParaEditar(id){
   document.getElementById('f_direccion').value = t.direccion || '';
   document.getElementById('f_lat').value = t.lat ?? '';
   document.getElementById('f_lng').value = t.lng ?? '';
-  document.getElementById('f_precio').value = t.precio || '';
-  document.getElementById('f_cuota').value = t.cuota || '';
+  document.getElementById('f_precio').value = formatMiles(soloDigitos(t.precio));
+  document.getElementById('f_cuota').value = formatMiles(soloDigitos(t.cuota));
   document.getElementById('f_precio_m2').value = t.precio_m2 || '';
   document.getElementById('f_ruta').value = t.ruta || '';
-  document.getElementById('f_polo').value = t.polo || '';
-  document.getElementById('f_tipo_agua').value = t.tipo_agua || '';
-  document.getElementById('f_tipo_luz').value = t.tipo_luz || '';
+  setSelectConOtro('f_polo', 'f_polo_otro', t.polo || '');
+  setSelectConOtro('f_tipo_agua', 'f_tipo_agua_otro', t.tipo_agua || '');
+  setSelectConOtro('f_tipo_luz', 'f_tipo_luz_otro', t.tipo_luz || '');
   document.getElementById('f_notas').value = t.notas || '';
   document.getElementById('f_contacto').value = t.contacto || '';
   document.getElementById('f_autor').value = t.autor || '';
@@ -894,13 +974,13 @@ document.getElementById('btnGuardar').addEventListener('click', async ()=>{
     direccion: document.getElementById('f_direccion').value.trim(),
     lat: coordsValidas(lat, lng) ? lat : null,
     lng: coordsValidas(lat, lng) ? lng : null,
-    precio: document.getElementById('f_precio').value,
-    cuota: document.getElementById('f_cuota').value,
+    precio: soloDigitos(document.getElementById('f_precio').value),
+    cuota: soloDigitos(document.getElementById('f_cuota').value),
     precio_m2: document.getElementById('f_precio_m2').value.trim(),
     ruta: document.getElementById('f_ruta').value,
-    polo: document.getElementById('f_polo').value.trim(),
-    tipo_agua: document.getElementById('f_tipo_agua').value.trim(),
-    tipo_luz: document.getElementById('f_tipo_luz').value.trim(),
+    polo: valorDeSelectConOtro('f_polo', 'f_polo_otro'),
+    tipo_agua: valorDeSelectConOtro('f_tipo_agua', 'f_tipo_agua_otro'),
+    tipo_luz: valorDeSelectConOtro('f_tipo_luz', 'f_tipo_luz_otro'),
     rentabilidad: stars.rentabilidad,
     seguridad: stars.seguridad,
     agua: stars.agua,
@@ -999,17 +1079,53 @@ function parseGoogleMapsLink(url){
   return null;
 }
 
-document.getElementById('btnUsarMapsLink').addEventListener('click', ()=>{
+function esLinkCorto(url){
+  return /^https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps)\//i.test(url.trim());
+}
+
+// Los links cortos (maps.app.goo.gl) redirigen a la URL larga, pero el navegador
+// no puede leer esa redirección directamente por las reglas de CORS. Usamos un
+// servicio intermediario (allorigins.win) que sigue la redirección del lado del
+// servidor y nos devuelve la URL final ya resuelta.
+async function resolverLinkCorto(url){
+  const proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+  const res = await fetch(proxy);
+  if(!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  const finalUrl = data?.status?.url;
+  if(!finalUrl) throw new Error('sin url final');
+  return finalUrl;
+}
+
+document.getElementById('btnUsarMapsLink').addEventListener('click', async ()=>{
   const input = document.getElementById('f_maps_link');
+  const btn = document.getElementById('btnUsarMapsLink');
   const url = input.value.trim();
   if(!url){ alert('Pegá primero un link de Google Maps.'); return; }
-  const coords = parseGoogleMapsLink(url);
-  if(!coords){
-    if(/goo\.gl|maps\.app\.goo\.gl/.test(url)){
-      alert('Ese es un link corto de Google Maps y no se puede leer directamente desde el navegador.\n\nAbrilo primero en Google Maps, esperá a que cargue, y copiá el link completo que queda en la barra de direcciones (o tocá "Compartir" y elegí "Copiar link"). Después pegalo acá.');
-    } else {
-      alert('No se pudieron detectar coordenadas en ese link. Probá abriendo el lugar en Google Maps y copiando el link completo de la barra de direcciones.');
+
+  let coords = parseGoogleMapsLink(url);
+
+  if(!coords && esLinkCorto(url)){
+    const textoOriginal = btn.textContent;
+    btn.textContent = 'Resolviendo…';
+    btn.disabled = true;
+    try{
+      const urlLarga = await resolverLinkCorto(url);
+      coords = parseGoogleMapsLink(urlLarga);
+    }catch(err){
+      console.error(err);
+    }finally{
+      btn.textContent = textoOriginal;
+      btn.disabled = false;
     }
+    if(!coords){
+      alert('No se pudo resolver ese link corto automáticamente (puede ser un problema temporal del servicio usado para leerlo).\n\nComo alternativa: abrilo en Google Maps, esperá a que cargue, y copiá el link completo de la barra de direcciones. Después pegalo acá y tocá "Usar link" de nuevo.');
+      return;
+    }
+  }
+
+  if(!coords){
+    alert('No se pudieron detectar coordenadas en ese link. Probá abriendo el lugar en Google Maps y copiando el link completo de la barra de direcciones.');
     return;
   }
   if(!coordsValidas(coords.lat, coords.lng)){
