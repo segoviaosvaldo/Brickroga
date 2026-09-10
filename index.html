@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BRICKROGA E.A.S. — Inmuebles</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2052%2052%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2250%22%20height%3D%2250%22%20rx%3D%2213%22%20fill%3D%22%23BF4E2C%22%20stroke%3D%22%232B2620%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M9%2027%20L26%2011%20L43%2027%22%20fill%3D%22none%22%20stroke%3D%22%23F5EFE1%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2227%22%20width%3D%2224%22%20height%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23F5EFE1%22%20stroke-width%3D%223%22%2F%3E%3Cline%20x1%3D%2214%22%20y1%3D%2232.5%22%20x2%3D%2238%22%20y2%3D%2232.5%22%20stroke%3D%22%23F5EFE1%22%20stroke-width%3D%221.3%22%20opacity%3D%220.65%22%2F%3E%3Cline%20x1%3D%2214%22%20y1%3D%2237.3%22%20x2%3D%2238%22%20y2%3D%2237.3%22%20stroke%3D%22%23F5EFE1%22%20stroke-width%3D%221.3%22%20opacity%3D%220.65%22%2F%3E%3Crect%20x%3D%2222%22%20y%3D%2233.5%22%20width%3D%228%22%20height%3D%228.5%22%20fill%3D%22%23F5EFE1%22%2F%3E%3C%2Fsvg%3E">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -110,6 +111,11 @@
     border-color:var(--line);
     font-weight:500;
   }
+  button.btn-danger{
+    background:var(--bad);
+    border-color:var(--brick-dark);
+    color:var(--paper);
+  }
   button:hover{opacity:0.85;}
   .toolbar-row{display:flex; gap:8px; flex-wrap:wrap; margin-left:auto;}
 
@@ -143,11 +149,65 @@
     border-radius:20px;
     border:1px solid var(--line);
     color:var(--ink-soft);
+    display:inline-flex;
+    align-items:center;
+    gap:3px;
   }
+  .star-rating{
+    position:relative;
+    display:inline-block;
+    width:11px;
+    height:11px;
+    font-size:11px;
+    line-height:1;
+  }
+  .star-bg, .star-fg{position:absolute; top:0; left:0;}
+  .star-bg{color:var(--line);}
+  .star-fg{color:var(--brick); overflow:hidden; white-space:nowrap;}
   .infoline{font-size:12px; color:var(--ink-soft); margin-bottom:6px; line-height:1.6;}
   .infoline b{color:var(--ink);}
   .card .notas{font-size:13px; color:var(--ink); margin-top:4px; white-space:pre-wrap;}
-  .card .meta{font-size:11px; color:var(--ink-soft); margin-top:8px; display:flex; justify-content:space-between;}
+  .card .meta{font-size:11px; color:var(--ink-soft); margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:8px;}
+  .card-menu{position:relative; flex-shrink:0;}
+  .menu-btn{
+    background:transparent;
+    border:1px solid transparent;
+    color:var(--ink-soft);
+    font-size:16px;
+    font-weight:700;
+    line-height:1;
+    padding:2px 8px;
+    border-radius:4px;
+  }
+  .menu-btn:hover{background:rgba(43,38,32,0.06); opacity:1; color:var(--ink);}
+  .menu-dropdown{
+    display:none;
+    position:absolute;
+    right:0;
+    bottom:calc(100% + 4px);
+    background:var(--paper);
+    border:1px solid var(--ink);
+    border-radius:4px;
+    box-shadow:0 4px 14px rgba(43,38,32,0.18);
+    z-index:5;
+    flex-direction:column;
+    min-width:120px;
+    overflow:hidden;
+  }
+  .menu-dropdown.open{display:flex;}
+  .menu-dropdown button{
+    background:transparent;
+    border:0;
+    border-radius:0;
+    color:var(--ink);
+    font-size:12.5px;
+    font-weight:500;
+    text-align:left;
+    padding:9px 12px;
+  }
+  .menu-dropdown button:hover{background:rgba(43,38,32,0.06); opacity:1;}
+  .menu-dropdown .menu-del{color:var(--brick-dark);}
+  .menu-dropdown button + button{border-top:1px solid var(--line);}
   .card .del{cursor:pointer; color:var(--brick); text-decoration:underline; background:none; border:none; padding:0; font-size:11px; font-weight:600;}
 
   dialog{
@@ -223,7 +283,6 @@
     display:flex; gap:14px; align-items:center; font-size:12px; color:var(--ink-soft); margin-bottom:14px; flex-wrap:wrap;
   }
   .dot{width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:5px; vertical-align:middle;}
-  .note-share{font-size:11.5px; color:var(--ink-soft); margin-top:6px;}
   .site-footer{
     text-align:center;
     padding:14px 20px;
@@ -244,6 +303,21 @@
   }
   .site-footer a{color:var(--ink-soft); text-decoration:none; border-bottom:1px dotted var(--ink-soft);}
   .site-footer a:hover{color:var(--brick-dark); border-bottom-color:var(--brick-dark);}
+  .footer-config-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    background:none;
+    border:none;
+    color:var(--ink-soft);
+    font-size:11px;
+    padding:0;
+    margin-top:6px;
+    cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+  .footer-config-btn:hover{color:var(--brick-dark); opacity:1;}
+  .footer-config-btn svg{width:12px; height:12px;}
   #status{font-size:12px; color:var(--ink-soft);}
   #fileImport{display:none;}
   .cfg-bar{
@@ -338,12 +412,6 @@
   </div>
   <div class="header-right">
     <div id="status">cargando…</div>
-    <button type="button" class="gear-btn" id="btnConfig" title="Configuración" aria-label="Configuración">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-      </svg>
-    </button>
   </div>
 </header>
 
@@ -351,7 +419,7 @@
   <div id="map"></div>
   <div class="panel">
     <div class="controls">
-      <label for="colorBy">Colorear pines por</label>
+      <label for="colorBy">Ordenar por</label>
       <select id="colorBy">
         <option value="rentabilidad" selected>Rentabilidad</option>
         <option value="calidad">Calidad de vida</option>
@@ -367,13 +435,19 @@
       <span><span class="dot" style="background:var(--bad)"></span>Bajo</span>
     </div>
     <div id="list"></div>
-    <p class="note-share">Los datos se guardan compartidos: los tres ven y editan el mismo listado en este archivo.</p>
   </div>
 </div>
 
 <footer class="site-footer">
   <div class="brand-line">BRICKROGA E.A.S. · RUC 80177512-4</div>
   <div class="credit-line">Hecho por Osvaldo Segovia · 2026 · <a href="mailto:contacto.brickroga@gmail.com">contacto.brickroga@gmail.com</a></div>
+  <button type="button" class="footer-config-btn" id="btnConfig" title="Configuración" aria-label="Configuración">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+    Configuración
+  </button>
 </footer>
 
 <dialog id="dlg">
@@ -511,8 +585,8 @@
 
     <div class="subhead">Otros datos</div>
     <div class="field">
-      <label>Notas (loteadora, plan de cuotas, potencial de uso, etc)</label>
-      <textarea id="f_notas" rows="3" placeholder="Ej: Loteadora XX, 36 cuotas sin interés, escritura al finalizar..."></textarea>
+      <label>Notas (loteadora, plan de cuotas, potencial de uso, entrega inicial, etc)</label>
+      <textarea id="f_notas" rows="3" placeholder="Ej: Loteadora XX, 36 cuotas sin interés, escritura al finalizar, entrega inicial Gs. 60.000.000..."></textarea>
     </div>
     <div class="row2">
       <div class="field">
@@ -597,6 +671,18 @@
   </div>
 </dialog>
 
+<dialog id="dlgConfirmDelete">
+  <div class="dlg-inner">
+    <button type="button" class="dlg-close-btn" id="btnCerrarConfirmDeleteX" title="Cerrar" aria-label="Cerrar">✕</button>
+    <h2>¿Eliminar inmueble?</h2>
+    <p class="hint" id="confirmDeleteMsg" style="margin-top:0;"></p>
+    <div class="dlg-actions">
+      <button type="button" class="secondary" id="btnEliminarNo">No, cancelar</button>
+      <button type="button" class="btn-danger" id="btnEliminarSi">Sí, eliminar</button>
+    </div>
+  </div>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
@@ -659,7 +745,11 @@ function coordsValidas(lat, lng){
 }
 
 function initMap(){
-  map = L.map('map').setView([-25.30, -57.55], 11); // Asunción / Central, Paraguay
+  // Ajusta el zoom automáticamente: desde Asunción (límite oeste) hasta Areguá (límite este)
+  map = L.map('map').fitBounds([
+    [-25.40, -57.65], // suroeste (Asunción / Río Paraguay)
+    [-25.20, -57.30]  // noreste (hasta Areguá)
+  ]);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap',
     maxZoom: 18
@@ -667,23 +757,26 @@ function initMap(){
   markersLayer = L.layerGroup().addTo(map);
 }
 
-function colorFor(t, mode){
-  let score;
+function getScore(t, mode){
   if(mode === 'rentabilidad'){
-    score = t.rentabilidad || 0; // 1-5
+    return Number(t.rentabilidad) || 0; // 1-5
   } else if(mode === 'precio'){
     const prices = inmuebles.map(x=>Number(x.precio)||0).filter(p=>p>0);
-    if(!prices.length) return '#C99A3A';
-    const min = Math.min(...prices), max = Math.max(...prices);
     const p = Number(t.precio)||0;
-    if(max===min) return '#C99A3A';
+    if(!prices.length || !p) return 0;
+    const min = Math.min(...prices), max = Math.max(...prices);
+    if(max===min) return 3;
     const norm = 1 - (p - min)/(max - min); // 1 = más barato
-    score = norm*4 + 1;
+    return norm*4 + 1;
   } else {
     const vals = [t.seguridad, t.agua, t.electricidad, t.colegio].map(v=>Number(v)||0);
     const filled = vals.filter(v=>v>0);
-    score = filled.length ? filled.reduce((a,b)=>a+b,0)/filled.length : 0;
+    return filled.length ? filled.reduce((a,b)=>a+b,0)/filled.length : 0;
   }
+}
+
+function colorFor(t, mode){
+  const score = getScore(t, mode);
   const t2 = THRESHOLDS[mode] || DEFAULT_THRESHOLDS.rentabilidad;
   if(score >= t2.bueno) return '#5C6B3E';
   if(score >= t2.malo) return '#C99A3A';
@@ -705,9 +798,10 @@ function fmtGs(n){
   return 'Gs. ' + n.toLocaleString('es-PY');
 }
 
-function starsStr(n){
-  n = Number(n)||0;
-  return '★'.repeat(n) + '☆'.repeat(5-n);
+function scoreBadge(label, n){
+  n = Math.max(0, Math.min(5, Number(n)||0));
+  const pct = (n/5)*100;
+  return `<span class="pill">${label} ${n}/5 <span class="star-rating"><span class="star-bg">★</span><span class="star-fg" style="width:${pct}%">★</span></span></span>`;
 }
 
 function render(){
@@ -721,7 +815,7 @@ function render(){
   }
 
   const ordenados = inmuebles.slice().sort((a,b)=>{
-    const diff = (Number(b.rentabilidad)||0) - (Number(a.rentabilidad)||0);
+    const diff = getScore(b, mode) - getScore(a, mode);
     if(diff !== 0) return diff;
     return new Date(b.fecha||0) - new Date(a.fecha||0);
   });
@@ -748,33 +842,79 @@ function render(){
       <div class="direccion">${escapeHtml(zona)}${t.cuota?(' · Cuota ~'+fmtGs(t.cuota)):''}${t.precio_m2?(' · '+escapeHtml(t.precio_m2)):''}</div>
       ${contextBits.length ? `<div class="infoline">${contextBits.join(' &nbsp;·&nbsp; ')}</div>` : ''}
       <div class="metrics">
-        <span class="pill">Rentabilidad ${starsStr(t.rentabilidad)}</span>
-        <span class="pill">Seguridad ${starsStr(t.seguridad)}</span>
-        <span class="pill">Agua ${starsStr(t.agua)}</span>
-        <span class="pill">Luz ${starsStr(t.electricidad)}</span>
-        <span class="pill">Colegio ${starsStr(t.colegio)}</span>
+        ${scoreBadge('Rentabilidad', t.rentabilidad)}
+        ${scoreBadge('Seguridad', t.seguridad)}
+        ${scoreBadge('Agua', t.agua)}
+        ${scoreBadge('Luz', t.electricidad)}
+        ${scoreBadge('Colegio', t.colegio)}
       </div>
       ${t.notas ? `<div class="notas">${escapeHtml(t.notas)}</div>` : ''}
-      <div class="meta"><span>${t.contacto ? ('Contacto: '+escapeHtml(t.contacto)+' · ') : ''}Cargado por ${escapeHtml(t.autor||'—')}</span><span><button class="edit" data-id="${t.id}" style="margin-right:10px;">editar</button><button class="del" data-id="${t.id}">eliminar</button></span></div>
+      <div class="meta">
+        <span>${t.contacto ? ('Contacto: '+escapeHtml(t.contacto)+' · ') : ''}Cargado por ${escapeHtml(t.autor||'—')}</span>
+        <span class="card-menu">
+          <button type="button" class="menu-btn" data-id="${t.id}" aria-label="Más opciones">⋮</button>
+          <span class="menu-dropdown" data-id="${t.id}">
+            <button type="button" class="menu-edit" data-id="${t.id}">Editar</button>
+            <button type="button" class="menu-del" data-id="${t.id}" data-nombre="${escapeHtml(t.nombre||'este inmueble')}">Eliminar</button>
+          </span>
+        </span>
+      </div>
     `;
     list.appendChild(card);
   });
 
-  list.querySelectorAll('.del').forEach(btn=>{
-    btn.addEventListener('click', async (e)=>{
-      const id = e.target.getAttribute('data-id');
-      inmuebles = inmuebles.filter(x=>x.id !== id);
-      await save();
-      render();
+  list.querySelectorAll('.menu-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const dropdown = btn.nextElementSibling;
+      const yaAbierto = dropdown.classList.contains('open');
+      document.querySelectorAll('.menu-dropdown.open').forEach(d=>d.classList.remove('open'));
+      if(!yaAbierto) dropdown.classList.add('open');
     });
   });
 
-  list.querySelectorAll('.edit').forEach(btn=>{
+  list.querySelectorAll('.menu-edit').forEach(btn=>{
     btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.menu-dropdown.open').forEach(d=>d.classList.remove('open'));
       abrirParaEditar(btn.getAttribute('data-id'));
     });
   });
+
+  list.querySelectorAll('.menu-del').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.menu-dropdown.open').forEach(d=>d.classList.remove('open'));
+      pendingDeleteId = btn.getAttribute('data-id');
+      document.getElementById('confirmDeleteMsg').textContent =
+        '¿Eliminar "' + btn.getAttribute('data-nombre') + '"? Esta acción no se puede deshacer.';
+      document.getElementById('dlgConfirmDelete').showModal();
+    });
+  });
 }
+
+// Cerrar cualquier menú de tres puntos abierto al tocar fuera
+document.addEventListener('click', ()=>{
+  document.querySelectorAll('.menu-dropdown.open').forEach(d=>d.classList.remove('open'));
+});
+
+let pendingDeleteId = null;
+
+document.getElementById('btnEliminarSi').addEventListener('click', async ()=>{
+  if(pendingDeleteId){
+    inmuebles = inmuebles.filter(x=>String(x.id) !== String(pendingDeleteId));
+    pendingDeleteId = null;
+    render();
+    document.getElementById('dlgConfirmDelete').close();
+    await save();
+  }
+});
+document.getElementById('btnEliminarNo').addEventListener('click', ()=>{
+  pendingDeleteId = null;
+  document.getElementById('dlgConfirmDelete').close();
+});
+document.getElementById('btnCerrarConfirmDeleteX').addEventListener('click', ()=>{
+  pendingDeleteId = null;
+  document.getElementById('dlgConfirmDelete').close();
+});
 
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
