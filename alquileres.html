@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+<title>Alquileres en Asunción | Brickroga</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#0E2240">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+<meta name="description" content="Departamentos y casas en alquiler en Asunción y Gran Asunción. Precio mensual, gastos comunes, dormitorios y m² en cada aviso.">
+<link rel="canonical" href="https://www.brickroga.com/alquileres.html">
+</head>
+<body data-page="alquileres">
+<header id="site-header"></header>
+<main>
+  <section class="page-head"><div class="wrap">
+    <h1 style="font-size:clamp(1.6rem,3.2vw,2.3rem)">Alquileres</h1>
+    <p>Departamentos y casas en Asunción. Todos con precio publicado.</p>
+  </div></section>
+  <div class="wrap">
+    <form class="filters" id="filters">
+      <div class="field"><label for="f-tipo">Tipo</label><select id="f-tipo" name="tipo"><option value="">Todos</option><option>Departamento</option><option>Casa</option></select></div>
+      <div class="field"><label for="f-dorm">Dormitorios</label><select id="f-dorm" name="dorm"><option value="">Cualquiera</option><option value="0">Monoambiente</option><option value="1">1 o más</option><option value="2">2 o más</option><option value="3">3 o más</option></select></div>
+      <div class="field"><label for="f-max">Precio máximo</label><select id="f-max" name="max"><option value="">Sin límite</option><option value="2500000">Gs. 2.500.000</option><option value="3500000">Gs. 3.500.000</option><option value="5000000">Gs. 5.000.000</option><option value="8000000">Gs. 8.000.000</option></select></div>
+      <div class="field"><label for="f-amob">Amoblado</label><select id="f-amob" name="amob"><option value="">Indistinto</option><option value="1">Sí</option><option value="0">No</option></select></div>
+      <div class="field"><label for="f-orden">Ordenar</label><select id="f-orden" name="orden"><option value="asc">Menor precio</option><option value="desc">Mayor precio</option><option value="m2">Más m²</option></select></div>
+    </form>
+    <p class="result-count" id="count" aria-live="polite"></p>
+    <div class="grid" id="list"></div>
+    <div style="height:56px"></div>
+  </div>
+</main>
+<footer id="site-footer"></footer>
+<script src="data/datos.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  const f = document.getElementById("filters");
+  try { const q = new URLSearchParams(location.search); for (const [k, v] of q) { const el = f.elements[k]; if (el) el.value = v; } } catch (e) {}
+  function render() {
+    const v = Object.fromEntries(new FormData(f));
+    let list = BRK.visibles().filter(p =>
+      (!v.tipo || p.tipo === v.tipo) &&
+      (v.dorm === "" || (v.dorm === "0" ? p.dormitorios === 0 : p.dormitorios >= +v.dorm)) &&
+      (!v.max || p.precio <= +v.max) &&
+      (v.amob === "" || p.amoblado === (v.amob === "1")));
+    list.sort((a, b) => v.orden === "desc" ? b.precio - a.precio : v.orden === "m2" ? b.m2 - a.m2 : a.precio - b.precio);
+    document.getElementById("count").textContent = list.length + (list.length === 1 ? " propiedad" : " propiedades");
+    document.getElementById("list").innerHTML = list.length ? list.map(BRK.card).join("")
+      : '<div class="empty" style="grid-column:1/-1">No hay propiedades con esos filtros. Probá subir el precio máximo o <a href="' + BRK.waLink("Hola Brickroga, busco un alquiler y no encontré lo que necesito.") + '" target="_blank" rel="noopener">contanos qué buscás</a>.</div>';
+  }
+  f.addEventListener("change", render); f.addEventListener("submit", e => e.preventDefault()); render();
+</script>
+</body>
+</html>
