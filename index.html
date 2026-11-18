@@ -1,23 +1,24 @@
 <!doctype html>
 <html lang="es-PY">
 <head>
-<title>Brickroga | Alquiler de departamentos y casas en Asunción</title>
+<title>Brickroga | Alquiler de departamentos amoblados en Asunción</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="theme-color" content="#0E2240">
+<meta name="theme-color" content="#102542">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css">
-<meta name="description" content="Alquileres de departamentos y casas en Asunción y Gran Asunción con el precio a la vista. Además, canastas navideñas corporativas y consultoría inmobiliaria. Brickroga E.A.S.">
+<meta name="description" content="Monoambientes amoblados en alquiler en Santa María, Asunción, desde Gs. 2.500.000 por mes con internet y servicios incluidos. También canastas navideñas corporativas. Brickroga E.A.S.">
 <link rel="canonical" href="https://www.brickroga.com/">
 <meta property="og:title" content="Brickroga | Alquileres con el precio a la vista">
-<meta property="og:description" content="Departamentos y casas en alquiler en Asunción. Precio, gastos comunes y m² desde el primer vistazo.">
+<meta property="og:description" content="Monoambientes amoblados en Santa María, Asunción. Gs. 2.500.000 por mes, servicios incluidos.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_PY">
 <meta property="og:url" content="https://www.brickroga.com/">
+<meta property="og:image" content="https://www.brickroga.com/assets/fotos/santa-maria/r1.webp">
 </head>
 <body data-page="inicio">
 <header id="site-header"></header>
@@ -25,70 +26,62 @@
 <main>
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow" style="color:var(--gold)">Alquileres en Asunción</p>
-      <h1 style="margin-top:10px">Tu próximo depto, <em>con el precio a la vista</em>.</h1>
-      <p class="lead">Alquiler mensual, gastos comunes y metros cuadrados en cada aviso. Sin "consultar precio", sin vueltas: elegís, escribís y coordinamos la visita.</p>
-      <form class="search" id="search" action="alquileres.html">
-        <label for="q-tipo"><span>Tipo</span>
-          <select id="q-tipo" name="tipo"><option value="">Todos</option><option>Departamento</option><option>Casa</option></select></label>
-        <label for="q-dorm"><span>Dormitorios</span>
-          <select id="q-dorm" name="dorm"><option value="">Cualquiera</option><option value="0">Monoambiente</option><option value="1">1 o más</option><option value="2">2 o más</option><option value="3">3 o más</option></select></label>
-        <label for="q-max"><span>Hasta</span>
-          <select id="q-max" name="max"><option value="">Sin límite</option><option value="2500000">Gs. 2.500.000</option><option value="3500000">Gs. 3.500.000</option><option value="5000000">Gs. 5.000.000</option><option value="8000000">Gs. 8.000.000</option></select></label>
-        <button class="btn btn-brick" type="submit">Buscar</button>
-      </form>
-      <div class="hero-stats">
-        <div><b class="num" data-count>0</b>propiedades disponibles</div>
-        <div><b class="num" data-min-price>—</b>alquiler desde, por mes</div>
-        <div><b>WhatsApp</b>respuesta el mismo día</div>
+      <div>
+        <p class="label">Alquileres en Asunción</p>
+        <h1 style="margin-top:12px">Llegás con la valija. <span class="b">El resto ya está.</span></h1>
+        <p class="lead">Monoambientes amoblados en Santa María, con internet y servicios incluidos. El precio está a la vista y la visita se coordina por WhatsApp.</p>
+        <div class="hero-row" id="hero-sign"></div>
+        <div class="hero-actions">
+          <a class="btn btn-navy" href="propiedad.html#santa-maria">Ver fotos y detalles</a>
+          <a class="btn btn-line" data-wa="Hola Brickroga, quiero coordinar una visita al monoambiente de Santa María." href="#">Coordinar una visita</a>
+        </div>
       </div>
+      <div class="bond" id="bond" aria-hidden="true"></div>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <div><p class="eyebrow">Disponibles ahora</p><h2 style="margin-top:6px">Departamentos en alquiler</h2></div>
-        <a class="link" href="alquileres.html">Ver todos →</a>
+        <h2>Disponibles ahora</h2>
+        <a class="link" href="alquileres.html">Ver todos los alquileres →</a>
       </div>
-      <div class="grid" data-list="destacados"></div>
+      <div data-list="destacados"></div>
     </div>
   </section>
 
-  <section class="section section-soft" aria-labelledby="xmas-t">
+  <section class="section" style="padding-top:0" aria-labelledby="xmas-t">
     <div class="wrap">
       <div class="xmas">
-        <div class="xmas-copy">
-          <p class="eyebrow">Navidad 2026 · Empresas</p>
-          <h2 id="xmas-t">Canastas navideñas corporativas con el logo de tu empresa</h2>
-          <p>Regalos para clientes y colaboradores, armados y entregados en Asunción y Gran Asunción. Facturamos con RUC.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
-            <a class="btn btn-brick" href="canastas-navidenas-corporativas.html">Ver canastas y precios</a>
-            <a class="btn btn-ghost" style="color:#fff" data-wa="Hola Brickroga, quiero cotizar canastas navideñas para mi empresa." href="#">Cotizar por WhatsApp</a>
-          </div>
+        <div class="gift" id="gift"></div>
+        <div>
+          <p class="label">Navidad 2026 · Para empresas</p>
+          <h2 id="xmas-t" style="margin-top:8px;font-size:clamp(1.4rem,2.6vw,2rem)">Canastas navideñas corporativas con tu logo</h2>
+          <p>Para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.</p>
         </div>
-        <div class="xmas-art" aria-hidden="true"><canvas id="snow"></canvas><div class="gift" style="color:#F4D79A"></div></div>
+        <div class="xmas-actions">
+          <a class="btn btn-brick" href="canastas-navidenas-corporativas.html">Ver canastas y precios</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="servicios">
+  <section class="section section-concrete" id="servicios">
     <div class="wrap">
-      <div class="section-head"><div><p class="eyebrow">Además de alquilar</p><h2 style="margin-top:6px">Servicios y consultoría</h2></div></div>
-      <div class="svc-grid" data-list="servicios"></div>
+      <div class="section-head"><h2>Además de alquilar</h2></div>
+      <div class="svc-list" data-list="servicios"></div>
     </div>
   </section>
 
-  <section class="section section-soft">
+  <section class="section">
     <div class="wrap story">
       <div>
-        <div class="word"><span class="b">Brick</span><span class="r">róga</span></div>
-        <div class="gloss"><div><b>Brick</b>ladrillo, en inglés</div><div><b>Róga</b>casa, en guaraní</div></div>
+        <div class="word">Brick<span class="r">róga</span></div>
+        <div class="gloss"><b>Brick</b><span>ladrillo, en inglés</span><b>Róga</b><span>casa, en guaraní</span></div>
       </div>
-      <div style="display:grid;gap:12px">
+      <div style="display:grid;gap:14px">
         <h2>Ladrillo por ladrillo, casa por casa.</h2>
-        <p class="muted">Somos una empresa paraguaya (E.A.S.) que compra terrenos, construye y alquila. Conocemos cada zona de Central por su precio por m², su acceso a ruta, el agua, la luz y la seguridad, y eso es lo que te contamos antes de que firmes.</p>
-        <div><a class="btn btn-navy" href="alquileres.html">Ver alquileres</a></div>
+        <p class="muted">Somos una empresa paraguaya que compra terrenos, construye y alquila. Antes de publicar una propiedad la revisamos como si fuéramos a vivir ahí: el precio por m² de la zona, el acceso, el agua, la luz y la seguridad. Eso es lo que te contamos antes de que firmes.</p>
       </div>
     </div>
   </section>
@@ -98,18 +91,14 @@
 <script src="data/datos.js"></script>
 <script src="assets/app.js"></script>
 <script>
-  document.querySelector(".xmas-art .gift").innerHTML = BRK_ICONS.gift;
-  // Nieve suave en el banner navideño
   (function () {
-    const c = document.getElementById("snow"); if (!c) return;
-    const x = c.getContext("2d"); let W, H, flakes;
-    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    function size() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight;
-      flakes = Array.from({ length: Math.round(W / 9) }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + .6, s: Math.random() * .4 + .15 })); }
-    function draw() { x.clearRect(0, 0, W, H); x.fillStyle = "rgba(255,255,255,.75)";
-      for (const f of flakes) { x.beginPath(); x.arc(f.x, f.y, f.r, 0, 7); x.fill(); if (!reduce) { f.y += f.s; f.x += Math.sin(f.y / 30) * .2; if (f.y > H) f.y = -4; } }
-      if (!reduce) requestAnimationFrame(draw); }
-    size(); draw(); addEventListener("resize", size);
+    const p = BRICKROGA.propiedades.find(x => x.destacado) || BRICKROGA.propiedades[0];
+    document.getElementById("gift").innerHTML = BRK_ICONS.gift;
+    if (!p) return;
+    document.getElementById("hero-sign").innerHTML = BRK.cartel(p) + (p.incluye ? `<p class="incl">${BRK.esc(p.incluye)}</p>` : "");
+    const f = p.fotos || [];
+    const cols = [[f[0], f[3]], [f[1], f[5]], [f[2], f[4]]];
+    document.getElementById("bond").innerHTML = cols.map(c => `<div class="col">${c.filter(Boolean).map(s => `<figure><img src="${BRK.esc(s)}" alt=""></figure>`).join("")}</div>`).join("");
   })();
 </script>
 </body>

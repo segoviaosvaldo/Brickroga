@@ -7,75 +7,62 @@
 
   "ejemplo: true" marca datos de muestra: el sitio les pone una
   etiqueta "Ejemplo". Al cargar los datos reales, borrá esa línea.
-  "fotos": lista de rutas, ej. ["assets/fotos/depto-1/01.jpg"].
-  Si está vacía, se muestra un marcador "Foto próximamente".
+  Un campo vacío ("") no se muestra en la web.
 */
 window.BRICKROGA = {
   config: {
     nombre: "Brickroga",
     razon_social: "BRICKROGA E.A.S.",
-    whatsapp: "595000000000",            // PENDIENTE: número real, sin + ni espacios
-    whatsapp_visible: "+595 000 000 000", // PENDIENTE
-    email: "contacto@brickroga.com",      // PENDIENTE: confirmar
-    instagram: "",                        // PENDIENTE: usuario de Instagram
-    ciudad_base: "Asunción, Paraguay",
-    sitio: "https://www.brickroga.com"
+    ruc: "",                                 // PENDIENTE: RUC de Brickroga
+    whatsapp: [
+      { numero: "595985777252", visible: "+595 985 777 252" } // CONFIRMAR: tomado de theparaguaytax.com/rentals
+    ],
+    email: "",                               // PENDIENTE: ej. contacto@brickroga.com
+    instagram: "",                           // PENDIENTE: usuario, sin @
+    oficina: "",                             // PENDIENTE: dirección de atención
+    oficina_maps: "",                        // link de Google Maps
+    horario: "Lunes a viernes de 8 a 18 h · Sábados de 8 a 12 h", // CONFIRMAR
+    sitio: "https://www.brickroga.com",
+    version: "Versión 1.0 · 2026"
   },
 
   propiedades: [
     {
-      id: "depto-1",
-      ejemplo: true,
-      estado: "disponible",          // disponible | reservado | alquilado
+      id: "santa-maria",
+      estado: "disponible",                  // disponible | reservado | alquilado
+      unidades_disponibles: 3,
       destacado: true,
       operacion: "Alquiler",
-      tipo: "Departamento",
-      titulo: "Departamento 1 dormitorio",
+      tipo: "Monoambiente",
+      titulo: "Monoambiente amoblado en Santa María",
       ciudad: "Asunción",
-      barrio: "Barrio a confirmar",
-      precio: 2800000, moneda: "Gs", periodo: "mes",
-      gastos_comunes: 350000,
-      dormitorios: 1, banos: 1, m2: 45, cochera: 1,
-      amoblado: false, mascotas: true,
-      caracteristicas: ["Aire acondicionado", "Balcón", "Seguridad 24 h", "Ascensor"],
-      descripcion: "Departamento luminoso, listo para entrar. Los datos y fotos definitivos se cargan en cuanto Johanna los pase.",
-      fotos: []
-    },
-    {
-      id: "depto-2",
-      ejemplo: true,
-      estado: "disponible",
-      destacado: true,
-      operacion: "Alquiler",
-      tipo: "Departamento",
-      titulo: "Departamento 2 dormitorios",
-      ciudad: "Asunción",
-      barrio: "Barrio a confirmar",
-      precio: 3900000, moneda: "Gs", periodo: "mes",
-      gastos_comunes: 450000,
-      dormitorios: 2, banos: 2, m2: 72, cochera: 1,
-      amoblado: true, mascotas: false,
-      caracteristicas: ["Amoblado", "Piscina", "Quincho", "Lavadero"],
-      descripcion: "Dos dormitorios con suite, cocina integrada y amenities en el edificio. Datos de muestra hasta recibir la ficha real.",
-      fotos: []
-    },
-    {
-      id: "depto-3",
-      ejemplo: true,
-      estado: "disponible",
-      destacado: true,
-      operacion: "Alquiler",
-      tipo: "Departamento",
-      titulo: "Monoambiente equipado",
-      ciudad: "Asunción",
-      barrio: "Barrio a confirmar",
-      precio: 2200000, moneda: "Gs", periodo: "mes",
-      gastos_comunes: 250000,
-      dormitorios: 0, banos: 1, m2: 32, cochera: 0,
-      amoblado: true, mascotas: true,
-      caracteristicas: ["Amoblado", "Wi-Fi", "Aire acondicionado"],
-      descripcion: "Ideal para una persona o estadías de trabajo. Datos de muestra hasta recibir la ficha real.",
-      fotos: []
+      barrio: "Santa María",
+      precio: 2500000, moneda: "Gs", periodo: "mes",
+      precio_usd_aprox: 420,
+      gastos_comunes: 0,
+      incluye: "Internet, agua, basura y luz hasta Gs. 100.000 por mes (pagás solo la diferencia).",
+      dormitorios: 0, banos: 1, m2: 0, cochera: 0,   // PENDIENTE: m² y cochera
+      amoblado: true, mascotas: null,
+      caracteristicas: ["Cama con cajoneras", "Escritorio y silla", "Aire acondicionado", "TV", "Cocina equipada", "Heladera y microondas", "Baño privado", "Patio propio", "Lavarropas y secarropas compartidos"],
+      descripcion: "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Internet y servicios básicos incluidos en el alquiler.",
+      cerca: [
+        { lugar: "Paseo La Galería", km: 2.3, min: 8 },
+        { lugar: "Shopping del Sol", km: 2.7, min: 10 }
+      ],
+      mapa: "assets/fotos/santa-maria/map.webp",
+      video: "assets/fotos/santa-maria/tour.mp4",
+      video_poster: "assets/fotos/santa-maria/tour.jpg",
+      fotos: [
+        "assets/fotos/santa-maria/r1.webp",
+        "assets/fotos/santa-maria/r5.webp",
+        "assets/fotos/santa-maria/r4.webp",
+        "assets/fotos/santa-maria/r3.webp",
+        "assets/fotos/santa-maria/r2.webp",
+        "assets/fotos/santa-maria/r8.webp",
+        "assets/fotos/santa-maria/r9.webp",
+        "assets/fotos/santa-maria/r6.webp",
+        "assets/fotos/santa-maria/r7.webp"
+      ]
     }
   ],
 
@@ -83,34 +70,38 @@ window.BRICKROGA = {
     {
       id: "clasica", ejemplo: true,
       nombre: "Canasta Clásica",
+      empaque: "Canasta de mimbre",
       precio: 180000, moneda: "Gs",
       contenido: ["Sidra 750 ml", "Pan dulce 500 g", "Turrón de maní", "Garrapiñadas", "Frutas secas", "Tarjeta con el logo de tu empresa"],
       fotos: []
     },
     {
       id: "ejecutiva", ejemplo: true, destacada: true,
-      nombre: "Canasta Ejecutiva",
+      nombre: "Box Ejecutivo",
+      empaque: "Caja de madera con tu logo",
       precio: 290000, moneda: "Gs",
-      contenido: ["Vino tinto reserva", "Sidra 750 ml", "Pan dulce premium", "Turrones surtidos", "Chocolates", "Frutos secos", "Caja rígida con tu logo"],
+      contenido: ["Vino tinto reserva", "Sidra 750 ml", "Pan dulce premium", "Turrones surtidos", "Bombones", "Frutos secos"],
       fotos: []
     },
     {
       id: "premium", ejemplo: true,
-      nombre: "Canasta Premium",
+      nombre: "Box Premium",
+      empaque: "Caja de madera grabada",
       precio: 450000, moneda: "Gs",
-      contenido: ["Espumante", "Vino tinto reserva", "Pan dulce artesanal", "Fiambres y quesos estacionados", "Chocolates finos", "Frutos secos", "Caja de madera grabada"],
+      contenido: ["Espumante", "Vino tinto reserva", "Pan dulce artesanal", "Fiambres y quesos estacionados", "Chocolates finos", "Frutos secos"],
       fotos: []
     }
   ],
   canastas_info: {
-    pedido_minimo: 10,          // PENDIENTE: confirmar
+    pedido_minimo: 10,               // PENDIENTE: confirmar
     fecha_limite: "15 de diciembre", // PENDIENTE: confirmar
-    zona_entrega: "Asunción y Gran Asunción"
+    zona_entrega: "Asunción y Gran Asunción",
+    pagos: ["Transferencia bancaria", "Tarjeta de crédito", "QR", "Efectivo"] // CONFIRMAR
   },
 
   servicios: [
     { id: "gestion", titulo: "Gestión de alquileres", texto: "Publicamos tu inmueble, filtramos interesados, hacemos el contrato y cobramos por vos." },
-    { id: "consultoria", titulo: "Consultoría inmobiliaria", texto: "Te ayudamos a comparar zonas, precios por m² y rentabilidad antes de comprar un terreno o departamento." },
-    { id: "terrenos", titulo: "Búsqueda de terrenos en cuotas", texto: "Relevamos lotes en Central y alrededores con agua, luz, acceso a ruta y seguridad evaluados uno por uno." }
+    { id: "consultoria", titulo: "Consultoría inmobiliaria", texto: "Comparamos zonas, precio por m² y rentabilidad antes de que compres un terreno o un departamento." },
+    { id: "terrenos", titulo: "Terrenos en cuotas", texto: "Relevamos lotes en Central con agua, luz, acceso a ruta y seguridad evaluados uno por uno." }
   ]
 };
