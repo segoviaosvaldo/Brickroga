@@ -325,7 +325,7 @@ html{scroll-behavior:smooth}
 .slider-ui .wrap{display:flex;align-items:center;gap:14px}
 .dots{display:flex;gap:8px}
 .dots button{width:34px;height:4px;border:0;padding:0;background:rgba(255,255,255,.3);cursor:pointer;position:relative;overflow:hidden}
-.dots button[aria-pressed="true"]::after{content:"";position:absolute;inset:0;background:var(--orange);transform-origin:left;animation:fill 4.5s linear forwards}
+.dots button[aria-pressed="true"]::after{content:"";position:absolute;inset:0;background:var(--orange);transform-origin:left;animation:fill 2.6s linear forwards}
 .slider.paused .dots button[aria-pressed="true"]::after{animation:none}
 @keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .arrows{display:flex;gap:6px;margin-left:auto}
@@ -543,3 +543,18 @@ html{scroll-behavior:smooth}
 .lang-menu button[aria-checked="true"]::after{content:"✓";margin-left:auto;color:var(--orange-ink)}
 .lang-menu .flag{width:22px;height:14px;display:block;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
 @media (max-width:520px){.lang-dd{margin-left:0}.lang-cur{padding:7px 8px}}
+/* bigger hero photos without growing the banner (2026-11-19) */
+@media (min-width:901px){
+  .slide .wrap{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:36px}
+  .slide h1,.slide .h1{font-size:clamp(1.9rem,2.6vw,2.6rem)}
+  .slide .photos{max-width:none;gap:10px;align-items:start}
+  .slide .photos figure{aspect-ratio:auto;height:clamp(240px,21vw,290px)}
+  .slide .photos figure:nth-child(2){margin-top:26px}
+  .slide .photos figure:nth-child(3){margin-top:10px}
+  .slide .wrap > div:first-child{column-gap:16px}
+  .slide .cartel{padding:9px 14px 11px}
+  .slide .cartel .monto{font-size:clamp(1.35rem,1.9vw,1.75rem)}
+  .slide .cartel .se,.slide .cartel .tel{font-size:.7rem}
+  .slide .cta .btn{padding-inline:16px}
+}
+.slide{transition:opacity .6s ease,visibility .6s}

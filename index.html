@@ -174,7 +174,7 @@
       document.querySelector("#slider .summer-slide").remove(); document.querySelectorAll("#slider .dots button")[1].remove();
     }
 
-    /* slider: crossfade every 4.5 s, pauses on hover/focus and when the tab is hidden */
+    /* slider: crossfade every 2 s (plus a 0.6 s fade), pauses on hover/focus and when the tab is hidden */
     const root = document.getElementById("slider"), slides = [...root.querySelectorAll(".slide")], dots = [...root.querySelectorAll(".dots button")];
     const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let cur = 0, tm = null;
@@ -186,7 +186,7 @@
       dots[cur].style.animation = "none"; void dots[cur].offsetWidth; dots[cur].style.animation = "";
       plan();
     }
-    function plan() { clearTimeout(tm); if (!RM && !root.classList.contains("paused")) tm = setTimeout(() => go(cur + 1), 4500); }
+    function plan() { clearTimeout(tm); if (!RM && !root.classList.contains("paused")) tm = setTimeout(() => go(cur + 1), 2600); }
     dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
     root.querySelector(".prev").addEventListener("click", () => go(cur - 1));
     root.querySelector(".next").addEventListener("click", () => go(cur + 1));
