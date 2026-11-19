@@ -325,7 +325,7 @@ html{scroll-behavior:smooth}
 .slider-ui .wrap{display:flex;align-items:center;gap:14px}
 .dots{display:flex;gap:8px}
 .dots button{width:34px;height:4px;border:0;padding:0;background:rgba(255,255,255,.3);cursor:pointer;position:relative;overflow:hidden}
-.dots button[aria-pressed="true"]::after{content:"";position:absolute;inset:0;background:var(--orange);transform-origin:left;animation:fill 7s linear forwards}
+.dots button[aria-pressed="true"]::after{content:"";position:absolute;inset:0;background:var(--orange);transform-origin:left;animation:fill 4.5s linear forwards}
 .slider.paused .dots button[aria-pressed="true"]::after{animation:none}
 @keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .arrows{display:flex;gap:6px;margin-left:auto}
@@ -528,3 +528,18 @@ html{scroll-behavior:smooth}
 /* desktop scroll effects (set from app.js, only ≥901px and without reduced motion) */
 .fx .slide .wrap > div:first-child,.fx .slide .photos figure,.fx .promo,.fx .story .word{will-change:transform}
 .fx .vid-sec video,.fx .video-wrap video{transform-origin:50% 60%;will-change:transform}
+
+/* language dropdown: shows only the current language; flags inside the menu */
+.lang-sw{display:none}
+.lang-dd{position:relative;margin-left:6px;flex:none}
+.lang-cur{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1.5px solid var(--fg);color:var(--fg);font-family:var(--font-display);font-stretch:85%;font-weight:800;font-size:.78rem;letter-spacing:.08em;padding:7px 10px;cursor:pointer;line-height:1}
+.lang-cur svg{width:10px;height:7px;transition:transform .2s}
+.lang-cur[aria-expanded="true"] svg{transform:rotate(180deg)}
+.lang-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.14);display:grid;min-width:150px;z-index:60;padding:4px}
+.lang-menu[hidden]{display:none}
+.lang-menu button{display:flex;align-items:center;gap:10px;background:transparent;border:0;color:var(--fg);font:inherit;font-size:.92rem;padding:9px 10px;cursor:pointer;text-align:left}
+.lang-menu button:hover,.lang-menu button:focus-visible{background:var(--concrete)}
+.lang-menu button[aria-checked="true"]{font-weight:700}
+.lang-menu button[aria-checked="true"]::after{content:"✓";margin-left:auto;color:var(--orange-ink)}
+.lang-menu .flag{width:22px;height:14px;display:block;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+@media (max-width:520px){.lang-dd{margin-left:0}.lang-cur{padding:7px 8px}}

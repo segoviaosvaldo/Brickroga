@@ -41,20 +41,6 @@
           <div class="photos" id="hero-photos" aria-hidden="true"></div>
         </div>
       </div>
-      <div class="slide xmas-slide" aria-hidden="true">
-        <div class="wrap">
-          <div>
-            <p class="label"><span aria-hidden="true">🎄 </span>Navidad 2026 · Para empresas</p>
-            <p class="h1">Canastas navideñas <em>corporativas</em>, con tu logo.</p>
-            <p class="lead">En bolso térmico, mochila o bolsa de viaje, para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.</p>
-            <div class="cta">
-              <a class="btn btn-orange" href="canastas-navidenas-corporativas.html" tabindex="-1"><span aria-hidden="true">🎁 </span>Ver canastas y precios</a>
-              <a class="btn btn-line" data-wa="Hola Brickroga, quiero cotizar canastas navideñas para mi empresa." href="#" tabindex="-1">Cotizar por WhatsApp</a>
-            </div>
-          </div>
-          <div class="photos" id="xmas-photos" aria-hidden="true"></div>
-        </div>
-      </div>
       <div class="slide summer-slide" aria-hidden="true">
         <div class="wrap">
           <div>
@@ -72,7 +58,7 @@
       </div>
     </div>
     <div class="slider-ui"><div class="wrap">
-      <div class="dots" role="group" aria-label="Elegir banner"><button type="button" aria-label="Banner 1: alquileres" aria-pressed="true"></button><button type="button" aria-label="Banner 2: canastas navideñas" aria-pressed="false"></button><button type="button" aria-label="Banner 3: verano en San Bernardino" aria-pressed="false"></button></div>
+      <div class="dots" role="group" aria-label="Elegir banner"><button type="button" aria-label="Banner 1: alquileres" aria-pressed="true"></button><button type="button" aria-label="Banner 2: verano en San Bernardino" aria-pressed="false"></button></div>
       <div class="arrows"><button type="button" class="prev" aria-label="Banner anterior">‹</button><button type="button" class="next" aria-label="Banner siguiente">›</button></div>
     </div></div>
   </section>
@@ -163,12 +149,11 @@
     document.querySelectorAll("[data-min-units]").forEach(e => e.textContent = ci.pedido_minimo);
     const promo = document.querySelector(".promo");
     promo.insertAdjacentHTML("afterbegin", BRK_SNOW() + BRK_LIGHTS(30));
-    const xs = document.querySelector(".xmas-slide"); xs.insertAdjacentHTML("afterbegin", BRK_SNOW() + BRK_LIGHTS(26));
+
     const left = ci.cierre ? Math.ceil((new Date(ci.cierre + "T23:59:59-03:00") - Date.now()) / 864e5) : null;
     if (left !== null && left < 0) {
-      /* season over: hide the strip and the Christmas slide */
+      /* season over: hide the Christmas strip */
       document.querySelector(".promo-sec").remove();
-      document.querySelector("#slider .xmas-slide").remove(); document.querySelectorAll("#slider .dots button")[1].remove();
     } else if (left !== null && left <= 45) {
       document.getElementById("promo-count").textContent = left === 0 ? "Hoy es el último día para pedir" : left === 1 ? "Queda 1 día para pedir" : "Quedan " + left + " días para pedir";
     }
@@ -186,12 +171,10 @@
       const sf = sb.fotos || [];
       document.getElementById("sb-photos").innerHTML = [sf[0], sf[6], sf[7]].filter(Boolean).map(s => `<figure><img src="${E(s)}" alt=""></figure>`).join("");
     } else {
-      document.querySelector("#slider .summer-slide").remove(); document.querySelectorAll("#slider .dots button")[2].remove();
+      document.querySelector("#slider .summer-slide").remove(); document.querySelectorAll("#slider .dots button")[1].remove();
     }
-    const cf = BRICKROGA.canastas.flatMap(c => c.fotos || []);
-    document.getElementById("xmas-photos").innerHTML = BRICKROGA.canastas.slice(0, 3).map(c => (c.fotos || [])[0] ? `<figure><img src="${E(c.fotos[0])}" alt=""></figure>` : `<figure class="xfig">${BRK_XART_FOR(c)}<figcaption>${E(c.empaque)}</figcaption></figure>`).join("");
 
-    /* slider: crossfade every 7 s, pauses on hover/focus and when the tab is hidden */
+    /* slider: crossfade every 4.5 s, pauses on hover/focus and when the tab is hidden */
     const root = document.getElementById("slider"), slides = [...root.querySelectorAll(".slide")], dots = [...root.querySelectorAll(".dots button")];
     const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let cur = 0, tm = null;
@@ -203,7 +186,7 @@
       dots[cur].style.animation = "none"; void dots[cur].offsetWidth; dots[cur].style.animation = "";
       plan();
     }
-    function plan() { clearTimeout(tm); if (!RM && !root.classList.contains("paused")) tm = setTimeout(() => go(cur + 1), 7000); }
+    function plan() { clearTimeout(tm); if (!RM && !root.classList.contains("paused")) tm = setTimeout(() => go(cur + 1), 4500); }
     dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
     root.querySelector(".prev").addEventListener("click", () => go(cur - 1));
     root.querySelector(".next").addEventListener("click", () => go(cur + 1));

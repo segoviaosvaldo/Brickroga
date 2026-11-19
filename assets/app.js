@@ -49,11 +49,21 @@
         ${navItem("#contacto", "Contacto", "contacto")}
         <a class="btn btn-black" href="${waLink(HELLO)}" target="_blank" rel="noopener">${I.wa}${esc(WA.visible)}</a>
       </nav>
-      <div class="lang-sw" role="group" aria-label="Idioma / Language" data-no-tr>
-        <button type="button" data-l="es" lang="es" aria-pressed="${L === "es"}" title="Español">${FLAG_PY}<span>ES</span></button>
-        <button type="button" data-l="en" lang="en" aria-pressed="${L === "en"}" title="English">${FLAG_UK}<span>EN</span></button>
+      <div class="lang-dd" data-no-tr>
+        <button type="button" class="lang-cur" aria-haspopup="true" aria-expanded="false" aria-label="Idioma / Language: ${L.toUpperCase()}">${L.toUpperCase()}<svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        <div class="lang-menu" role="menu" hidden>
+          <button type="button" role="menuitemradio" data-l="es" lang="es" aria-checked="${L === "es"}">${FLAG_PY}<span>Español</span></button>
+          <button type="button" role="menuitemradio" data-l="en" lang="en" aria-checked="${L === "en"}">${FLAG_UK}<span>English</span></button>
+        </div>
       </div></div>`;
-    header.querySelectorAll(".lang-sw button").forEach(b => b.addEventListener("click", () => { if (b.dataset.l !== L) window.BRK_I18N.set(b.dataset.l); }));
+    {
+      const dd = header.querySelector(".lang-dd"), cur = dd.querySelector(".lang-cur"), menu = dd.querySelector(".lang-menu");
+      const open = v => { menu.hidden = !v; cur.setAttribute("aria-expanded", v); if (v) menu.querySelector('[aria-checked="true"]').focus(); };
+      cur.addEventListener("click", e => { e.stopPropagation(); open(menu.hidden); });
+      document.addEventListener("click", e => { if (!dd.contains(e.target)) open(false); });
+      dd.addEventListener("keydown", e => { if (e.key === "Escape") { open(false); cur.focus(); } });
+      menu.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { open(false); if (b.dataset.l !== L) window.BRK_I18N.set(b.dataset.l); }));
+    }
     const btn = document.getElementById("menu-btn"), nav = document.getElementById("nav");
     btn.addEventListener("click", () => { const o = nav.classList.toggle("open"); btn.setAttribute("aria-expanded", o); });
     nav.addEventListener("click", e => { if (e.target.closest("a")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", false); } });
@@ -175,7 +185,7 @@
     const sel = ["main .section-head", "main .feature", "main .grid > .card", "main .svc", "main .xmas", "main .story > *", "main .tier", "main .step",
       "main .faq details", "main .prose", "main .quote > *", "main .facts", "main .near", "main .feat", "main .media-row", "main .page-head", "main .filters", "main .feature-photos img"];
     const fold = innerHeight;
-    const els = [...document.querySelectorAll(sel.join(","))].filter(e => !e.closest(".swipe") && e.getBoundingClientRect().top > fold * 0.92);
+    const els = [...document.querySelectorAll(sel.join(","))].filter(e => !e.closest(".swipe") && !(MOB && !RM && e.matches(".grid > .card, .tier, .feature, .section-head, .page-head")) && e.getBoundingClientRect().top > fold * 0.92);
     els.forEach(e => {
       e.classList.add("rv"); if (e.matches("img")) e.classList.add("zoom");
       const sib = [...e.parentElement.children].filter(x => els.includes(x)), i = sib.indexOf(e);
@@ -194,8 +204,9 @@
     }), { threshold: .12, rootMargin: "0px 0px -6% 0px" });
     els.forEach(e => io.observe(e));
 
-    /* Desktop: scroll-linked effects in the Apple style (parallax, scale-in video, drifting headline). */
-    if (RM || !matchMedia("(min-width:901px)").matches) return;
+    /* Scroll-linked effects in the Apple style (parallax, scale-in video, drifting headline).
+       Phones get their own set below: cards rise and grow as they come into view. */
+    if (RM) return;
     document.documentElement.classList.add("fx");
     const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
     const prog = el => { const r = el.getBoundingClientRect(); return clamp((innerHeight - r.top) / (innerHeight + r.height), 0, 1); }; // 0 entering → 1 leaving
@@ -214,6 +225,17 @@
     document.querySelectorAll(".story .word").forEach(el => fx.push(() => { const p = prog(el); el.style.transform = `translate3d(${(.5 - p) * 120}px,0,0)`; }));
     document.querySelectorAll(".xh-art .xart, .xcard .xart, .xfig .xart").forEach((el, i) => fx.push(() => { const p = prog(el); el.style.transform = `translate3d(0,${(.5 - p) * (30 + (i % 3) * 18)}px,0)`; }));
     document.querySelectorAll("main .section-head h2").forEach(el => fx.push(() => { const p = enter(el); el.style.letterSpacing = (1 - p) * .06 + "em"; }));
+    if (MOB) {
+      document.querySelectorAll("main .grid > .card, main .tier, main .feature").forEach(el => {
+        if (el.getBoundingClientRect().top < innerHeight * .9) return;
+        const img = el.querySelector(".card-photo img, .card-photo .xart, img");
+        fx.push(() => { const p = enter(el), e = 1 - Math.pow(1 - p, 2);
+          el.style.transform = `translate3d(0,${(1 - e) * 70}px,0) scale(${.9 + .1 * e})`; el.style.opacity = .15 + .85 * e;
+          if (img) img.style.transform = `scale(${1.18 - .18 * e})`; });
+      });
+      document.querySelectorAll("main .section-head, main .page-head").forEach(el => fx.push(() => { const p = enter(el); el.style.transform = `translate3d(${(1 - p) * -40}px,0,0)`; el.style.opacity = .2 + .8 * p; }));
+      document.querySelectorAll(".svc-list.swipe, .steps.swipe").forEach(el => fx.push(() => { const p = enter(el); el.style.transform = `translate3d(${(1 - p) * 90}px,0,0)`; el.style.opacity = .2 + .8 * p; }));
+    }
     let ticking = false;
     const run = () => { ticking = false; fx.forEach(f => f()); };
     addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } }, { passive: true });
