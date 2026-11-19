@@ -558,3 +558,21 @@ html{scroll-behavior:smooth}
   .slide .cta .btn{padding-inline:16px}
 }
 .slide{transition:opacity .6s ease,visibility .6s}
+
+/* search as a floating bar resting on the hero's bottom edge (2026-11-19; previous version: commit 9b0e129) */
+.finder{background:transparent;border:0;position:relative;z-index:5;margin-top:-46px}
+.finder form{background:var(--surface);border:1px solid var(--line);box-shadow:0 22px 50px -12px rgba(0,0,0,.35);padding:14px 16px;align-items:end}
+.finder label{font-size:.66rem}
+.slide .wrap{padding-bottom:104px}
+.slider-ui{bottom:62px}
+.promo-sec{padding-top:26px}
+@media (min-width:901px){.slide .wrap{padding-bottom:100px}}
+@media (max-width:900px){.finder{margin-top:-34px}.slide .wrap{padding-bottom:92px}.slider-ui{bottom:50px}.finder form{padding:12px}}
+@media (max-width:640px){
+  .finder form{grid-template-columns:1fr 1fr auto;gap:8px}
+  .finder form .field:first-child{grid-column:1/-1}
+  .finder .btn{grid-column:auto;padding-inline:14px}
+  .finder label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .finder input,.finder select{min-width:0}
+}
+@media (max-width:640px){.slide .wrap{padding-bottom:112px}.slider-ui{bottom:52px}}

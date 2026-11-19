@@ -213,7 +213,7 @@
     const enter = el => { const r = el.getBoundingClientRect(); return clamp((innerHeight - r.top) / (innerHeight * .75), 0, 1); }; // 0 at bottom edge → 1 when well in view
     const fx = [];
     const slider = document.getElementById("slider");
-    if (slider) fx.push(() => {
+    if (slider && !MOB) fx.push(() => {
       const y = Math.min(scrollY, slider.offsetHeight);
       slider.querySelectorAll(".slide.on .wrap > div:first-child").forEach(t => { t.style.transform = `translate3d(0,${y * .28}px,0)`; t.style.opacity = 1 - y / slider.offsetHeight * .9; });
       slider.querySelectorAll(".slide.on .photos figure").forEach((f, i) => { f.style.transform = `translate3d(0,${y * (.1 + i * .08)}px,0)`; });
