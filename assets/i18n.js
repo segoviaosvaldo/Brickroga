@@ -32,7 +32,7 @@
     /* home */
     "Destacados": "Highlights", "Elegir banner": "Choose banner", "Banner 1: alquileres": "Banner 1: rentals",
     "Banner 2: canastas navideñas": "Banner 2: Christmas baskets", "Banner anterior": "Previous banner", "Banner siguiente": "Next banner",
-    "Alquileres en Asunción": "Rentals in Asunción", "Alquileres": "Rentals", "Alquilá tu depto.": "Rent your place.", "Llegás con la valija.": "Just bring your suitcase.",
+    "Alquileres en Asunción": "Rentals in Asunción", "Alquileres": "Rentals", "Alquilá tu depto.": "Rent your place.", "Llegás con la valija.": "Just bring your suitcase.", "A 10 minutos de Paseo La Galería.": "10 minutes from Paseo La Galería.", "Ilustración · foto real próximamente": "Illustration · real photo coming soon",
     "Monoambientes amoblados en Santa María con internet y servicios incluidos. El precio está a la vista y la visita se coordina por WhatsApp.":
       "Furnished studios in Santa María, Asunción, with internet and utilities included. The price is right there, and you book a visit on WhatsApp.",
     "Ver el departamento": "See the apartment", "Coordinar una visita": "Book a visit",
@@ -140,6 +140,7 @@
     [/^(.+) · Unidad (\d+)$/, (m, a, n) => tr(a) + " · Unit " + n],
     [/^★ ([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => "★ " + a.replace(",", ".") + " · " + n + " reviews on " + f],
     [/^([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => a.replace(",", ".") + " · " + n + " reviews on " + f],
+    [/^(\d+) min en auto hasta (.+) · ([\d,]+) km$/, (m, n, l, k) => n + " min by car to " + l + " · " + k.replace(",", ".") + " km"],
     [/^Quedan (\d+) días para pedir$/, "$1 days left to order"], [/^Queda 1 día para pedir$/, "1 day left to order"], [/^Hoy es el último día para pedir$/, "Today is the last day to order"],
     [/^(\d+) huéspedes$/, "$1 guests"], [/^(\d+) dormitorios?$/, (m, n) => n + (n === "1" ? " bedroom" : " bedrooms")],
     [/^(\d+) propiedades?$/, (m, n) => n + (n === "1" ? " property" : " properties")],

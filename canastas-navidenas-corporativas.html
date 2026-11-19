@@ -64,7 +64,7 @@
   <section class="xhero">
     <div class="wrap">
       <div>
-        <p class="label"><span class="lico" id="xh-star"></span>Navidad 2026 · Regalos empresariales</p>
+        <p class="label"><span aria-hidden="true">🎄 </span>Navidad 2026 · Regalos empresariales</p>
         <h1 style="margin-top:12px">Canastas navideñas corporativas en Asunción</h1>
         <p class="lead">Canastas en bolso térmico, mochila o bolsa de viaje para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.</p>
         <div class="xhero-actions">
@@ -72,13 +72,13 @@
           <a class="btn btn-line" id="hero-wa" data-wa="Hola Brickroga, quiero cotizar canastas navideñas corporativas." href="#">Escribir por WhatsApp</a>
         </div>
       </div>
-      <div class="ticks" id="ticks"></div>
+      <div class="xh-right"><div class="ticks" id="ticks"></div></div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section xsec">
     <div class="wrap">
-      <div class="section-head"><h2>Elegí la canasta para tu empresa</h2><span class="muted">Precio por unidad</span></div>
+      <div class="section-head"><h2><span aria-hidden="true">🎁 </span>Elegí la canasta para tu empresa</h2><span class="muted">Precio por unidad</span></div>
       <div class="tiers" id="tiers"></div>
       <p class="muted" style="font-size:.88rem;margin-top:16px">Para más de 50 unidades armamos precio por volumen. A partir de 30 unidades podés pedir una canasta a medida.</p>
     </div>
@@ -139,11 +139,12 @@
 <script src="data/datos.js"></script>
 <script src="assets/i18n.js"></script>
 <script src="assets/iconos.js"></script>
+<script src="assets/navidad.js"></script>
 <script src="assets/app.js"></script>
 <script>
   const D = BRICKROGA, E = BRK.esc, info = D.canastas_info;
-  document.querySelector(".xhero").insertAdjacentHTML("afterbegin", BRK_XDECO([["xtree", 84, 10, 84, 0], ["star", 87.2, 2.5, 22, 0], ["ornament", 74, 14, 34, -8], ["snow", 66, 6, 22, 0], ["bell", 95, 20, 30, 10], ["snow", 92, 4, 14, 0], ["ornament", 62, 24, 20, 12], ["candy", 78, 30, 26, -14]]));
-  document.getElementById("xh-star").innerHTML = BRK_ICO("star");
+  document.querySelector(".xhero").insertAdjacentHTML("afterbegin", BRK_SNOW() + BRK_LIGHTS(30));
+  document.getElementById("ticks").insertAdjacentHTML("beforebegin", `<div class="xh-art" aria-hidden="true">${D.canastas.slice(0, 3).map(BRK_XART_FOR).join("")}</div>`);
   document.querySelectorAll(".step").forEach((s, i) => s.insertAdjacentHTML("afterbegin", `<span class="step-ico">${BRK_ICO(["gift", "star", "truck"][i])}</span>`));
   document.getElementById("hero-wa").innerHTML = BRK_ICONS.wa + "Escribir por WhatsApp";
   document.querySelectorAll("[data-min-units]").forEach(e => e.textContent = info.pedido_minimo);
@@ -158,7 +159,7 @@
   document.getElementById("horario").textContent = D.config.horario;
   document.getElementById("tiers").innerHTML = D.canastas.map(c => `
     <article class="tier${c.destacada ? " featured" : ""}">
-      <div class="card-photo">${BRK.photo(c, 0, "Foto próximamente", BRK_ICONS.gift)}<div class="tags">${c.destacada ? '<span class="chip chip-orange">La más pedida</span>' : ""}${c.ejemplo ? '<span class="chip chip-ej">Ejemplo</span>' : ""}</div></div>
+      <div class="card-photo${(c.fotos || []).length ? "" : " xcard"}">${(c.fotos || []).length ? BRK.photo(c, 0) : BRK_XART_FOR(c) + '<span class="xcap">Ilustración · foto real próximamente</span>'}<div class="tags">${c.destacada ? '<span class="chip chip-orange">La más pedida</span>' : ""}${c.ejemplo ? '<span class="chip chip-ej">Ejemplo</span>' : ""}</div></div>
       <div class="tier-body">
         <span class="label tier-lbl">${BRK_ICO("ornament")}${E(c.empaque)}</span>
         <h3>${E(c.nombre)}</h3>

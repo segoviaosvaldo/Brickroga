@@ -30,7 +30,7 @@
         <div class="wrap">
           <div>
             <p class="label">Alquileres en Asunción</p>
-            <h1>Alquilá tu depto. <em>Llegás con la valija.</em></h1>
+            <h1>Alquilá tu depto. <em>A 10 minutos de Paseo La Galería.</em></h1>
             <p class="lead">Monoambientes amoblados en Santa María con internet y servicios incluidos. El precio está a la vista y la visita se coordina por WhatsApp.</p>
             <div id="hero-sign"></div>
             <div class="cta">
@@ -41,14 +41,14 @@
           <div class="photos" id="hero-photos" aria-hidden="true"></div>
         </div>
       </div>
-      <div class="slide" aria-hidden="true">
+      <div class="slide xmas-slide" aria-hidden="true">
         <div class="wrap">
           <div>
-            <p class="label">Navidad 2026 · Para empresas</p>
+            <p class="label"><span aria-hidden="true">🎄 </span>Navidad 2026 · Para empresas</p>
             <p class="h1">Canastas navideñas <em>corporativas</em>, con tu logo.</p>
             <p class="lead">En bolso térmico, mochila o bolsa de viaje, para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.</p>
             <div class="cta">
-              <a class="btn btn-orange" href="canastas-navidenas-corporativas.html" tabindex="-1">Ver canastas y precios</a>
+              <a class="btn btn-orange" href="canastas-navidenas-corporativas.html" tabindex="-1"><span aria-hidden="true">🎁 </span>Ver canastas y precios</a>
               <a class="btn btn-line" data-wa="Hola Brickroga, quiero cotizar canastas navideñas para mi empresa." href="#" tabindex="-1">Cotizar por WhatsApp</a>
             </div>
           </div>
@@ -76,9 +76,9 @@
   <section class="promo-sec" aria-label="Canastas navideñas corporativas">
     <div class="wrap">
       <a class="promo" href="canastas-navidenas-corporativas.html">
-        <span class="promo-a"><span class="label"><span class="lico" id="promo-star"></span>Navidad 2026 · Para empresas</span><strong>Canastas navideñas corporativas</strong></span>
+        <span class="promo-a"><span class="label"><span aria-hidden="true">🎄 </span>Navidad 2026 · Para empresas</span><strong>Canastas navideñas corporativas</strong></span>
         <span class="promo-b"><b>En bolso térmico, mochila o bolsa de viaje,</b> con la tarjeta de tu empresa. Entregamos en Asunción y Gran Asunción, con factura.<span class="promo-count" id="promo-count"></span><small>Pedido mínimo <span data-min-units>10</span> <i aria-hidden="true">·</i> Pedidos hasta el <span data-deadline>15 de diciembre</span></small></span>
-        <span class="promo-cta">Ver canastas</span>
+        <span class="promo-cta"><span aria-hidden="true">🎁 </span>Ver canastas</span>
         <span class="promo-img" id="promo-img" aria-hidden="true"></span>
       </a>
     </div>
@@ -138,16 +138,17 @@
 <script src="data/datos.js"></script>
 <script src="assets/i18n.js"></script>
 <script src="assets/iconos.js"></script>
+<script src="assets/navidad.js"></script>
 <script src="assets/app.js"></script>
 <script>
   (function () {
     const E = BRK.esc, p = BRICKROGA.propiedades.find(x => x.destacado) || BRICKROGA.propiedades[0];
     const ci = BRICKROGA.canastas_info, cp = BRICKROGA.canastas.flatMap(c => c.fotos || [])[0];
-    document.getElementById("promo-img").innerHTML = cp ? `<img src="${E(cp)}" alt="">` : BRK_ICONS.gift;
+    document.getElementById("promo-img").innerHTML = cp ? `<img src="${E(cp)}" alt="">` : BRK_XART("regalo");
     document.querySelectorAll("[data-min-units]").forEach(e => e.textContent = ci.pedido_minimo);
     const promo = document.querySelector(".promo");
-    promo.insertAdjacentHTML("afterbegin", BRK_XDECO([["star", 85.5, 6, 16, -10], ["snow", 98.6, 10, 22, 0], ["ornament", 98.4, 66, 26, 8], ["star", 84.6, 82, 12, 14], ["bell", 59, 6, 14, -12]]));
-    document.getElementById("promo-star").innerHTML = BRK_ICO("star");
+    promo.insertAdjacentHTML("afterbegin", BRK_SNOW() + BRK_LIGHTS(30));
+    const xs = document.querySelector(".xmas-slide"); xs.insertAdjacentHTML("afterbegin", BRK_SNOW() + BRK_LIGHTS(26));
     const left = ci.cierre ? Math.ceil((new Date(ci.cierre + "T23:59:59-03:00") - Date.now()) / 864e5) : null;
     if (left !== null && left < 0) {
       /* season over: hide the strip and the Christmas slide */
@@ -163,7 +164,7 @@
       document.getElementById("hero-photos").innerHTML = [f[0], f[1], f[2]].map(s => s ? `<figure><img src="${E(s)}" alt=""></figure>` : `<figure><div class="ph-dark">${BRK_ICONS.house}<span>Foto próximamente</span></div></figure>`).join("");
     }
     const cf = BRICKROGA.canastas.flatMap(c => c.fotos || []);
-    document.getElementById("xmas-photos").innerHTML = [0, 1, 2].map(i => cf[i] ? `<figure><img src="${E(cf[i])}" alt=""></figure>` : `<figure><div class="ph-dark">${BRK_ICONS.gift}<span>Foto próximamente</span></div></figure>`).join("");
+    document.getElementById("xmas-photos").innerHTML = BRICKROGA.canastas.slice(0, 3).map(c => (c.fotos || [])[0] ? `<figure><img src="${E(c.fotos[0])}" alt=""></figure>` : `<figure class="xfig">${BRK_XART_FOR(c)}<figcaption>${E(c.empaque)}</figcaption></figure>`).join("");
 
     /* slider: crossfade every 7 s, pauses on hover/focus and when the tab is hidden */
     const root = document.getElementById("slider"), slides = [...root.querySelectorAll(".slide")], dots = [...root.querySelectorAll(".dots button")];

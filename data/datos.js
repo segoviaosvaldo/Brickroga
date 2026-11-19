@@ -252,7 +252,7 @@ window.BRICKROGA = {
     dormitorios: 2, banos: 2, m2: 0, cochera: 1, huespedes: 6, camas: 4,
     amoblado: true,
     comodidades: ["piscina", "patio_techado", "parrilla", "jardin", "wifi", "tv", "aa", "ventilador", "cocina", "horno", "agua_caliente", "ducha_exterior", "estacionamiento", "independiente", "mascotas", "camaras", "botiquin", "amoblado"],
-    mapa_q: "San Bernardino, Cordillera, Paraguay", mapa_aprox: true,
+    mapa_q: "San Bernardino, Cordillera, Paraguay", mapa_aprox: true, mapa_solo: true,
     ideal_para: "Ideal para una escapada en familia o con amigos, a pasos del lago Ypacaraí.",
     descripcion: "Casa entera con 2 habitaciones y piscina privada, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene cocina totalmente equipada, Wi-Fi rápido, TV, aire acondicionado y ventilador de techo, parrilla y comedor al aire libre, y estacionamiento gratis dentro de la propiedad.",
     nota: { titulo: "Para tener en cuenta", texto: "No tiene lavarropas ni secarropas, y no incluye toallas, sábanas ni artículos de higiene: consultanos al reservar. Se permite fumar." },

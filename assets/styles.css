@@ -450,3 +450,42 @@ html{scroll-behavior:smooth}
 .tier-lbl .ico{font-size:1.15em;color:var(--orange-ink)}
 @media (max-width:560px){.xdeco span:nth-child(n+5){display:none}}
 @media (max-width:980px){.promo .xdeco{display:none}} @media (max-width:860px){.xhero .xdeco span{opacity:.25}}
+
+/* ---- Christmas mood (assets/navidad.js) ---- */
+.lights{position:absolute;left:0;right:0;top:0;width:100%;height:34px;z-index:2;pointer-events:none}
+.lights .bulb{animation:twinkle 2.4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:1}50%{opacity:.35}}
+.snow{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.snow i{position:absolute;inset:-100% 0 0;background-image:radial-gradient(circle,rgba(255,255,255,.75) 1.2px,transparent 1.6px),radial-gradient(circle,rgba(255,255,255,.45) 1px,transparent 1.4px);background-size:90px 90px,140px 140px;background-position:0 0,45px 60px;animation:snowfall 18s linear infinite}
+.snow i:nth-child(2){background-size:120px 120px,200px 200px;background-position:30px 20px,100px 90px;animation-duration:26s;opacity:.7}
+.snow i:nth-child(3){background-size:170px 170px,240px 240px;background-position:70px 40px,10px 130px;animation-duration:36s;opacity:.5}
+@keyframes snowfall{to{transform:translateY(50%)}}
+@media (prefers-reduced-motion:reduce){.snow i,.lights .bulb{animation:none}}
+/* hero slide 2 */
+.xmas-slide{background:radial-gradient(ellipse at 78% 40%,rgba(200,16,46,.28),transparent 55%),radial-gradient(ellipse at 10% 90%,rgba(46,107,63,.3),transparent 50%),var(--black-deep);position:relative}
+.xmas-slide .wrap{position:relative;z-index:1}
+.xmas-slide .label{color:var(--gold)}
+.xmas-slide .h1 em{color:var(--gold)}
+.slide .photos .xfig{background:radial-gradient(circle at 50% 40%,rgba(232,89,12,.28),transparent 70%),#151515;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(217,164,65,.25)}
+.xfig .xart{width:96%;height:auto}
+.xfig figcaption{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+/* promo strip */
+.promo{background:radial-gradient(ellipse at 88% 50%,rgba(200,16,46,.35),transparent 50%),radial-gradient(ellipse at 0% 100%,rgba(46,107,63,.35),transparent 45%),var(--black-deep);padding-top:40px}
+.promo::before{display:none}
+.promo-img{background:radial-gradient(circle,rgba(232,89,12,.25),transparent 70%),#141414;width:130px;height:130px}
+.promo-img .xart{width:100%;height:100%}
+.promo .snow,.promo .lights{z-index:0}
+.promo .lights{z-index:1}
+/* canastas page */
+.xhero{background:radial-gradient(ellipse at 85% 20%,rgba(200,16,46,.3),transparent 50%),radial-gradient(ellipse at 0% 100%,rgba(46,107,63,.32),transparent 45%),var(--black-deep);overflow:hidden;padding-top:72px}
+.xhero .lights{height:40px}
+.xh-right{display:grid;gap:18px}
+.xh-art{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.xh-art .xart{width:100%;height:auto;background:radial-gradient(circle at 50% 45%,rgba(232,89,12,.22),transparent 70%)}
+.xcard{background:radial-gradient(circle at 50% 42%,rgba(232,89,12,.22),transparent 68%),#121212!important;display:flex;align-items:center;justify-content:center;position:relative}
+.xcard .xart{width:82%;height:auto}
+.xcap{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:.72rem;color:#9a9a9a}
+.xsec{background-image:radial-gradient(circle,rgba(200,16,46,.08) 2px,transparent 2.5px),radial-gradient(circle,rgba(46,107,63,.08) 2px,transparent 2.5px);background-size:46px 46px;background-position:0 0,23px 23px}
+.map-ref{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.95rem}.map-ref .ico{font-size:1.25rem;color:var(--orange-ink)}
+.promo > .lights,.promo > .snow{position:absolute}
+@media (max-width:640px){.xfig figcaption{font-size:.6rem;bottom:6px;letter-spacing:.04em}.xfig .xart{margin-top:-14px}}

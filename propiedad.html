@@ -44,6 +44,11 @@
     facts.push([p.m2 ? p.m2 + " m²" : "—", "superficie"]);
     if (!p.huespedes) facts.push([p.codigo || "—", "código"]);
     const mapq = p.lat ? p.lat + "," + p.lng : p.mapa_q || "";
+    /* Asunción listings show the route to Paseo La Galería as the reference point; others only show the place */
+    const REF = "Paseo La Galería", ref = !p.mapa_solo && p.ciudad === "Asunción" && p.lat ? (p.ref_mapa || REF) : "";
+    const refNear = ref && (p.cerca || []).find(c => c.lugar === ref);
+    const mapSrc = ref ? `https://maps.google.com/maps?saddr=${encodeURIComponent(mapq)}&daddr=${encodeURIComponent(ref + ", Asunción, Paraguay")}&hl=es&output=embed`
+      : `https://maps.google.com/maps?q=${encodeURIComponent(mapq)}&z=${p.lat ? 15 : 13}&hl=es&output=embed`;
     const ivisit = p.operacion === "Alquiler temporario" ? "Consultar fechas y tarifa" : "Coordinar una visita";
     document.getElementById("main").innerHTML = `
       <nav class="crumbs" aria-label="Ruta"><a href="index.html">Inicio</a> / <a href="alquileres.html">Propiedades</a> / <a href="alquileres.html?ciudad=${encodeURIComponent(p.ciudad)}">${E(p.ciudad)}</a> / ${E(p.codigo || p.barrio)}</nav>
@@ -65,7 +70,8 @@
           ${p.nota ? `<div class="nota"><b>${E(p.nota.titulo)}</b><p>${E(p.nota.texto)}</p></div>` : ""}
           <h2 style="font-size:1.35rem;margin-top:32px">Ubicación</h2>
           <div class="addr">${p.direccion ? `<b>${E(p.direccion)}</b>` : `<b>${E(p.barrio)}, ${E(p.ciudad)}</b>`}${p.maps ? `<a href="${E(p.maps)}" target="_blank" rel="noopener">Ver en Google Maps →</a>` : ""}</div>
-          ${mapq ? `<div class="map-embed"><iframe title="Mapa: ${E(p.barrio)}, ${E(p.ciudad)}" src="https://maps.google.com/maps?q=${encodeURIComponent(mapq)}&z=${p.lat ? 15 : 13}&hl=es&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>${p.mapa_aprox ? '<p class="muted" style="font-size:.85rem;margin-top:8px">Ubicación aproximada. Te pasamos la dirección exacta al confirmar la reserva.</p>' : ""}` : ""}
+          ${refNear ? `<p class="map-ref">${BRK_ICO("car")}<span>${refNear.min} min en auto hasta ${E(ref)} · ${String(refNear.km).replace(".", ",")} km</span></p>` : ""}
+          ${mapq ? `<div class="map-embed"><iframe title="Mapa: ${E(p.barrio)}, ${E(p.ciudad)}" src="${mapSrc}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>${p.mapa_aprox ? '<p class="muted" style="font-size:.85rem;margin-top:8px">Ubicación aproximada. Te pasamos la dirección exacta al confirmar la reserva.</p>' : ""}` : ""}
           ${p.cerca_lista ? `<ul class="near-list">${p.cerca_lista.map(c => { const s = BRK_ICO_SPLIT(c); return `<li>${s[0]}<span>${E(s[1])}</span></li>`; }).join("")}</ul>` : ""}
           ${p.cerca && p.cerca.length ? `<div class="near">${p.cerca.map(c => `<div><b>${E(c.lugar)}</b><span>${String(c.km).replace(".", ",")} km</span><span>~${c.min} min en auto</span></div>`).join("")}</div>
           <p class="muted" style="font-size:.85rem;margin-top:8px">Distancia en línea recta. Tiempos en auto, sin mucho tráfico.</p>` : ""}
