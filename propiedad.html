@@ -52,7 +52,7 @@
           <div style="display:flex;gap:6px;flex-wrap:wrap">${estado}<span class="chip chip-orange">${E(p.operacion)}</span><span class="chip" style="background:var(--concrete)">${E(p.tipo)}</span>${p.ejemplo ? '<span class="chip chip-ej">Datos de ejemplo</span>' : ""}</div>
           <h1 style="font-size:clamp(1.8rem,3.6vw,2.7rem);margin-top:12px">${E(p.titulo)}</h1>
           <p class="loc" style="margin-top:8px">${BRK_ICONS.pin}${E(p.barrio)}, ${E(p.ciudad)}</p>
-          ${p.resenas ? `<p class="rating" style="margin-top:8px"><span class="stars">★</span>${String(p.resenas.nota).replace(".", ",")} · ${p.resenas.cantidad} reseñas en ${E(p.resenas.fuente)}</p>` : ""}
+          ${p.resenas ? `<p class="rating" style="margin-top:8px"><span class="stars">★</span>${String(p.resenas.nota).replace(".", ",")} · ${p.resenas.cantidad} reseñas en ${E(p.resenas.fuente)}</p>${p.resenas.detalle ? `<p class="muted" style="font-size:.88rem;margin-top:2px">${E(p.resenas.detalle)}</p>` : ""}` : ""}
           <div class="only-m">${BRK.cartel(p)}<a class="btn btn-wa" href="${wa}" target="_blank" rel="noopener">${BRK_ICONS.wa}${ivisit}</a></div>
           <div class="facts">${facts.map(f => `<div class="fact"><b>${E(f[0])}</b><span>${f[1]}</span></div>`).join("")}</div>
           ${p.ideal_para ? `<p class="ideal">${E(p.ideal_para)}</p>` : ""}
@@ -67,7 +67,7 @@
           <p class="muted" style="font-size:.85rem;margin-top:8px">Distancia en línea recta. Tiempos en auto, sin mucho tráfico.</p>` : ""}
           ${p.video || p.mapa ? `<h2 style="font-size:1.35rem;margin-top:32px">${p.video_titulo ? E(p.video_titulo) : "Recorrido"}</h2>
           <div class="media-row">
-            ${p.video ? `<div class="video-wrap"><video controls playsinline preload="none" poster="${E(p.video_poster || "")}" src="${E(p.video)}"></video></div>` : ""}
+            ${p.video ? `<div class="video-wrap"><video data-auto controls muted loop playsinline preload="metadata" poster="${E(p.video_poster || "")}" src="${E(p.video)}"></video></div>` : ""}
             ${p.mapa ? `<figure style="margin:0"><img src="${E(p.mapa)}" alt="Mapa de la zona de ${E(p.barrio)}" loading="lazy"><figcaption class="muted" style="font-size:.8rem;margin-top:6px">© OpenStreetMap</figcaption></figure>` : ""}
           </div>` : ""}
         </div>
@@ -87,6 +87,7 @@
       </div>
       ${(() => { const more = BRK.visibles().filter(x => x.id !== p.id).slice(0, 3); return more.length ? `<section style="padding-bottom:64px"><div class="section-head"><h2 style="font-size:1.6rem">Otras propiedades</h2><a class="link" href="alquileres.html">Ver todas →</a></div><div class="grid">${more.map(BRK.card).join("")}</div></section>` : ""; })()}`;
     window.scrollTo(0, 0);
+    if (window.BRK_VIDEOS_READY) BRK_VIDEOS_READY();
   }
   addEventListener("hashchange", show); show();
 </script>

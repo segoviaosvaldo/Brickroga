@@ -31,6 +31,8 @@
   const L = (window.BRK_I18N && window.BRK_I18N.lang) || "es";
   const here = document.body.dataset.page || "";
   const navItem = (href, label, key) => `<a href="${href}"${here === key ? ' aria-current="page"' : ""}>${label}</a>`;
+  const FLAG_PY = '<svg class="flag" viewBox="0 0 30 18" aria-hidden="true"><rect width="30" height="6" fill="#D52B1E"/><rect y="6" width="30" height="6" fill="#fff"/><rect y="12" width="30" height="6" fill="#0038A8"/><circle cx="15" cy="9" r="2.3" fill="none" stroke="#0038A8" stroke-width=".7"/><circle cx="15" cy="9" r=".8" fill="#F7D117"/></svg>';
+  const FLAG_UK = '<svg class="flag" viewBox="0 0 60 36" aria-hidden="true"><clipPath id="ukc"><rect width="60" height="36"/></clipPath><g clip-path="url(#ukc)"><rect width="60" height="36" fill="#012169"/><path d="M0 0 60 36M60 0 0 36" stroke="#fff" stroke-width="7"/><path d="M0 0 60 36M60 0 0 36" stroke="#C8102E" stroke-width="2.4"/><path d="M30 0v36M0 18h60" stroke="#fff" stroke-width="11"/><path d="M30 0v36M0 18h60" stroke="#C8102E" stroke-width="6.5"/></g></svg>';
   const header = document.getElementById("site-header");
   if (header) {
     header.className = "site-header";
@@ -44,8 +46,11 @@
         ${navItem("#contacto", "Contacto", "contacto")}
         <a class="btn btn-black" href="${waLink(HELLO)}" target="_blank" rel="noopener">${I.wa}${esc(WA.visible)}</a>
       </nav>
-      <button class="lang-btn" id="lang-btn" type="button" data-no-tr lang="${L === "en" ? "es" : "en"}" aria-label="${L === "en" ? "Ver en español" : "View in English"}">${L === "en" ? "ES" : "EN"}</button></div>`;
-    document.getElementById("lang-btn").addEventListener("click", () => window.BRK_I18N.set(L === "en" ? "es" : "en"));
+      <div class="lang-sw" role="group" aria-label="Idioma / Language" data-no-tr>
+        <button type="button" data-l="es" lang="es" aria-pressed="${L === "es"}" title="Español">${FLAG_PY}<span>ES</span></button>
+        <button type="button" data-l="en" lang="en" aria-pressed="${L === "en"}" title="English">${FLAG_UK}<span>EN</span></button>
+      </div></div>`;
+    header.querySelectorAll(".lang-sw button").forEach(b => b.addEventListener("click", () => { if (b.dataset.l !== L) window.BRK_I18N.set(b.dataset.l); }));
     const btn = document.getElementById("menu-btn"), nav = document.getElementById("nav");
     btn.addEventListener("click", () => { const o = nav.classList.toggle("open"); btn.setAttribute("aria-expanded", o); });
     nav.addEventListener("click", e => { if (e.target.closest("a")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", false); } });
@@ -134,6 +139,22 @@
     el.innerHTML = D.servicios.map(s => `<div class="svc"><h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p>
       <a href="${waLink("Hola Brickroga, me interesa: " + s.titulo)}" target="_blank" rel="noopener">Consultar por WhatsApp →</a></div>`).join("");
   });
+
+
+  /* Videos: play muted and on loop while visible (browsers only allow muted autoplay); tap the sound button to hear it */
+  window.BRK_VIDEOS_READY = function () {
+    const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll("video[data-auto]:not([data-ready])").forEach(v => {
+      v.dataset.ready = 1; v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute("muted", "");
+      const wrap = v.parentElement; wrap.classList.add("vwrap");
+      const b = document.createElement("button"); b.type = "button"; b.className = "snd"; b.textContent = "🔇 Activar sonido"; b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => { v.muted = !v.muted; b.setAttribute("aria-pressed", String(!v.muted)); b.textContent = v.muted ? "🔇 Activar sonido" : "🔊 Silenciar"; if (window.BRK_I18N) b.textContent = BRK_I18N.tr(b.textContent); if (v.paused) v.play().catch(() => {}); });
+      wrap.appendChild(b);
+      if (RM || !("IntersectionObserver" in window)) return;
+      new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }), { threshold: .35 }).observe(v);
+    });
+  };
+  document.addEventListener("DOMContentLoaded", () => window.BRK_VIDEOS_READY());
 
   /* Apple-style motion layer (like theparaguaytax.com): reveal on scroll, photo zoom, price count-up, swipe rows on mobile.
      Runs after page scripts have rendered their content. */

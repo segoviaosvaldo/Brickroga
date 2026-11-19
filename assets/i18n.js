@@ -51,6 +51,7 @@
     "Servicios básicos incluidos": "Utilities included", "Sin gastos comunes": "No building fees",
 
 
+    "🔇 Activar sonido": "🔇 Turn sound on", "🔊 Silenciar": "🔊 Mute", "Idioma / Language": "Language / Idioma",
     /* catálogo */
     "Propiedades": "Properties", "Operación": "Listing type", "Todas": "All", "Alquiler temporario": "Short-term rental", "Venta": "Sale", "Terreno": "Land",
     "Ciudad": "City", "Buscar": "Search", "Código": "Code", "código": "code", "Reservado": "Reserved",

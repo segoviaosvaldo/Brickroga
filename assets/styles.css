@@ -348,9 +348,9 @@ html{scroll-behavior:smooth}
 @media (max-width:640px){.slide .photos .ph-dark span{display:none}}
 
 /* language switch */
-.lang-btn{font-family:var(--font-display);font-stretch:85%;font-weight:800;letter-spacing:.08em;font-size:.8rem;background:transparent;color:var(--fg);border:1.5px solid var(--fg);padding:7px 9px;cursor:pointer;line-height:1;margin-left:4px}
+.lang-btn-old{font-family:var(--font-display);font-stretch:85%;font-weight:800;letter-spacing:.08em;font-size:.8rem;background:transparent;color:var(--fg);border:1.5px solid var(--fg);padding:7px 9px;cursor:pointer;line-height:1;margin-left:4px}
 .lang-btn:hover{background:var(--orange);border-color:var(--orange);color:#fff}
-@media (max-width:860px){.lang-btn{margin-left:8px}}
+@media (max-width:860px){.lang-btn-old{margin-left:8px}}
 .slider-ui .arrows{margin-right:64px}
 
 /* catalog additions */
@@ -388,3 +388,14 @@ html{scroll-behavior:smooth}
 .vid-sec{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:48px;align-items:center}
 @media (max-width:760px){.vid-sec{grid-template-columns:1fr;gap:24px}}
 .vid-sec video{width:100%;aspect-ratio:9/16;object-fit:cover;background:#111}
+
+.lang-sw{display:inline-flex;border:1.5px solid var(--fg);margin-left:6px;flex:none}
+.lang-sw button{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;color:var(--fg);font-family:var(--font-display);font-stretch:85%;font-weight:800;font-size:.76rem;letter-spacing:.06em;padding:6px 8px;cursor:pointer;line-height:1}
+.lang-sw button + button{border-left:1.5px solid var(--fg)}
+.lang-sw button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.lang-sw .flag{width:20px;height:12px;display:block;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+@media (max-width:420px){.lang-sw span{display:none}.lang-sw button{padding:7px}}
+@media (max-width:860px){.lang-sw{margin-left:8px}}
+.vwrap{position:relative}
+.snd{position:absolute;top:10px;left:10px;z-index:2;font:inherit;font-size:.8rem;font-weight:600;background:rgba(0,0,0,.65);color:#fff;border:0;padding:7px 10px;cursor:pointer}
+@media (max-width:520px){.site-header .wrap{gap:10px}.logo b{font-size:1rem}.logo svg{width:30px;height:30px}.menu-btn{padding:7px 10px}.lang-sw{margin-left:0}}

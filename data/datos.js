@@ -62,7 +62,9 @@ window.BRICKROGA = {
     piscina:         ["🏊", "Piscina"],
     mascotas:        ["🐾", "Acepta mascotas"],
     servicios:       ["💡", "Servicios incluidos"],
-    independiente:   ["🚪", "Entrada independiente"]
+    independiente:   ["🚪", "Entrada independiente"],
+    patio_techado:   ["⛱️", "Patio techado y comedor exterior"],
+    jardin:          ["🌳", "Jardín"]
   },
 
 
@@ -112,6 +114,10 @@ window.BRICKROGA = {
     "Ideal para una escapada en familia o con amigos, a pasos del lago Ypacaraí.": "Ideal for a getaway with family or friends, close to Lake Ypacaraí.",
     "Casa entera para hasta 6 huéspedes, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene dos habitaciones amplias, piscina privada, cocina completamente equipada, Wi-Fi rápido y TV.":
       "Entire house for up to 6 guests in a natural setting, 15 minutes from downtown San Bernardino. Two spacious bedrooms, a private pool, a fully equipped kitchen, fast Wi-Fi and TV.",
+    "Patio techado y jardín": "Covered patio and garden", "Comedor al aire libre bajo techo, rodeado de un jardín verde.": "Covered outdoor dining area surrounded by a green garden.",
+    "Entorno natural y tranquilo": "Quiet natural setting", "Zona residencial calma, cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino.": "A calm residential area near Lake Ypacaraí, 15 minutes from downtown San Bernardino.",
+    "Patio techado y comedor exterior": "Covered patio and outdoor dining", "Jardín": "Garden",
+    "Favorito entre huéspedes · Limpieza 5,0 · Ubicación 5,0 · Comunicación 5,0": "Guest favorite · Cleanliness 5.0 · Location 5.0 · Communication 5.0",
     "Piscina privada": "Private pool", "Para disfrutar el verano sin salir de la casa.": "Enjoy the summer without leaving the house.",
     "2 habitaciones, 4 camas": "2 bedrooms, 4 beds", "Habitación 1: cama doble y cama simple. Habitación 2: cama doble. Además, un sillón en la sala.": "Bedroom 1: double bed and single bed. Bedroom 2: double bed. Plus a sofa in the living room.",
     "Entorno natural": "Natural setting", "Cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino.": "Near Lake Ypacaraí and 15 minutes from downtown San Bernardino.",
@@ -225,15 +231,16 @@ window.BRICKROGA = {
     precio: null, moneda: "Gs", periodo: "noche",    // PENDIENTE: tarifa por noche
     dormitorios: 2, banos: 2, m2: 0, cochera: 1, huespedes: 6, camas: 4,
     amoblado: true,
-    comodidades: ["piscina", "wifi", "tv", "cocina", "estacionamiento", "mascotas", "amoblado"],
+    comodidades: ["piscina", "patio_techado", "jardin", "wifi", "tv", "cocina", "estacionamiento", "mascotas", "amoblado"],
     ideal_para: "Ideal para una escapada en familia o con amigos, a pasos del lago Ypacaraí.",
     descripcion: "Casa entera para hasta 6 huéspedes, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene dos habitaciones amplias, piscina privada, cocina completamente equipada, Wi-Fi rápido y TV.",
     secciones: [
       { e: "🏊", titulo: "Piscina privada", texto: "Para disfrutar el verano sin salir de la casa." },
       { e: "🛏️", titulo: "2 habitaciones, 4 camas", texto: "Habitación 1: cama doble y cama simple. Habitación 2: cama doble. Además, un sillón en la sala." },
-      { e: "🌳", titulo: "Entorno natural", texto: "Cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino." }
+      { e: "⛱️", titulo: "Patio techado y jardín", texto: "Comedor al aire libre bajo techo, rodeado de un jardín verde." },
+      { e: "🌳", titulo: "Entorno natural y tranquilo", texto: "Zona residencial calma, cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino." }
     ],
-    resenas: { nota: 4.89, cantidad: 19, fuente: "Airbnb" },
+    resenas: { nota: 4.89, cantidad: 19, fuente: "Airbnb", detalle: "Favorito entre huéspedes · Limpieza 5,0 · Ubicación 5,0 · Comunicación 5,0" },
     airbnb: "https://www.airbnb.cl/rooms/1346521144935895640",
     contacto: { nombre: "Johanna Colman", numero: "595981743522", visible: "0981 743 522" },
     fotos: []   // PENDIENTE: fotos propias de la casa
