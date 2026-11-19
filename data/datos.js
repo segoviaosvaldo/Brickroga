@@ -17,8 +17,8 @@ window.BRICKROGA = {
     whatsapp: [
       { numero: "595981743522", visible: "0981 743 522" } // Johanna
     ],
-    email: "",                               // PENDIENTE: ej. contacto@brickroga.com
-    instagram: "",                           // PENDIENTE: usuario, sin @
+    email: "contacto.brickroga@gmail.com",
+    instagram: "",                           // todavía no hay cuenta: vacío = no se muestra
     oficina: "Velloso Enciso entre Raúl Carmona y Bruselas",
     oficina_referencia: "A 200 metros de la entrada posterior de Paseo La Galería",
     oficina_barrio: "Ycuá Satí, Asunción",
@@ -99,6 +99,27 @@ window.BRICKROGA = {
     fecha_limite: "15 de diciembre", // PENDIENTE: confirmar
     zona_entrega: "Asunción y Gran Asunción",
     pagos: ["Transferencia bancaria", "Tarjeta de crédito", "QR", "Efectivo"] // CONFIRMAR
+  },
+
+  /* Traducciones al inglés del contenido de arriba (español → inglés).
+     Si cambiás un texto en español, actualizá también su traducción acá. */
+  traducciones_en: {
+    "Monoambiente amoblado en Santa María": "Furnished studio in Santa María",
+    "Monoambiente amoblado en Santa María, Asunción": "Furnished studio in Santa María, Asunción",
+    "Internet, agua, basura y luz hasta Gs. 100.000 por mes (pagás solo la diferencia).": "Internet, water, garbage collection and electricity up to Gs. 100,000 a month (you only pay any difference).",
+    "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Internet y servicios básicos incluidos en el alquiler.":
+      "Furnished studio, ready to move in with just your suitcase. Porcelain tile floors, an exposed brick wall, a kitchen with counter and breakfast bar, a desk to work at and a private patio with a table. Internet and utilities are included in the rent.",
+    "Cama con cajoneras": "Bed with drawers", "Escritorio y silla": "Desk and chair", "Aire acondicionado": "Air conditioning", "TV": "TV",
+    "Cocina equipada": "Equipped kitchen", "Heladera y microondas": "Fridge and microwave", "Baño privado": "Private bathroom", "Patio propio": "Private patio",
+    "Lavarropas y secarropas compartidos": "Shared washer and dryer",
+    "Gestión de alquileres": "Rental management", "Publicamos tu inmueble, filtramos interesados, hacemos el contrato y cobramos por vos.": "We list your property, screen applicants, handle the lease and collect the rent for you.",
+    "Consultoría inmobiliaria": "Real estate consulting", "Comparamos zonas, precio por m² y rentabilidad antes de que compres un terreno o un departamento.": "We compare areas, price per m² and returns before you buy land or an apartment.",
+    "Terrenos en cuotas": "Land in installments", "Relevamos lotes en Central con agua, luz, acceso a ruta y seguridad evaluados uno por uno.": "We survey lots in Central department, checking water, power, road access and safety one by one.",
+    "Canasta Clásica": "Classic Basket", "Box Ejecutivo": "Executive Box", "Box Premium": "Premium Box",
+    "Sidra 750 ml": "Cider 750 ml", "Pan dulce 500 g": "Panettone 500 g", "Turrón de maní": "Peanut nougat", "Garrapiñadas": "Candied peanuts", "Frutas secas": "Dried fruit",
+    "Tarjeta con el logo de tu empresa": "Card with your company logo", "Vino tinto reserva": "Reserve red wine", "Pan dulce premium": "Premium panettone",
+    "Turrones surtidos": "Assorted nougat", "Bombones": "Chocolates", "Frutos secos": "Nuts", "Espumante": "Sparkling wine", "Pan dulce artesanal": "Artisan panettone",
+    "Fiambres y quesos estacionados": "Cured meats and aged cheeses", "Chocolates finos": "Fine chocolates"
   },
 
   servicios: [

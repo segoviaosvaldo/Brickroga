@@ -28,6 +28,7 @@
   const HELLO = "Hola Brickroga, quiero hacer una consulta.";
 
   /* Header */
+  const L = (window.BRK_I18N && window.BRK_I18N.lang) || "es";
   const here = document.body.dataset.page || "";
   const navItem = (href, label, key) => `<a href="${href}"${here === key ? ' aria-current="page"' : ""}>${label}</a>`;
   const header = document.getElementById("site-header");
@@ -42,7 +43,9 @@
         ${navItem("index.html#servicios", "Servicios", "servicios")}
         ${navItem("#contacto", "Contacto", "contacto")}
         <a class="btn btn-black" href="${waLink(HELLO)}" target="_blank" rel="noopener">${I.wa}${esc(WA.visible)}</a>
-      </nav></div>`;
+      </nav>
+      <button class="lang-btn" id="lang-btn" type="button" data-no-tr lang="${L === "en" ? "es" : "en"}" aria-label="${L === "en" ? "Ver en español" : "View in English"}">${L === "en" ? "ES" : "EN"}</button></div>`;
+    document.getElementById("lang-btn").addEventListener("click", () => window.BRK_I18N.set(L === "en" ? "es" : "en"));
     const btn = document.getElementById("menu-btn"), nav = document.getElementById("nav");
     btn.addEventListener("click", () => { const o = nav.classList.toggle("open"); btn.setAttribute("aria-expanded", o); });
     nav.addEventListener("click", e => { if (e.target.closest("a")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", false); } });
@@ -60,7 +63,7 @@
       </div>
       <div class="cols">
         <div><h4>Empresa</h4><span style="color:var(--on-dark)">${esc(C.razon_social)}</span>${C.ruc ? `<span>RUC: ${esc(C.ruc)}</span>` : pend("RUC: a completar")}<span>${esc(C.horario)}</span></div>
-        <div><h4>Contacto</h4>${C.whatsapp.map(w => `<a href="https://wa.me/${esc(w.numero)}" target="_blank" rel="noopener">WhatsApp ${esc(w.visible)}</a>`).join("")}${C.email ? `<span>${esc(C.email)}</span>` : pend("Email: a completar")}${C.instagram ? `<a href="https://instagram.com/${esc(C.instagram)}" target="_blank" rel="noopener">@${esc(C.instagram)}</a>` : pend("Instagram: a completar")}</div>
+        <div><h4>Contacto</h4>${C.whatsapp.map(w => `<a href="https://wa.me/${esc(w.numero)}" target="_blank" rel="noopener">WhatsApp ${esc(w.visible)}</a>`).join("")}${C.email ? `<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>` : ""}${C.instagram ? `<a href="https://instagram.com/${esc(C.instagram)}" target="_blank" rel="noopener">Instagram @${esc(C.instagram)}</a>` : ""}</div>
         <div><h4>Oficina</h4>${C.oficina ? `<span style="color:var(--on-dark)">${esc(C.oficina)}</span>` : pend("Dirección: a completar")}${C.oficina_barrio ? `<span>${esc(C.oficina_barrio)}</span>` : ""}${C.oficina_referencia ? `<span>${esc(C.oficina_referencia)}</span>` : ""}${C.oficina_maps ? `<a href="${esc(C.oficina_maps)}" target="_blank" rel="noopener" style="color:var(--orange)">Ver en Google Maps →</a>` : ""}</div>
         <div><h4>Sitio</h4><a href="alquileres.html">Alquileres</a><a href="canastas-navidenas-corporativas.html">Canastas navideñas corporativas</a><a href="index.html#servicios">Servicios y consultoría</a></div>
       </div>
@@ -134,6 +137,7 @@
   /* Apple-style motion layer (like theparaguaytax.com): reveal on scroll, photo zoom, price count-up, swipe rows on mobile.
      Runs after page scripts have rendered their content. */
   document.addEventListener("DOMContentLoaded", function () {
+    if (window.BRK_I18N) window.BRK_I18N.run();
     const RM = matchMedia("(prefers-reduced-motion: reduce)").matches, MOB = matchMedia("(max-width:640px)").matches;
     if (MOB) document.querySelectorAll(".svc-list,.steps").forEach(e => e.classList.add("swipe"));
     if (!("IntersectionObserver" in window)) return;
