@@ -34,7 +34,7 @@
             <p class="lead">Monoambientes amoblados en Santa María con internet y servicios incluidos. El precio está a la vista y la visita se coordina por WhatsApp.</p>
             <div id="hero-sign"></div>
             <div class="cta">
-              <a class="btn btn-orange" href="propiedad.html#santa-maria">Ver el departamento</a>
+              <a class="btn btn-orange" href="propiedad.html#santa-maria-1">Ver el departamento</a>
               <a class="btn btn-line" data-wa="Hola Brickroga, quiero coordinar una visita al monoambiente de Santa María." href="#">Coordinar una visita</a>
             </div>
           </div>
@@ -62,17 +62,47 @@
     </div></div>
   </section>
 
+  <section class="finder" aria-label="Buscar propiedades">
+    <div class="wrap">
+      <form action="alquileres.html" id="finder">
+        <div class="field"><label for="s-q">Buscar</label><input id="s-q" name="q" type="search" placeholder="Barrio, ciudad o lo que necesitás (piscina, amoblado...)"></div>
+        <div class="field"><label for="s-op">Operación</label><select id="s-op" name="op"><option value="">Todas</option><option>Alquiler</option><option>Alquiler temporario</option><option>Venta</option></select></div>
+        <div class="field"><label for="s-tipo">Tipo</label><select id="s-tipo" name="tipo"><option value="">Todos</option><option>Monoambiente</option><option>Departamento</option><option>Casa</option><option>Terreno</option></select></div>
+        <button class="btn btn-orange" type="submit">Buscar</button>
+      </form>
+    </div>
+  </section>
+
   <section class="section">
     <div class="wrap">
       <div class="section-head">
         <h2>Disponibles ahora</h2>
-        <a class="link" href="alquileres.html">Ver todos los alquileres →</a>
+        <a class="link" href="alquileres.html">Ver todas las propiedades →</a>
       </div>
       <div data-list="destacados"></div>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0" aria-labelledby="xmas-t">
+  <section class="section section-concrete" aria-labelledby="vid-t">
+    <div class="wrap vid-sec">
+      <video controls playsinline preload="none" poster="assets/video/romi.jpg" src="assets/video/romi.mp4" aria-label="Video recorriendo los monoambientes de Santa María"></video>
+      <div style="display:grid;gap:16px">
+        <p class="label">Santa María, Asunción</p>
+        <h2 id="vid-t">📍 Una ubicación que lo tiene todo.</h2>
+        <p class="muted" style="max-width:56ch">Ubicados en una zona estratégica de Asunción, nuestros monoambientes te permiten disfrutar de la comodidad de un entorno residencial, con todo lo que necesitás a pocos minutos.</p>
+        <ul class="near-list">
+          <li>🛍️ Cerca de Paseo La Galería y Shopping del Sol.</li>
+          <li>☕ Rodeado de opciones gastronómicas y comerciales.</li>
+          <li>🛒 Supermercados y servicios en las cercanías.</li>
+          <li>🏢 Fácil acceso al eje corporativo y comercial de Asunción.</li>
+        </ul>
+        <p style="font-weight:600">Ideal para quienes buscan comodidad, practicidad y una excelente ubicación, ya sea por trabajo, turismo o estadías temporales. ✨</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-black" href="alquileres.html?q=Santa%20Mar%C3%ADa">Ver los 3 monoambientes</a><a class="btn btn-line" data-wa="Hola Brickroga, vi el video de los monoambientes de Santa María y quiero coordinar una visita." href="#">Coordinar una visita</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="xmas-t">
     <div class="wrap">
       <div class="xmas">
         <div class="gift" id="gift"></div>

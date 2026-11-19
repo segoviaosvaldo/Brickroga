@@ -32,7 +32,7 @@
     /* home */
     "Destacados": "Highlights", "Elegir banner": "Choose banner", "Banner 1: alquileres": "Banner 1: rentals",
     "Banner 2: canastas navideñas": "Banner 2: Christmas baskets", "Banner anterior": "Previous banner", "Banner siguiente": "Next banner",
-    "Alquileres en Asunción": "Rentals in Asunción", "Alquilá tu depto.": "Rent your place.", "Llegás con la valija.": "Just bring your suitcase.",
+    "Alquileres en Asunción": "Rentals in Asunción", "Alquileres": "Rentals", "Alquilá tu depto.": "Rent your place.", "Llegás con la valija.": "Just bring your suitcase.",
     "Monoambientes amoblados en Santa María con internet y servicios incluidos. El precio está a la vista y la visita se coordina por WhatsApp.":
       "Furnished studios in Santa María, Asunción, with internet and utilities included. The price is right there, and you book a visit on WhatsApp.",
     "Ver el departamento": "See the apartment", "Coordinar una visita": "Book a visit",
@@ -49,6 +49,33 @@
     "Somos una empresa paraguaya que compra terrenos, construye y alquila. Antes de publicar una propiedad la revisamos como si fuéramos a vivir ahí: el precio por m² de la zona, el acceso, el agua, la luz y la seguridad. Eso es lo que te contamos antes de que firmes.":
       "We are a Paraguayan company that buys land, builds and rents. Before we list a property we check it as if we were moving in: the price per m² in the area, access, water, power and safety. That is what we tell you before you sign.",
     "Servicios básicos incluidos": "Utilities included", "Sin gastos comunes": "No building fees",
+
+
+    /* catálogo */
+    "Propiedades": "Properties", "Operación": "Listing type", "Todas": "All", "Alquiler temporario": "Short-term rental", "Venta": "Sale", "Terreno": "Land",
+    "Ciudad": "City", "Buscar": "Search", "Código": "Code", "código": "code", "Reservado": "Reserved",
+    "Ver todas las propiedades →": "See all properties →", "Ver todas →": "See all →", "Otras propiedades": "Other properties",
+    "Departamentos, casas y terrenos. Todos con precio publicado.": "Apartments, houses and land. Every listing shows its price.",
+    "Barrio, ciudad, código o comodidad": "Neighborhood, city, code or amenity",
+    "Barrio, ciudad o lo que necesitás (piscina, amoblado...)": "Neighborhood, city or what you need (pool, furnished...)",
+    "Buscar propiedades": "Search properties",
+    "Consultá la tarifa": "Ask for rates", "Consultá según fechas": "Depends on dates", "Tarifa": "Rate", "Tarifa por noche": "Nightly rate",
+    "Se vende": "For sale", "Consultar fechas y tarifa": "Ask for dates and rates", "Ver disponibilidad en Airbnb": "Check availability on Airbnb",
+    "Ubicación": "Location", "Ver en español": "Ver en español", "View in English": "View in English",
+    "Ver los 3 monoambientes": "See the 3 studios", "Recorrido con Romi": "Video tour with Romi", "Recorrido": "Video tour",
+    "Video recorriendo los monoambientes de Santa María": "Video tour of the Santa María studios",
+    "Santa María, Asunción": "Santa María, Asunción",
+    "📍 Una ubicación que lo tiene todo.": "📍 A location that has it all.",
+    "Ubicados en una zona estratégica de Asunción, nuestros monoambientes te permiten disfrutar de la comodidad de un entorno residencial, con todo lo que necesitás a pocos minutos.":
+      "Set in a strategic part of Asunción, our studios give you the calm of a residential area with everything you need a few minutes away.",
+    "🛍️ Cerca de Paseo La Galería y Shopping del Sol.": "🛍️ Close to Paseo La Galería and Shopping del Sol.",
+    "☕ Rodeado de opciones gastronómicas y comerciales.": "☕ Surrounded by cafés, restaurants and shops.",
+    "🛒 Supermercados y servicios en las cercanías.": "🛒 Supermarkets and services nearby.",
+    "🏢 Fácil acceso al eje corporativo y comercial de Asunción.": "🏢 Easy access to Asunción's business and shopping district.",
+    "Ideal para quienes buscan comodidad, practicidad y una excelente ubicación, ya sea por trabajo, turismo o estadías temporales. ✨":
+      "Ideal if you want comfort, convenience and a great location, whether for work, tourism or a temporary stay. ✨",
+    "Fotos de referencia: las 3 unidades tienen el mismo equipamiento.": "Reference photos: all 3 units have the same furnishings.",
+    "dormitorio": "bedroom", "huéspedes": "guests",
 
     /* listings */
     "Todos con precio publicado y fotos reales.": "Every listing shows its price and real photos.",
@@ -106,6 +133,12 @@
     "15 de diciembre": "December 15"
   };
   const RULES = [
+    [/^(.+) · Unidad (\d+)$/, (m, a, n) => tr(a) + " · Unit " + n],
+    [/^★ ([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => "★ " + a.replace(",", ".") + " · " + n + " reviews on " + f],
+    [/^([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => a.replace(",", ".") + " · " + n + " reviews on " + f],
+    [/^(\d+) huéspedes$/, "$1 guests"], [/^(\d+) dormitorios?$/, (m, n) => n + (n === "1" ? " bedroom" : " bedrooms")],
+    [/^(\d+) propiedades?$/, (m, n) => n + (n === "1" ? " property" : " properties")],
+    [/^Coordiná con (.+) · WhatsApp (.+)$/, "Book with $1 · WhatsApp $2"],
     [/^(\d+) unidades disponibles$/, "$1 units available"], [/^(\d+) unidad disponible$/, "$1 unit available"],
     [/^(\d+) disponibles$/, "$1 available"], [/^(\d+) baños?$/, (m, n) => n + (n === "1" ? " bathroom" : " bathrooms")],
     [/^(\d+) dorm\.$/, "$1 bed"], [/^(\d+) coch\.$/, "$1 parking"], [/^(\d+) unidades$/, "$1 units"],
@@ -113,11 +146,12 @@
     [/^~(\d+) min en auto$/, "~$1 min by car"], [/^Estimado: (.+)$/, "Estimate: $1"],
     [/^© (\d{4}) BRICKROGA E\.A\.S\. · Todos los precios publicados son finales por mes\.$/, "© $1 BRICKROGA E.A.S. · All listed prices are final monthly prices."],
     [/^www\.brickroga\.com · Versión (.+)$/, "www.brickroga.com · Version $1"],
-    [/^(.+) · (Gs\. [\d.]+)$/, (m, a, b) => tr(a) + " · " + b]
+    [/^(.+) · (Gs\. [\d.]+)$/, (m, a, b) => tr(a) + " · " + b],
+    [/^(.+), ([^,]+)$/, (m, a, b) => DICT[a] !== undefined ? DICT[a] + ", " + b : m]
   ];
   const PAGES = {
     inicio: ["Brickroga | Furnished apartments for rent in Asunción", "Furnished studios for rent in Santa María, Asunción, from Gs. 2,500,000 a month with internet and utilities included. Also corporate Christmas baskets. Brickroga E.A.S."],
-    alquileres: ["Rentals in Asunción | Brickroga", "Apartments and studios for rent in Asunción. Monthly price, utilities and real photos in every listing."],
+    alquileres: ["Properties for rent in Asunción and Paraguay | Brickroga", "Brickroga studios, apartments, houses and land in and around Asunción. Search by area, type, price and amenities."],
     canastas: ["Corporate Christmas baskets in Paraguay | Brickroga", "Corporate Christmas baskets in Greater Asunción. Wicker baskets and wooden boxes with your company logo, delivery and tax invoice. Get a quote on WhatsApp."]
   };
 
@@ -143,9 +177,9 @@
       if (lang !== "en") return;
       const D = window.BRICKROGA || {}; DICT = Object.assign({}, UI, D.traducciones_en || {});
       translate(document.body);
-      const page = document.body.dataset.page, P = PAGES[page];
+      const page = document.body.dataset.page, P = document.body.hasAttribute("data-dyn-title") ? null : PAGES[page];
       if (P) { document.title = P[0]; const m = document.querySelector('meta[name="description"]'); if (m) m.content = P[1]; }
-      else document.title = document.title.split(" | ").map(tr).join(" | ");
+      else { document.title = document.title.split(" | ").map(tr).join(" | "); const m = document.querySelector('meta[name="description"]'); if (m) m.content = tr(m.content); }
       // re-translate content that pages render later (filters, hash changes)
       new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(x => { if (x.nodeType === 1) translate(x); else if (x.nodeType === 3 && x.parentElement) translate(x.parentElement); }))).observe(document.body, { childList: true, subtree: true });
     }

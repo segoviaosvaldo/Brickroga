@@ -28,45 +28,43 @@ window.BRICKROGA = {
     version: "Versión 1.0 · 2026"
   },
 
-  propiedades: [
-    {
-      id: "santa-maria",
-      estado: "disponible",                  // disponible | reservado | alquilado
-      unidades_disponibles: 3,
-      destacado: true,
-      operacion: "Alquiler",
-      tipo: "Monoambiente",
-      titulo: "Monoambiente amoblado en Santa María",
-      ciudad: "Asunción",
-      barrio: "Santa María",
-      precio: 2500000, moneda: "Gs", periodo: "mes",
-      precio_usd_aprox: 420,
-      gastos_comunes: 0,
-      incluye: "Internet, agua, basura y luz hasta Gs. 100.000 por mes (pagás solo la diferencia).",
-      dormitorios: 0, banos: 1, m2: 0, cochera: 0,   // PENDIENTE: m² y cochera
-      amoblado: true, mascotas: null,
-      caracteristicas: ["Cama con cajoneras", "Escritorio y silla", "Aire acondicionado", "TV", "Cocina equipada", "Heladera y microondas", "Baño privado", "Patio propio", "Lavarropas y secarropas compartidos"],
-      descripcion: "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Internet y servicios básicos incluidos en el alquiler.",
-      cerca: [
-        { lugar: "Paseo La Galería", km: 2.3, min: 8 },
-        { lugar: "Shopping del Sol", km: 2.7, min: 10 }
-      ],
-      mapa: "assets/fotos/santa-maria/map.webp",
-      video: "assets/fotos/santa-maria/tour.mp4",
-      video_poster: "assets/fotos/santa-maria/tour.jpg",
-      fotos: [
-        "assets/fotos/santa-maria/r1.webp",
-        "assets/fotos/santa-maria/r5.webp",
-        "assets/fotos/santa-maria/r4.webp",
-        "assets/fotos/santa-maria/r3.webp",
-        "assets/fotos/santa-maria/r2.webp",
-        "assets/fotos/santa-maria/r8.webp",
-        "assets/fotos/santa-maria/r9.webp",
-        "assets/fotos/santa-maria/r6.webp",
-        "assets/fotos/santa-maria/r7.webp"
-      ]
-    }
-  ],
+  /* ─────────────────────────────────────────────────────────────
+     PROPIEDADES — una entrada por cada departamento, casa o terreno.
+     Campos:
+       id           identificador para la URL (propiedad.html#id), sin espacios
+       codigo       código interno (BRK-001...)
+       estado       disponible | reservado | alquilado (alquilado = no se muestra)
+       destacado    true = aparece en la portada
+       operacion    Alquiler | Alquiler temporario | Venta
+       tipo         Monoambiente | Departamento | Casa | Terreno
+       precio       número, o null si se consulta
+       periodo      mes | noche | (vacío para venta)
+       comodidades  claves de la lista COMODIDADES de abajo (ícono + texto)
+       secciones    bloques con emoji para la ficha (como los posts de Instagram)
+       fotos        rutas a las fotos; fotos_nota aclara si son de referencia
+     ───────────────────────────────────────────────────────────── */
+  propiedades: [],
+
+  /* Comodidades disponibles (ícono + texto). Agregá nuevas acá. */
+  comodidades: {
+    amoblado:        ["🛋️", "Amoblado"],
+    wifi:            ["📶", "Internet / Wi-Fi"],
+    aa:              ["❄️", "Aire acondicionado"],
+    tv:              ["📺", "TV"],
+    cocina:          ["🍳", "Cocina equipada"],
+    heladera:        ["🧊", "Heladera y microondas"],
+    cama:            ["🛏️", "Cama con cajoneras"],
+    escritorio:      ["💻", "Escritorio y silla"],
+    bano_privado:    ["🚿", "Baño privado"],
+    lavarropas:      ["🧺", "Lavarropas y secarropas compartidos"],
+    patio:           ["🌿", "Patio propio"],
+    estacionamiento: ["🚗", "Estacionamiento"],
+    piscina:         ["🏊", "Piscina"],
+    mascotas:        ["🐾", "Acepta mascotas"],
+    servicios:       ["💡", "Servicios incluidos"],
+    independiente:   ["🚪", "Entrada independiente"]
+  },
+
 
   canastas: [
     {
@@ -104,6 +102,22 @@ window.BRICKROGA = {
   /* Traducciones al inglés del contenido de arriba (español → inglés).
      Si cambiás un texto en español, actualizá también su traducción acá. */
   traducciones_en: {
+    "Ideal para ejecutivos y profesionales que vienen por trabajo o necesitan estar cerca del eje corporativo.": "Ideal for executives and professionals in town for work or who need to be close to the business district.",
+    "Ubicación estratégica": "Strategic location", "Zona tranquila y bien ubicada en Asunción, con la comodidad de un entorno residencial.": "A quiet, well-located area of Asunción with the comfort of a residential neighborhood.",
+    "Comodidad urbana": "City convenience", "Todo cerca: shoppings, supermercados y zonas corporativas. Llegás a todo en minutos.": "Everything nearby: malls, supermarkets and business areas, all a few minutes away.",
+    "Conectividad total": "Fully connected", "Listo para mudarte: cama, escritorio, TV, aire acondicionado, cocina equipada, baño privado, y lavarropas y secarropas de uso compartido.": "Ready to move in: bed, desk, TV, air conditioning, equipped kitchen, private bathroom, and a shared washer and dryer.",
+    "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Los departamentos son independientes y el complejo tiene amplio estacionamiento.":
+      "Furnished studio, ready to move in with just your suitcase. Porcelain tile floors, an exposed brick wall, a kitchen with counter and breakfast bar, a desk to work at and a private patio with a table. Each unit has its own entrance and the complex has ample parking.",
+    "Casa con piscina en San Bernardino": "House with pool in San Bernardino", "Cerca del lago Ypacaraí": "Near Lake Ypacaraí",
+    "Ideal para una escapada en familia o con amigos, a pasos del lago Ypacaraí.": "Ideal for a getaway with family or friends, close to Lake Ypacaraí.",
+    "Casa entera para hasta 6 huéspedes, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene dos habitaciones amplias, piscina privada, cocina completamente equipada, Wi-Fi rápido y TV.":
+      "Entire house for up to 6 guests in a natural setting, 15 minutes from downtown San Bernardino. Two spacious bedrooms, a private pool, a fully equipped kitchen, fast Wi-Fi and TV.",
+    "Piscina privada": "Private pool", "Para disfrutar el verano sin salir de la casa.": "Enjoy the summer without leaving the house.",
+    "2 habitaciones, 4 camas": "2 bedrooms, 4 beds", "Habitación 1: cama doble y cama simple. Habitación 2: cama doble. Además, un sillón en la sala.": "Bedroom 1: double bed and single bed. Bedroom 2: double bed. Plus a sofa in the living room.",
+    "Entorno natural": "Natural setting", "Cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino.": "Near Lake Ypacaraí and 15 minutes from downtown San Bernardino.",
+    "Amoblado": "Furnished", "Internet / Wi-Fi": "Internet / Wi-Fi", "Heladera y microondas": "Fridge and microwave", "Escritorio y silla": "Desk and chair",
+    "Estacionamiento": "Parking", "Piscina": "Pool", "Acepta mascotas": "Pets allowed", "Servicios incluidos": "Utilities included", "Entrada independiente": "Private entrance",
+    "Mayor Joel Estigarribia 485, Asunción": "Mayor Joel Estigarribia 485, Asunción",
     "Monoambiente amoblado en Santa María": "Furnished studio in Santa María",
     "Monoambiente amoblado en Santa María, Asunción": "Furnished studio in Santa María, Asunción",
     "Internet, agua, basura y luz hasta Gs. 100.000 por mes (pagás solo la diferencia).": "Internet, water, garbage collection and electricity up to Gs. 100,000 a month (you only pay any difference).",
@@ -128,3 +142,100 @@ window.BRICKROGA = {
     { id: "terrenos", titulo: "Terrenos en cuotas", texto: "Relevamos lotes en Central con agua, luz, acceso a ruta y seguridad evaluados uno por uno." }
   ]
 };
+
+/* Los 3 monoambientes de Santa María comparten casi todo: se definen una vez y cada unidad tiene su propia ficha. */
+(function () {
+  const santaMaria = {
+    estado: "disponible",
+    destacado: true,
+    operacion: "Alquiler",
+    tipo: "Monoambiente",
+    ciudad: "Asunción",
+    barrio: "Santa María",
+    direccion: "Mayor Joel Estigarribia 485, Asunción",
+    lat: -25.301266, lng: -57.550014,
+    maps: "https://maps.google.com/?q=-25.301266,-57.550014",
+    precio: 2500000, moneda: "Gs", periodo: "mes",
+    precio_usd_aprox: 420,
+    gastos_comunes: 0,
+    incluye: "Internet, agua, basura y luz hasta Gs. 100.000 por mes (pagás solo la diferencia).",
+    dormitorios: 0, banos: 1, m2: 0, cochera: 0,   // PENDIENTE: m² de cada unidad
+    amoblado: true,
+    comodidades: ["amoblado", "wifi", "aa", "tv", "cocina", "heladera", "cama", "escritorio", "bano_privado", "lavarropas", "patio", "estacionamiento", "independiente", "servicios"],
+    ideal_para: "Ideal para ejecutivos y profesionales que vienen por trabajo o necesitan estar cerca del eje corporativo.",
+    descripcion: "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Los departamentos son independientes y el complejo tiene amplio estacionamiento.",
+    secciones: [
+      { e: "📍", titulo: "Ubicación estratégica", texto: "Zona tranquila y bien ubicada en Asunción, con la comodidad de un entorno residencial." },
+      { e: "🏙️", titulo: "Comodidad urbana", texto: "Todo cerca: shoppings, supermercados y zonas corporativas. Llegás a todo en minutos." },
+      { e: "🔌", titulo: "Conectividad total", texto: "Listo para mudarte: cama, escritorio, TV, aire acondicionado, cocina equipada, baño privado, y lavarropas y secarropas de uso compartido." }
+    ],
+    cerca_lista: [
+      "🛍️ Cerca de Paseo La Galería y Shopping del Sol.",
+      "☕ Rodeado de opciones gastronómicas y comerciales.",
+      "🛒 Supermercados y servicios en las cercanías.",
+      "🏢 Fácil acceso al eje corporativo y comercial de Asunción."
+    ],
+    cerca: [
+      { lugar: "Paseo La Galería", km: 2.3, min: 7 },
+      { lugar: "Shopping del Sol", km: 2.7, min: 10 }
+    ],
+    contacto: { nombre: "Johanna Colman", numero: "595981743522", visible: "0981 743 522" },
+    mapa: "assets/fotos/santa-maria/map.webp",
+    video: "assets/video/romi.mp4",
+    video_poster: "assets/video/romi.jpg",
+    video_titulo: "Recorrido con Romi",
+    fotos_nota: "Fotos de referencia: las 3 unidades tienen el mismo equipamiento.",
+    fotos: [
+      "assets/fotos/santa-maria/fachada.jpg",
+      "assets/fotos/santa-maria/r1.webp",
+      "assets/fotos/santa-maria/r5.webp",
+      "assets/fotos/santa-maria/r4.webp",
+      "assets/fotos/santa-maria/r3.webp",
+      "assets/fotos/santa-maria/r2.webp",
+      "assets/fotos/santa-maria/r8.webp",
+      "assets/fotos/santa-maria/r9.webp",
+      "assets/fotos/santa-maria/r6.webp",
+      "assets/fotos/santa-maria/r7.webp",
+      "assets/fotos/santa-maria/pasillo.jpg"
+    ]
+  };
+  const P = window.BRICKROGA.propiedades;
+  [1, 2, 3].forEach(n => P.push(Object.assign({}, santaMaria, {
+    id: "santa-maria-" + n,
+    codigo: "BRK-00" + n,
+    unidad: "Unidad " + n,
+    titulo: "Monoambiente amoblado en Santa María · Unidad " + n,
+    // PENDIENTE: cuando lleguen las fotos de cada unidad, poné acá su lista propia y borrá fotos_nota
+    // cada unidad abre con una foto distinta para que no se vean iguales en el listado
+    fotos: (function () { const f = santaMaria.fotos.slice(), first = f.splice(n, 1)[0]; return [first].concat(f); })()
+  })));
+
+  P.push({
+    id: "san-bernardino-casa",
+    codigo: "BRK-004",
+    estado: "disponible",
+    destacado: true,
+    operacion: "Alquiler temporario",
+    tipo: "Casa",
+    titulo: "Casa con piscina en San Bernardino",
+    ciudad: "San Bernardino",
+    barrio: "Cerca del lago Ypacaraí",
+    direccion: "",
+    maps: "",
+    precio: null, moneda: "Gs", periodo: "noche",    // PENDIENTE: tarifa por noche
+    dormitorios: 2, banos: 2, m2: 0, cochera: 1, huespedes: 6, camas: 4,
+    amoblado: true,
+    comodidades: ["piscina", "wifi", "tv", "cocina", "estacionamiento", "mascotas", "amoblado"],
+    ideal_para: "Ideal para una escapada en familia o con amigos, a pasos del lago Ypacaraí.",
+    descripcion: "Casa entera para hasta 6 huéspedes, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene dos habitaciones amplias, piscina privada, cocina completamente equipada, Wi-Fi rápido y TV.",
+    secciones: [
+      { e: "🏊", titulo: "Piscina privada", texto: "Para disfrutar el verano sin salir de la casa." },
+      { e: "🛏️", titulo: "2 habitaciones, 4 camas", texto: "Habitación 1: cama doble y cama simple. Habitación 2: cama doble. Además, un sillón en la sala." },
+      { e: "🌳", titulo: "Entorno natural", texto: "Cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino." }
+    ],
+    resenas: { nota: 4.89, cantidad: 19, fuente: "Airbnb" },
+    airbnb: "https://www.airbnb.cl/rooms/1346521144935895640",
+    contacto: { nombre: "Johanna Colman", numero: "595981743522", visible: "0981 743 522" },
+    fotos: []   // PENDIENTE: fotos propias de la casa
+  });
+})();

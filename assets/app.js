@@ -38,7 +38,7 @@
       <a class="logo" href="index.html" aria-label="Brickroga, inicio">${I.logo}<b>BRICKROGA</b></a>
       <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menú</button>
       <nav class="nav" id="nav" aria-label="Principal">
-        ${navItem("alquileres.html", "Alquileres", "alquileres")}
+        ${navItem("alquileres.html", "Propiedades", "alquileres")}
         ${navItem("canastas-navidenas-corporativas.html", "Canastas navideñas", "canastas")}
         ${navItem("index.html#servicios", "Servicios", "servicios")}
         ${navItem("#contacto", "Contacto", "contacto")}
@@ -65,7 +65,7 @@
         <div><h4>Empresa</h4><span style="color:var(--on-dark)">${esc(C.razon_social)}</span>${C.ruc ? `<span>RUC: ${esc(C.ruc)}</span>` : pend("RUC: a completar")}<span>${esc(C.horario)}</span></div>
         <div><h4>Contacto</h4>${C.whatsapp.map(w => `<a href="https://wa.me/${esc(w.numero)}" target="_blank" rel="noopener">WhatsApp ${esc(w.visible)}</a>`).join("")}${C.email ? `<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>` : ""}${C.instagram ? `<a href="https://instagram.com/${esc(C.instagram)}" target="_blank" rel="noopener">Instagram @${esc(C.instagram)}</a>` : ""}</div>
         <div><h4>Oficina</h4>${C.oficina ? `<span style="color:var(--on-dark)">${esc(C.oficina)}</span>` : pend("Dirección: a completar")}${C.oficina_barrio ? `<span>${esc(C.oficina_barrio)}</span>` : ""}${C.oficina_referencia ? `<span>${esc(C.oficina_referencia)}</span>` : ""}${C.oficina_maps ? `<a href="${esc(C.oficina_maps)}" target="_blank" rel="noopener" style="color:var(--orange)">Ver en Google Maps →</a>` : ""}</div>
-        <div><h4>Sitio</h4><a href="alquileres.html">Alquileres</a><a href="canastas-navidenas-corporativas.html">Canastas navideñas corporativas</a><a href="index.html#servicios">Servicios y consultoría</a></div>
+        <div><h4>Sitio</h4><a href="alquileres.html">Propiedades</a><a href="canastas-navidenas-corporativas.html">Canastas navideñas corporativas</a><a href="index.html#servicios">Servicios y consultoría</a></div>
       </div>
       <div class="legal"><span>© ${new Date().getFullYear()} ${esc(C.razon_social)} · Todos los precios publicados son finales por mes.</span><span>www.brickroga.com · ${esc(C.version)}</span></div></div>`;
   }
@@ -82,52 +82,53 @@
     return src ? `<img src="${esc(src)}" alt="${esc((p.titulo || p.nombre) + ", foto " + (i + 1))}" loading="lazy">`
                : `<div class="ph-empty">${icon}<span>${label}</span></div>`;
   }
-  const rooms = p => p.dormitorios === 0 ? "Monoambiente" : p.dormitorios + " dorm.";
+  const rooms = p => p.tipo === "Terreno" ? "" : p.dormitorios === 0 ? "Monoambiente" : p.dormitorios + (p.dormitorios === 1 ? " dormitorio" : " dormitorios");
   function specs(p) {
-    const s = [`<span>${I.bed}${rooms(p)}</span>`, `<span>${I.bath}${p.banos} baño${p.banos > 1 ? "s" : ""}</span>`];
+    const s = [];
+    if (rooms(p)) s.push(`<span>${I.bed}${rooms(p)}</span>`);
+    if (p.banos) s.push(`<span>${I.bath}${p.banos} baño${p.banos > 1 ? "s" : ""}</span>`);
+    if (p.huespedes) s.push(`<span>${I.house}${p.huespedes} huéspedes</span>`);
     if (p.m2) s.push(`<span>${I.area}${p.m2} m²</span>`);
     if (p.cochera) s.push(`<span>${I.car}${p.cochera} coch.</span>`);
     return s.join("");
   }
-  function cartel(p, label = "Se alquila") {
-    return `<div class="cartel"><span class="se">${label}</span><span class="monto">${money(p.moneda, p.precio)}<small>/ ${esc(p.periodo)}</small></span><span class="tel">${esc(WA.visible)}</span></div>`;
+  const perLabel = p => p.periodo ? "/ " + p.periodo : "";
+  const signLabel = p => p.operacion === "Venta" ? "Se vende" : p.operacion === "Alquiler temporario" ? "Alquiler temporario" : "Se alquila";
+  function priceHTML(p) {
+    return p.precio ? `${money(p.moneda, p.precio)} <small>${perLabel(p)}</small>` : `<span class="consult">Consultá la tarifa</span>`;
+  }
+  function cartel(p) {
+    const tel = (p.contacto && p.contacto.visible) || WA.visible;
+    return `<div class="cartel"><span class="se">${signLabel(p)}</span><span class="monto">${p.precio ? money(p.moneda, p.precio) + `<small>${perLabel(p)}</small>` : `<span class="consult">Consultá la tarifa</span>`}</span><span class="tel">${esc(tel)}</span></div>`;
+  }
+  function amen(p, max) {
+    const C = D.comodidades || {}, list = (p.comodidades || []).filter(k => C[k]);
+    const shown = max ? list.slice(0, max) : list, more = list.length - shown.length;
+    return shown.map(k => `<span class="am"><span class="e" aria-hidden="true">${C[k][0]}</span>${esc(C[k][1])}</span>`).join("") + (more > 0 ? `<span class="am more">+${more}</span>` : "");
   }
   function tags(p) {
-    return `<div class="tags">${p.unidades_disponibles > 1 ? `<span class="chip chip-orange">${p.unidades_disponibles} disponibles</span>` : `<span class="chip chip-orange">${esc(p.operacion)}</span>`}${p.amoblado ? '<span class="chip">Amoblado</span>' : ""}${p.ejemplo ? '<span class="chip chip-ej">Ejemplo</span>' : ""}</div>`;
+    return `<div class="tags"><span class="chip chip-orange">${esc(p.operacion)}</span>${p.estado === "reservado" ? '<span class="chip chip-ej">Reservado</span>' : ""}${p.ejemplo ? '<span class="chip chip-ej">Ejemplo</span>' : ""}</div>`;
   }
   function card(p) {
     return `<a class="card" href="propiedad.html#${esc(p.id)}">
-      <div class="card-photo">${photo(p)}${tags(p)}</div>
+      <div class="card-photo">${photo(p)}${tags(p)}${p.codigo ? `<span class="code">${esc(p.codigo)}</span>` : ""}</div>
       <div class="card-body">
-        <div class="price">${money(p.moneda, p.precio)} <small>/ ${esc(p.periodo)}</small></div>
-        <div class="sub">${p.gastos_comunes ? "+ " + money(p.moneda, p.gastos_comunes) + " gastos comunes" : p.incluye ? "Servicios básicos incluidos" : "Sin gastos comunes"}</div>
+        <div class="price">${priceHTML(p)}</div>
+        <div class="sub">${p.gastos_comunes ? "+ " + money(p.moneda, p.gastos_comunes) + " gastos comunes" : p.incluye ? "Servicios básicos incluidos" : p.resenas ? "★ " + String(p.resenas.nota).replace(".", ",") + " · " + p.resenas.cantidad + " reseñas en " + p.resenas.fuente : esc(p.tipo)}</div>
         <div class="card-title">${esc(p.titulo)}</div>
         <div class="loc">${I.pin}${esc(p.barrio)}, ${esc(p.ciudad)}</div>
+        <div class="ams">${amen(p, 4)}</div>
         <div class="specs">${specs(p)}</div>
       </div></a>`;
   }
-  function feature(p) {
-    const f = p.fotos || [];
-    return `<a class="feature" href="propiedad.html#${esc(p.id)}">
-      <div class="feature-photos">${[0, 1, 2].map(i => f[i] ? `<img src="${esc(f[i])}" alt="${esc(p.titulo)}, foto ${i + 1}" loading="lazy">` : "").join("")}</div>
-      <div class="feature-body">
-        <div style="display:flex;gap:6px;flex-wrap:wrap">${p.unidades_disponibles > 1 ? `<span class="chip chip-orange">${p.unidades_disponibles} unidades disponibles</span>` : ""}${p.amoblado ? '<span class="chip" style="background:var(--concrete)">Amoblado</span>' : ""}</div>
-        <h3 style="font-size:1.6rem">${esc(p.titulo)}</h3>
-        <div class="loc">${I.pin}${esc(p.barrio)}, ${esc(p.ciudad)}</div>
-        ${cartel(p)}
-        ${p.precio_usd_aprox ? `<p class="sub">Unos USD ${fmt(p.precio_usd_aprox)} por mes.</p>` : ""}
-        ${p.incluye ? `<p class="incl-box">${esc(p.incluye)}</p>` : ""}
-        <div class="specs" style="margin-top:4px">${specs(p)}</div>
-        <span class="btn btn-black" style="align-self:flex-start">Ver fotos y detalles →</span>
-      </div></a>`;
-  }
-  Object.assign(window.BRK, { card, photo, specs, cartel, feature, rooms });
+  function feature(p) { return `<div class="grid">${card(p)}</div>`; }
+  Object.assign(window.BRK, { card, photo, specs, cartel, feature, rooms, amen, priceHTML, signLabel });
   const visibles = () => D.propiedades.filter(p => p.estado !== "alquilado");
   window.BRK.visibles = visibles;
 
   document.querySelectorAll("[data-list='destacados']").forEach(el => {
     const v = visibles().filter(p => p.destacado);
-    el.innerHTML = v.length === 1 ? feature(v[0]) : `<div class="grid">${v.slice(0, 6).map(card).join("")}</div>`;
+    el.innerHTML = `<div class="grid">${v.slice(0, 6).map(card).join("")}</div>`;
   });
   document.querySelectorAll("[data-list='servicios']").forEach(el => {
     el.innerHTML = D.servicios.map(s => `<div class="svc"><h3>${esc(s.titulo)}</h3><p>${esc(s.texto)}</p>
