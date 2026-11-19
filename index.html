@@ -55,9 +55,24 @@
           <div class="photos" id="xmas-photos" aria-hidden="true"></div>
         </div>
       </div>
+      <div class="slide summer-slide" aria-hidden="true">
+        <div class="wrap">
+          <div>
+            <p class="label"><span aria-hidden="true">☀️ </span>Verano en San Bernardino</p>
+            <p class="h1">Este verano, <em>piscina propia</em> a pasos del lago.</p>
+            <p class="lead">Casa entera con 2 habitaciones, piscina privada y parrilla, para hasta 6 personas. Tu perro también viene. <span class="sb-rating" id="sb-rating"></span></p>
+            <div id="sb-sign"></div>
+            <div class="cta">
+              <a class="btn btn-orange" href="propiedad.html#san-bernardino-casa" tabindex="-1">Ver la casa</a>
+              <a class="btn btn-line" data-wa="Hola Brickroga, quiero consultar fechas para la casa con piscina de San Bernardino (BRK-004)." href="#" tabindex="-1">Consultar fechas</a>
+            </div>
+          </div>
+          <div class="photos" id="sb-photos" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
     <div class="slider-ui"><div class="wrap">
-      <div class="dots" role="group" aria-label="Elegir banner"><button type="button" aria-label="Banner 1: alquileres" aria-pressed="true"></button><button type="button" aria-label="Banner 2: canastas navideñas" aria-pressed="false"></button></div>
+      <div class="dots" role="group" aria-label="Elegir banner"><button type="button" aria-label="Banner 1: alquileres" aria-pressed="true"></button><button type="button" aria-label="Banner 2: canastas navideñas" aria-pressed="false"></button><button type="button" aria-label="Banner 3: verano en San Bernardino" aria-pressed="false"></button></div>
       <div class="arrows"><button type="button" class="prev" aria-label="Banner anterior">‹</button><button type="button" class="next" aria-label="Banner siguiente">›</button></div>
     </div></div>
   </section>
@@ -153,7 +168,7 @@
     if (left !== null && left < 0) {
       /* season over: hide the strip and the Christmas slide */
       document.querySelector(".promo-sec").remove();
-      document.querySelectorAll("#slider .slide")[1].remove(); document.querySelectorAll("#slider .dots button")[1].remove();
+      document.querySelector("#slider .xmas-slide").remove(); document.querySelectorAll("#slider .dots button")[1].remove();
     } else if (left !== null && left <= 45) {
       document.getElementById("promo-count").textContent = left === 0 ? "Hoy es el último día para pedir" : left === 1 ? "Queda 1 día para pedir" : "Quedan " + left + " días para pedir";
     }
@@ -162,6 +177,16 @@
       document.getElementById("hero-sign").innerHTML = BRK.cartel(p);
       const f = p.fotos || [];
       document.getElementById("hero-photos").innerHTML = [f[0], f[1], f[2]].map(s => s ? `<figure><img src="${E(s)}" alt=""></figure>` : `<figure><div class="ph-dark">${BRK_ICONS.house}<span>Foto próximamente</span></div></figure>`).join("");
+    }
+    /* slide 3: San Bernardino summer */
+    const sb = BRICKROGA.propiedades.find(x => x.id === "san-bernardino-casa");
+    if (sb) {
+      document.getElementById("sb-sign").innerHTML = BRK.cartel(sb);
+      if (sb.resenas) document.getElementById("sb-rating").textContent = "★ " + String(sb.resenas.nota).replace(".", ",") + " en " + sb.resenas.fuente + ".";
+      const sf = sb.fotos || [];
+      document.getElementById("sb-photos").innerHTML = [sf[0], sf[6], sf[7]].filter(Boolean).map(s => `<figure><img src="${E(s)}" alt=""></figure>`).join("");
+    } else {
+      document.querySelector("#slider .summer-slide").remove(); document.querySelectorAll("#slider .dots button")[2].remove();
     }
     const cf = BRICKROGA.canastas.flatMap(c => c.fotos || []);
     document.getElementById("xmas-photos").innerHTML = BRICKROGA.canastas.slice(0, 3).map(c => (c.fotos || [])[0] ? `<figure><img src="${E(c.fotos[0])}" alt=""></figure>` : `<figure class="xfig">${BRK_XART_FOR(c)}<figcaption>${E(c.empaque)}</figcaption></figure>`).join("");

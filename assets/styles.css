@@ -518,3 +518,13 @@ html{scroll-behavior:smooth}
 @media (max-width:640px){.slide .wrap > div:first-child{display:block}}
 @media (max-width:900px){.slide .wrap{grid-template-columns:1fr;padding-block:28px 62px}}
 .promo-sec + .section{padding-top:44px} @media (max-width:640px){.slide .photos figure{aspect-ratio:1/1}.slide .photos figure:nth-child(2){margin-top:14px}}
+
+/* slide 3: summer in San Bernardino */
+.summer-slide{background:radial-gradient(circle at 82% 8%,rgba(255,170,60,.42),transparent 38%),radial-gradient(ellipse at 60% 110%,rgba(0,150,170,.28),transparent 55%),var(--black-deep)}
+.summer-slide .label{color:#FFB547}
+.summer-slide .h1 em{color:#FFB547}
+.summer-slide .sb-rating{color:#fff;font-weight:600;white-space:nowrap}
+
+/* desktop scroll effects (set from app.js, only ≥901px and without reduced motion) */
+.fx .slide .wrap > div:first-child,.fx .slide .photos figure,.fx .promo,.fx .story .word{will-change:transform}
+.fx .vid-sec video,.fx .video-wrap video{transform-origin:50% 60%;will-change:transform}

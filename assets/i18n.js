@@ -97,7 +97,9 @@
     "Canastas navideñas corporativas en Asunción": "Corporate Christmas baskets in Asunción",
     "Canastas en bolso térmico, mochila o bolsa de viaje para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.":
       "Baskets in a cooler bag, backpack or travel bag for your clients, suppliers and team. We add your logo, deliver wherever you need and issue a Paraguayan tax invoice (RUC).",
-    "Pedir cotización": "Request a quote", "Desde": "From", "Tarifa base por noche. Puede variar según la fecha y la cantidad de noches.": "Base nightly rate. It may vary with the dates and the number of nights.", "Tarifa por noche": "Nightly rate", "Ver canastas": "See the baskets", "Canastas navideñas corporativas": "Corporate Christmas baskets",
+    "Pedir cotización": "Request a quote", "Desde": "From", "Verano en San Bernardino": "Summer in San Bernardino", "Este verano,": "This summer,", "piscina propia": "your own pool", "a pasos del lago.": "steps from the lake.",
+    "Casa entera con 2 habitaciones, piscina privada y parrilla, para hasta 6 personas. Tu perro también viene.": "Entire house with 2 bedrooms, a private pool and a grill, for up to 6 guests. Your dog can come too.",
+    "Ver la casa": "See the house", "Consultar fechas": "Check dates", "Tarifa base por noche. Puede variar según la fecha y la cantidad de noches.": "Base nightly rate. It may vary with the dates and the number of nights.", "Tarifa por noche": "Nightly rate", "Ver canastas": "See the baskets", "Canastas navideñas corporativas": "Corporate Christmas baskets",
     "En bolso térmico, mochila o bolsa de viaje,": "In a cooler bag, backpack or travel bag,",
     "con la tarjeta de tu empresa. Entregamos en Asunción y Gran Asunción, con factura.": "with your company's card. Delivered across Greater Asunción, with a tax invoice.",
     "Pedidos hasta el": "Order by", "Pedido mínimo": "Minimum order", "Entrega": "Delivery", "Factura": "Invoice",
@@ -141,6 +143,7 @@
     [/^★ ([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => "★ " + a.replace(",", ".") + " · " + n + " reviews on " + f],
     [/^([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => a.replace(",", ".") + " · " + n + " reviews on " + f],
     [/^(\d+) min en auto hasta (.+) · ([\d,]+) km$/, (m, n, l, k) => n + " min by car to " + l + " · " + k.replace(",", ".") + " km"],
+    [/^★ ([\d,]+) en (.+)\.$/, (m, a, f) => "★ " + a.replace(",", ".") + " on " + f + "."],
     [/^Quedan (\d+) días para pedir$/, "$1 days left to order"], [/^Queda 1 día para pedir$/, "1 day left to order"], [/^Hoy es el último día para pedir$/, "Today is the last day to order"],
     [/^(\d+) huéspedes$/, "$1 guests"], [/^(\d+) dormitorios?$/, (m, n) => n + (n === "1" ? " bedroom" : " bedrooms")],
     [/^(\d+) propiedades?$/, (m, n) => n + (n === "1" ? " property" : " properties")],
