@@ -76,8 +76,8 @@
   <section class="promo-sec" aria-label="Canastas navideñas corporativas">
     <div class="wrap">
       <a class="promo" href="canastas-navidenas-corporativas.html">
-        <span class="promo-a"><span class="label">Navidad 2026 · Para empresas</span><strong>Canastas navideñas corporativas</strong></span>
-        <span class="promo-b"><b>En bolso térmico, mochila o bolsa de viaje,</b> con la tarjeta de tu empresa. Entregamos en Asunción y Gran Asunción, con factura.<small>Pedido mínimo <span data-min-units>10</span> <i aria-hidden="true">·</i> Pedidos hasta el <span data-deadline>15 de diciembre</span></small></span>
+        <span class="promo-a"><span class="label"><span class="lico" id="promo-star"></span>Navidad 2026 · Para empresas</span><strong>Canastas navideñas corporativas</strong></span>
+        <span class="promo-b"><b>En bolso térmico, mochila o bolsa de viaje,</b> con la tarjeta de tu empresa. Entregamos en Asunción y Gran Asunción, con factura.<span class="promo-count" id="promo-count"></span><small>Pedido mínimo <span data-min-units>10</span> <i aria-hidden="true">·</i> Pedidos hasta el <span data-deadline>15 de diciembre</span></small></span>
         <span class="promo-cta">Ver canastas</span>
         <span class="promo-img" id="promo-img" aria-hidden="true"></span>
       </a>
@@ -145,6 +145,17 @@
     const ci = BRICKROGA.canastas_info, cp = BRICKROGA.canastas.flatMap(c => c.fotos || [])[0];
     document.getElementById("promo-img").innerHTML = cp ? `<img src="${E(cp)}" alt="">` : BRK_ICONS.gift;
     document.querySelectorAll("[data-min-units]").forEach(e => e.textContent = ci.pedido_minimo);
+    const promo = document.querySelector(".promo");
+    promo.insertAdjacentHTML("afterbegin", BRK_XDECO([["star", 85.5, 6, 16, -10], ["snow", 98.6, 10, 22, 0], ["ornament", 98.4, 66, 26, 8], ["star", 84.6, 82, 12, 14], ["bell", 59, 6, 14, -12]]));
+    document.getElementById("promo-star").innerHTML = BRK_ICO("star");
+    const left = ci.cierre ? Math.ceil((new Date(ci.cierre + "T23:59:59-03:00") - Date.now()) / 864e5) : null;
+    if (left !== null && left < 0) {
+      /* season over: hide the strip and the Christmas slide */
+      document.querySelector(".promo-sec").remove();
+      document.querySelectorAll("#slider .slide")[1].remove(); document.querySelectorAll("#slider .dots button")[1].remove();
+    } else if (left !== null && left <= 45) {
+      document.getElementById("promo-count").textContent = left === 0 ? "Hoy es el último día para pedir" : left === 1 ? "Queda 1 día para pedir" : "Quedan " + left + " días para pedir";
+    }
     document.querySelectorAll("[data-deadline]").forEach(e => e.textContent = ci.fecha_limite);
     if (p) {
       document.getElementById("hero-sign").innerHTML = BRK.cartel(p);

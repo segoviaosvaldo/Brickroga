@@ -107,6 +107,7 @@ window.BRICKROGA = {
   canastas_info: {
     pedido_minimo: 10,               // PENDIENTE: confirmar
     fecha_limite: "15 de diciembre", // PENDIENTE: confirmar
+    cierre: "2026-12-15",            // después de esta fecha se ocultan el banner y el slide de canastas
     zona_entrega: "Asunción y Gran Asunción",
     pagos: ["Transferencia bancaria", "Tarjeta de crédito", "QR", "Efectivo"] // CONFIRMAR
   },
@@ -246,7 +247,8 @@ window.BRICKROGA = {
     barrio: "Cerca del lago Ypacaraí",
     direccion: "",
     maps: "",
-    precio: null, moneda: "Gs", periodo: "noche",    // PENDIENTE: tarifa por noche
+    precio: 700000, moneda: "Gs", periodo: "noche",  // Airbnb: CLP 112.732/noche × 6,25 (BCP 19/11/2026) ≈ Gs. 704.000, redondeado. CONFIRMAR con Johanna
+    precio_nota: "Tarifa base por noche. Puede variar según la fecha y la cantidad de noches.",
     dormitorios: 2, banos: 2, m2: 0, cochera: 1, huespedes: 6, camas: 4,
     amoblado: true,
     comodidades: ["piscina", "patio_techado", "parrilla", "jardin", "wifi", "tv", "aa", "ventilador", "cocina", "horno", "agua_caliente", "ducha_exterior", "estacionamiento", "independiente", "mascotas", "camaras", "botiquin", "amoblado"],

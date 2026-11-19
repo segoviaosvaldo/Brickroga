@@ -35,7 +35,14 @@
     cup: '<path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17M3 22h16M8 2.5c0 1.2 1 1.2 1 2.5M12 2.5c0 1.2 1 1.2 1 2.5"/>',
     cart: '<path d="M2.5 3.5h3l2.4 11.2a1.5 1.5 0 0 0 1.5 1.3h8.2a1.5 1.5 0 0 0 1.5-1.2L21 8H6.3"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/>',
     office: '<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4M8 7h2M14 7h2M8 11h2M14 11h2"/>',
-    check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>'
+    check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+    star: '<path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7Z"/>',
+    ornament: '<circle cx="12" cy="14" r="7"/><path d="M10 7V5h4v2M12 5V3M5.5 12.5c2.2 1.2 4.4 1.2 6.5 0s4.3-1.2 6.5 0M6 16.5c2 1 4 1 6 0s4-1 6 0"/>',
+    xtree: '<path d="M12 2.5 7 9h3l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h3Z"/><path d="M12 20v2"/>',
+    bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15Z"/><path d="M10 20.5a2 2 0 0 0 4 0M12 3v2"/>',
+    candy: '<path d="M9 21V8a3 3 0 0 1 6 0v1"/><path d="m9 12 3-2M9 16l3-2"/>',
+    gift: '<rect x="3.5" y="9" width="17" height="12" rx="1"/><path d="M2.5 9h19v-3h-19ZM12 6v15M12 6C10 2 6.5 3 7.5 6M12 6c2-4 5.5-3 4.5 0"/>',
+    truck: '<path d="M2.5 6h11v10h-11ZM13.5 9.5h4l3 3.5V16h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/>'
   };
   const MAP = {
     amoblado: "sofa", wifi: "wifi", aa: "snow", tv: "tv", cocina: "pot", heladera: "fridge", cama: "bed", escritorio: "desk",
@@ -48,6 +55,11 @@
   window.BRK_ICO = function (k) {
     const d = P[MAP[k] || k] || P.check;
     return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + "</svg>";
+  };
+  /* Christmas confetti layer: faint gold line icons scattered behind a dark band. */
+  /* spots: [icon, left %, top %, size px, rotation deg]; keep them clear of the text. */
+  window.BRK_XDECO = function (spots) {
+    return '<span class="xdeco" aria-hidden="true">' + spots.map(s => `<span style="left:${s[1]}%;top:${s[2]}%;font-size:${s[3]}px;transform:rotate(${s[4]}deg)">${window.BRK_ICO(s[0])}</span>`).join("") + "</span>";
   };
   /* "🛍️ Cerca de..." → [icon, "Cerca de..."] */
   window.BRK_ICO_SPLIT = function (s) {

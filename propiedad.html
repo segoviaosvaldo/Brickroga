@@ -83,6 +83,7 @@
             ${p.operacion === "Alquiler" ? `<dt>Gastos comunes</dt><dd>${p.gastos_comunes ? M(p.gastos_comunes) : "No tiene"}</dd>` : ""}
             ${p.codigo ? `<dt>Código</dt><dd>${E(p.codigo)}</dd>` : ""}
           </dl>
+          ${p.precio_nota ? `<p class="muted" style="font-size:.85rem">${E(p.precio_nota)}</p>` : ""}
           ${p.incluye ? `<p class="incl-box"><b>Incluido:</b> ${E(p.incluye)}</p>` : ""}
           <a class="btn btn-wa" href="${wa}" target="_blank" rel="noopener">${BRK_ICONS.wa}${ivisit}</a>
           ${p.airbnb ? `<a class="btn btn-line" href="${E(p.airbnb)}" target="_blank" rel="noopener">Ver disponibilidad en Airbnb</a>` : ""}
