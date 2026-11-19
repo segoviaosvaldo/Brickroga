@@ -489,3 +489,32 @@ html{scroll-behavior:smooth}
 .map-ref{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.95rem}.map-ref .ico{font-size:1.25rem;color:var(--orange-ink)}
 .promo > .lights,.promo > .snow{position:absolute}
 @media (max-width:640px){.xfig figcaption{font-size:.6rem;bottom:6px;letter-spacing:.04em}.xfig .xart{margin-top:-14px}}
+
+/* ---- Compact hero (2026-11-19): leaves room for the ad strip and listings on the first screen ---- */
+.slide .wrap{min-height:0;padding-block:36px 64px;gap:40px;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
+.slide h1,.slide .h1{font-size:clamp(2rem,3.6vw,3.15rem);line-height:1.02}
+.slide .lead{font-size:clamp(.98rem,1.2vw,1.08rem);margin-top:12px;max-width:52ch}
+.slide .cartel{margin-top:16px}
+.slide .cartel .monto{font-size:clamp(1.5rem,2.4vw,2rem)}
+.slide .cta{margin-top:18px}
+.slide .photos{max-width:460px;justify-self:end;width:100%}
+.slide .photos figure{aspect-ratio:3/4}
+.slide .photos figure:nth-child(2){margin-top:28px}
+.slide .photos figure:nth-child(3){margin-top:10px}
+.slider-ui{bottom:18px}
+.xmas-slide .wrap{padding-top:44px}
+.finder form{padding-block:14px}
+.promo-sec{padding-top:22px}
+.promo{min-height:0;padding-block:34px 22px}
+@media (max-width:900px){.slide .wrap{padding-block:30px 62px;gap:22px}.slide .photos{max-width:none;justify-self:stretch}}
+@media (max-width:640px){.slide .photos figure{aspect-ratio:4/5}}
+.slide .wrap{grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);padding-block:32px 60px}
+.slide h1,.slide .h1{font-size:clamp(1.9rem,3vw,2.75rem)}
+.slide .wrap > div:first-child{display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:22px}
+.slide .wrap > div:first-child > .label,.slide .wrap > div:first-child > h1,.slide .wrap > div:first-child > .h1,.slide .wrap > div:first-child > .lead{flex-basis:100%}
+.slide #hero-sign .cartel{margin-top:16px}
+.slide .lead{max-width:62ch}
+.slide .photos{max-width:400px}
+@media (max-width:640px){.slide .wrap > div:first-child{display:block}}
+@media (max-width:900px){.slide .wrap{grid-template-columns:1fr;padding-block:28px 62px}}
+.promo-sec + .section{padding-top:44px} @media (max-width:640px){.slide .photos figure{aspect-ratio:1/1}.slide .photos figure:nth-child(2){margin-top:14px}}
