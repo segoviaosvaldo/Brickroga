@@ -73,6 +73,17 @@
     </div>
   </section>
 
+  <section class="promo-sec" aria-label="Canastas navideñas corporativas">
+    <div class="wrap">
+      <a class="promo" href="canastas-navidenas-corporativas.html">
+        <span class="promo-a"><span class="label">Navidad 2026 · Para empresas</span><strong>Canastas navideñas corporativas</strong></span>
+        <span class="promo-b"><b>En bolso térmico, mochila o bolsa de viaje,</b> con la tarjeta de tu empresa. Entregamos en Asunción y Gran Asunción, con factura.<small>Pedido mínimo <span data-min-units>10</span> <i aria-hidden="true">·</i> Pedidos hasta el <span data-deadline>15 de diciembre</span></small></span>
+        <span class="promo-cta">Ver canastas</span>
+        <span class="promo-img" id="promo-img" aria-hidden="true"></span>
+      </a>
+    </div>
+  </section>
+
   <section class="section">
     <div class="wrap">
       <div class="section-head">
@@ -88,7 +99,7 @@
       <div style="min-width:0"><video data-auto controls muted loop playsinline preload="metadata" poster="assets/video/romi.jpg" src="assets/video/romi.mp4" aria-label="Video recorriendo los monoambientes de Santa María"></video></div>
       <div style="display:grid;gap:16px">
         <p class="label">Santa María, Asunción</p>
-        <h2 id="vid-t">📍 Una ubicación que lo tiene todo.</h2>
+        <h2 id="vid-t">Una ubicación que lo tiene todo.</h2>
         <p class="muted" style="max-width:56ch">Ubicados en una zona estratégica de Asunción, nuestros monoambientes te permiten disfrutar de la comodidad de un entorno residencial, con todo lo que necesitás a pocos minutos.</p>
         <ul class="near-list">
           <li>🛍️ Cerca de Paseo La Galería y Shopping del Sol.</li>
@@ -96,24 +107,8 @@
           <li>🛒 Supermercados y servicios en las cercanías.</li>
           <li>🏢 Fácil acceso al eje corporativo y comercial de Asunción.</li>
         </ul>
-        <p style="font-weight:600">Ideal para quienes buscan comodidad, practicidad y una excelente ubicación, ya sea por trabajo, turismo o estadías temporales. ✨</p>
+        <p style="font-weight:600">Ideal para quienes buscan comodidad, practicidad y una excelente ubicación, ya sea por trabajo, turismo o estadías temporales.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-black" href="alquileres.html?q=Santa%20Mar%C3%ADa">Ver los 3 monoambientes</a><a class="btn btn-line" data-wa="Hola Brickroga, vi el video de los monoambientes de Santa María y quiero coordinar una visita." href="#">Coordinar una visita</a></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="xmas-t">
-    <div class="wrap">
-      <div class="xmas">
-        <div class="gift" id="gift"></div>
-        <div>
-          <p class="label">Navidad 2026 · Para empresas</p>
-          <h2 id="xmas-t" style="margin-top:8px;font-size:clamp(1.4rem,2.6vw,2rem)">Canastas navideñas corporativas con tu logo</h2>
-          <p>Para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.</p>
-        </div>
-        <div class="xmas-actions">
-          <a class="btn btn-orange" href="canastas-navidenas-corporativas.html">Ver canastas y precios</a>
-        </div>
       </div>
     </div>
   </section>
@@ -142,11 +137,15 @@
 <footer id="site-footer"></footer>
 <script src="data/datos.js"></script>
 <script src="assets/i18n.js"></script>
+<script src="assets/iconos.js"></script>
 <script src="assets/app.js"></script>
 <script>
   (function () {
     const E = BRK.esc, p = BRICKROGA.propiedades.find(x => x.destacado) || BRICKROGA.propiedades[0];
-    document.getElementById("gift").innerHTML = BRK_ICONS.gift;
+    const ci = BRICKROGA.canastas_info, cp = BRICKROGA.canastas.flatMap(c => c.fotos || [])[0];
+    document.getElementById("promo-img").innerHTML = cp ? `<img src="${E(cp)}" alt="">` : BRK_ICONS.gift;
+    document.querySelectorAll("[data-min-units]").forEach(e => e.textContent = ci.pedido_minimo);
+    document.querySelectorAll("[data-deadline]").forEach(e => e.textContent = ci.fecha_limite);
     if (p) {
       document.getElementById("hero-sign").innerHTML = BRK.cartel(p);
       const f = p.fotos || [];

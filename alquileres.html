@@ -38,13 +38,14 @@
 <footer id="site-footer"></footer>
 <script src="data/datos.js"></script>
 <script src="assets/i18n.js"></script>
+<script src="assets/iconos.js"></script>
 <script src="assets/app.js"></script>
 <script>
   const f = document.getElementById("filters"), D = BRICKROGA, E = BRK.esc;
   const norm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   [...new Set(D.propiedades.map(p => p.ciudad))].sort().forEach(c => f.elements.ciudad.insertAdjacentHTML("beforeend", `<option>${E(c)}</option>`));
   const CHECKS = ["amoblado", "piscina", "mascotas", "estacionamiento", "servicios"];
-  document.getElementById("checks").innerHTML = CHECKS.filter(k => D.comodidades[k]).map(k => `<label for="c-${k}"><input type="checkbox" id="c-${k}" name="c" value="${k}"><span aria-hidden="true">${D.comodidades[k][0]}</span>${E(D.comodidades[k][1])}</label>`).join("");
+  document.getElementById("checks").innerHTML = CHECKS.filter(k => D.comodidades[k]).map(k => `<label for="c-${k}"><input type="checkbox" id="c-${k}" name="c" value="${k}"><span class="e" aria-hidden="true">${BRK_ICO(k)}</span>${E(D.comodidades[k][1])}</label>`).join("");
   try { const q = new URLSearchParams(location.search); for (const [k, v] of q) { const el = f.elements[k]; if (el && el.tagName) el.value = v; } } catch (e) {}
   function haystack(p) {
     const C = D.comodidades;

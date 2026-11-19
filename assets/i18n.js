@@ -66,15 +66,15 @@
     "Ver los 3 monoambientes": "See the 3 studios", "Recorrido con Romi": "Video tour with Romi", "Recorrido": "Video tour",
     "Video recorriendo los monoambientes de Santa María": "Video tour of the Santa María studios",
     "Santa María, Asunción": "Santa María, Asunción",
-    "📍 Una ubicación que lo tiene todo.": "📍 A location that has it all.",
+   
     "Ubicados en una zona estratégica de Asunción, nuestros monoambientes te permiten disfrutar de la comodidad de un entorno residencial, con todo lo que necesitás a pocos minutos.":
       "Set in a strategic part of Asunción, our studios give you the calm of a residential area with everything you need a few minutes away.",
-    "🛍️ Cerca de Paseo La Galería y Shopping del Sol.": "🛍️ Close to Paseo La Galería and Shopping del Sol.",
-    "☕ Rodeado de opciones gastronómicas y comerciales.": "☕ Surrounded by cafés, restaurants and shops.",
-    "🛒 Supermercados y servicios en las cercanías.": "🛒 Supermarkets and services nearby.",
-    "🏢 Fácil acceso al eje corporativo y comercial de Asunción.": "🏢 Easy access to Asunción's business and shopping district.",
-    "Ideal para quienes buscan comodidad, practicidad y una excelente ubicación, ya sea por trabajo, turismo o estadías temporales. ✨":
-      "Ideal if you want comfort, convenience and a great location, whether for work, tourism or a temporary stay. ✨",
+    "Cerca de Paseo La Galería y Shopping del Sol.": "Close to Paseo La Galería and Shopping del Sol.",
+    "Rodeado de opciones gastronómicas y comerciales.": "Surrounded by cafés, restaurants and shops.",
+    "Supermercados y servicios en las cercanías.": "Supermarkets and services nearby.",
+    "Fácil acceso al eje corporativo y comercial de Asunción.": "Easy access to Asunción's business and shopping district.",
+    "Ideal para quienes buscan comodidad, practicidad y una excelente ubicación, ya sea por trabajo, turismo o estadías temporales.":
+      "Ideal if you want comfort, convenience and a great location, whether for work, tourism or a temporary stay.",
     "Fotos de referencia: las 3 unidades tienen el mismo equipamiento.": "Reference photos: all 3 units have the same furnishings.",
     "dormitorio": "bedroom", "huéspedes": "guests",
 
@@ -97,7 +97,10 @@
     "Canastas navideñas corporativas en Asunción": "Corporate Christmas baskets in Asunción",
     "Canastas en bolso térmico, mochila o bolsa de viaje para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.":
       "Baskets in a cooler bag, backpack or travel bag for your clients, suppliers and team. We add your logo, deliver wherever you need and issue a Paraguayan tax invoice (RUC).",
-    "Pedir cotización": "Request a quote", "Desde": "From", "Pedido mínimo": "Minimum order", "Entrega": "Delivery", "Factura": "Invoice",
+    "Pedir cotización": "Request a quote", "Desde": "From", "Ver canastas": "See the baskets", "Canastas navideñas corporativas": "Corporate Christmas baskets",
+    "En bolso térmico, mochila o bolsa de viaje,": "In a cooler bag, backpack or travel bag,",
+    "con la tarjeta de tu empresa. Entregamos en Asunción y Gran Asunción, con factura.": "with your company's card. Delivered across Greater Asunción, with a tax invoice.",
+    "Pedidos hasta el": "Order by", "Pedido mínimo": "Minimum order", "Entrega": "Delivery", "Factura": "Invoice",
     "Con RUC": "With RUC", "Pedidos hasta": "Order by", "Asunción y Gran Asunción": "Greater Asunción",
     "Elegí la canasta para tu empresa": "Choose a basket for your company", "Precio por unidad": "Price per unit", "La más pedida": "Most ordered",
     "Precio a confirmar": "Price to be confirmed", "Consultá el precio": "Ask for the price",

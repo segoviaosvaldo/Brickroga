@@ -112,7 +112,7 @@
   function amen(p, max) {
     const C = D.comodidades || {}, list = (p.comodidades || []).filter(k => C[k]);
     const shown = max ? list.slice(0, max) : list, more = list.length - shown.length;
-    return shown.map(k => `<span class="am"><span class="e" aria-hidden="true">${C[k][0]}</span>${esc(C[k][1])}</span>`).join("") + (more > 0 ? `<span class="am more">+${more}</span>` : "");
+    return shown.map(k => `<span class="am"><span class="e" aria-hidden="true">${window.BRK_ICO ? BRK_ICO(k) : C[k][0]}</span>${esc(C[k][1])}</span>`).join("") + (more > 0 ? `<span class="am more">+${more}</span>` : "");
   }
   function tags(p) {
     return `<div class="tags"><span class="chip chip-orange">${esc(p.operacion)}</span>${p.estado === "reservado" ? '<span class="chip chip-ej">Reservado</span>' : ""}${p.ejemplo ? '<span class="chip chip-ej">Ejemplo</span>' : ""}</div>`;
@@ -162,6 +162,12 @@
   /* Apple-style motion layer (like theparaguaytax.com): reveal on scroll, photo zoom, price count-up, swipe rows on mobile.
      Runs after page scripts have rendered their content. */
   document.addEventListener("DOMContentLoaded", function () {
+    /* static lists written with a leading emoji get the matching line icon */
+    if (window.BRK_ICO_SPLIT) document.querySelectorAll(".near-list li").forEach(li => {
+      if (li.querySelector(".ico")) return;
+      const s = BRK_ICO_SPLIT(li.textContent.trim());
+      if (s[0]) { li.innerHTML = s[0]; const t = document.createElement("span"); t.textContent = s[1]; li.appendChild(t); }
+    });
     if (window.BRK_I18N) window.BRK_I18N.run();
     const RM = matchMedia("(prefers-reduced-motion: reduce)").matches, MOB = matchMedia("(max-width:640px)").matches;
     if (MOB) document.querySelectorAll(".svc-list,.steps").forEach(e => e.classList.add("swipe"));

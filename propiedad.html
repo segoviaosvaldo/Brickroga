@@ -20,6 +20,7 @@
 <footer id="site-footer"></footer>
 <script src="data/datos.js"></script>
 <script src="assets/i18n.js"></script>
+<script src="assets/iconos.js"></script>
 <script src="assets/app.js"></script>
 <script>
   function show() {
@@ -57,7 +58,7 @@
           <div class="only-m">${BRK.cartel(p)}<a class="btn btn-wa" href="${wa}" target="_blank" rel="noopener">${BRK_ICONS.wa}${ivisit}</a></div>
           <div class="facts">${facts.map(f => `<div class="fact"><b>${E(f[0])}</b><span>${f[1]}</span></div>`).join("")}</div>
           ${p.ideal_para ? `<p class="ideal">${E(p.ideal_para)}</p>` : ""}
-          ${p.secciones && p.secciones.length ? `<div class="blocks" style="margin-top:26px">${p.secciones.map(b => `<div class="block"><span class="e" aria-hidden="true">${b.e}</span><h3>${E(b.titulo)}</h3><p>${E(b.texto)}</p></div>`).join("")}</div>` : ""}
+          ${p.secciones && p.secciones.length ? `<div class="blocks" style="margin-top:26px">${p.secciones.map(b => `<div class="block"><span class="e" aria-hidden="true">${BRK_ICO(b.e)}</span><h3>${E(b.titulo)}</h3><p>${E(b.texto)}</p></div>`).join("")}</div>` : ""}
           <h2 style="font-size:1.35rem;margin-top:32px">Qué tiene</h2>
           <div class="ams-big">${BRK.amen(p)}</div>
           <p style="max-width:66ch;margin-top:20px" class="muted">${E(p.descripcion)}</p>
@@ -65,7 +66,7 @@
           <h2 style="font-size:1.35rem;margin-top:32px">Ubicación</h2>
           <div class="addr">${p.direccion ? `<b>${E(p.direccion)}</b>` : `<b>${E(p.barrio)}, ${E(p.ciudad)}</b>`}${p.maps ? `<a href="${E(p.maps)}" target="_blank" rel="noopener">Ver en Google Maps →</a>` : ""}</div>
           ${mapq ? `<div class="map-embed"><iframe title="Mapa: ${E(p.barrio)}, ${E(p.ciudad)}" src="https://maps.google.com/maps?q=${encodeURIComponent(mapq)}&z=${p.lat ? 15 : 13}&hl=es&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>${p.mapa_aprox ? '<p class="muted" style="font-size:.85rem;margin-top:8px">Ubicación aproximada. Te pasamos la dirección exacta al confirmar la reserva.</p>' : ""}` : ""}
-          ${p.cerca_lista ? `<ul class="near-list">${p.cerca_lista.map(c => `<li>${E(c)}</li>`).join("")}</ul>` : ""}
+          ${p.cerca_lista ? `<ul class="near-list">${p.cerca_lista.map(c => { const s = BRK_ICO_SPLIT(c); return `<li>${s[0]}<span>${E(s[1])}</span></li>`; }).join("")}</ul>` : ""}
           ${p.cerca && p.cerca.length ? `<div class="near">${p.cerca.map(c => `<div><b>${E(c.lugar)}</b><span>${String(c.km).replace(".", ",")} km</span><span>~${c.min} min en auto</span></div>`).join("")}</div>
           <p class="muted" style="font-size:.85rem;margin-top:8px">Distancia en línea recta. Tiempos en auto, sin mucho tráfico.</p>` : ""}
           ${p.video || (p.mapa && !mapq) ? `<h2 style="font-size:1.35rem;margin-top:32px">${p.video_titulo ? E(p.video_titulo) : "Recorrido"}</h2>
