@@ -22,9 +22,12 @@
   const fmt = n => Math.round(n).toLocaleString("es-PY").replace(/,/g, ".");
   const money = (m, n) => (m === "USD" ? "USD " : "Gs. ") + fmt(n);
   const WA = C.whatsapp[0];
-  const waLink = (msg) => "https://wa.me/" + WA.numero + "?text=" + encodeURIComponent(msg);
+  /* Every pre-filled WhatsApp message says it comes from the website, so the team knows where the lead came from. */
+  const WEB_TAG = "\n\n(Te escribo desde la página web de BRICKROGA, www.brickroga.com)";
+  const waText = msg => msg + WEB_TAG;
+  const waLink = (msg, num) => "https://wa.me/" + (num || WA.numero) + "?text=" + encodeURIComponent(waText(msg));
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  window.BRK = { fmt, money, waLink, esc, WA };
+  window.BRK = { fmt, money, waLink, waText, esc, WA };
   const HELLO = "Hola Brickroga, quiero hacer una consulta.";
 
   /* Header */

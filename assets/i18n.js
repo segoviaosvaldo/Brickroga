@@ -37,8 +37,8 @@
       "Furnished studios in Santa María, Asunción, with internet and utilities included. The price is right there, and you book a visit on WhatsApp.",
     "Ver el departamento": "See the apartment", "Coordinar una visita": "Book a visit",
     "Navidad 2026 · Para empresas": "Christmas 2026 · For companies", "Canastas navideñas": "Christmas baskets", "corporativas": "corporate gifts", ", con tu logo.": ", with your logo.",
-    "Canastas de mimbre y cajas de madera para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.":
-      "Wicker baskets and wooden boxes for clients, suppliers and your team. Delivered across Greater Asunción, with a tax invoice.",
+    "En bolso térmico, mochila o bolsa de viaje, para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.":
+      "In a cooler bag, backpack or travel bag, for clients, suppliers and your team. Delivered across Greater Asunción, with a tax invoice.",
     "Ver canastas y precios": "See baskets and prices", "Cotizar por WhatsApp": "Get a quote on WhatsApp",
     "Disponibles ahora": "Available now", "Ver todos los alquileres →": "See all rentals →", "Ver fotos y detalles →": "See photos and details →",
     "Canastas navideñas corporativas con tu logo": "Corporate Christmas baskets with your logo",
@@ -95,12 +95,12 @@
     /* baskets */
     "Navidad 2026 · Regalos empresariales": "Christmas 2026 · Corporate gifts",
     "Canastas navideñas corporativas en Asunción": "Corporate Christmas baskets in Asunción",
-    "Canastas de mimbre y cajas de madera para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.":
-      "Wicker baskets and wooden boxes for your clients, suppliers and team. We add your logo, deliver wherever you need and issue a Paraguayan tax invoice (RUC).",
+    "Canastas en bolso térmico, mochila o bolsa de viaje para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.":
+      "Baskets in a cooler bag, backpack or travel bag for your clients, suppliers and team. We add your logo, deliver wherever you need and issue a Paraguayan tax invoice (RUC).",
     "Pedir cotización": "Request a quote", "Desde": "From", "Pedido mínimo": "Minimum order", "Entrega": "Delivery", "Factura": "Invoice",
     "Con RUC": "With RUC", "Pedidos hasta": "Order by", "Asunción y Gran Asunción": "Greater Asunción",
     "Elegí la canasta para tu empresa": "Choose a basket for your company", "Precio por unidad": "Price per unit", "La más pedida": "Most ordered",
-    "Canasta de mimbre": "Wicker basket", "Caja de madera con tu logo": "Wooden box with your logo", "Caja de madera grabada": "Engraved wooden box",
+    "Precio a confirmar": "Price to be confirmed", "Consultá el precio": "Ask for the price",
     "Para más de 50 unidades armamos precio por volumen. A partir de 30 unidades podés pedir una canasta a medida.":
       "Volume pricing for more than 50 units. From 30 units you can order a custom basket.",
     "Cómo se hace un pedido": "How ordering works", "PASO 1": "STEP 1", "PASO 2": "STEP 2", "PASO 3": "STEP 3",
@@ -117,15 +117,15 @@
     "Horario de atención": "Opening hours", "RUC": "RUC (tax ID)", "Canasta": "Basket", "Canasta a medida": "Custom basket", "Cantidad": "Quantity", "Comentarios": "Comments",
     "Nombre de la empresa": "Company name", "Opcional": "Optional", "Fecha de entrega, dirección, si llevan logo...": "Delivery date, address, logo...",
     "Canastas de Navidad para empresas en Paraguay": "Christmas baskets for companies in Paraguay",
-    "Una canasta navideña empresarial es la forma más directa de agradecer a clientes, proveedores y colaboradores al cerrar el año. En Brickroga armamos canastas corporativas con sidra, pan dulce, vinos, turrones y bombones, presentadas en canasta de mimbre o caja de madera con la identidad de tu empresa.":
-      "A corporate Christmas basket is the simplest way to thank clients, suppliers and staff at the end of the year. At Brickroga we put together baskets with cider, panettone, wine, nougat and chocolates, presented in a wicker basket or wooden box with your company's branding.",
+    "Una canasta navideña empresarial es la forma más directa de agradecer a clientes, proveedores y colaboradores al cerrar el año. En Brickroga armamos canastas corporativas con sidra, pan dulce, vino, turrón, cookies y más, presentadas en bolso térmico, mochila o bolsa de viaje que tu equipo y tus clientes van a seguir usando, con la tarjeta de tu empresa.":
+      "A corporate Christmas basket is the simplest way to thank clients, suppliers and staff at the end of the year. At Brickroga we put together baskets with cider, panettone, wine, nougat, cookies and more, packed in a cooler bag, backpack or travel bag your clients and team will keep using, with your company's card.",
     "Trabajamos con empresas de Asunción, Luque, San Lorenzo, Fernando de la Mora, Lambaré y todo Gran Asunción. Podés pedir canastas iguales para todos o combinar líneas según el destinatario.":
       "We work with companies in Asunción, Luque, San Lorenzo, Fernando de la Mora, Lambaré and all of Greater Asunción. Order the same basket for everyone or mix lines by recipient.",
     "Preguntas frecuentes": "Frequently asked questions",
     "¿Cuál es el pedido mínimo?": "What is the minimum order?", "El pedido mínimo es de": "The minimum order is",
     "canastas. Para pedidos más grandes armamos un precio por volumen.": "baskets. Larger orders get volume pricing.",
     "¿Pueden llevar el logo de mi empresa?": "Can they carry my company logo?",
-    "Sí. Todas llevan tarjeta con tu logo, y los box de madera pueden ir grabados.": "Yes. Every basket includes a card with your logo, and wooden boxes can be engraved.",
+    "Sí. Todas llevan una tarjeta con el logo de tu empresa.": "Yes. Every basket includes a card with your company logo.",
     "¿Hacen factura legal?": "Do you issue a tax invoice?", "Sí. Brickroga E.A.S. emite factura legal con RUC.": "Yes. Brickroga E.A.S. issues a legal Paraguayan invoice (factura) with RUC.",
     "¿Dónde entregan?": "Where do you deliver?",
     "Entregamos en Asunción y Gran Asunción, en tu oficina o directamente a cada destinatario.": "Across Greater Asunción, to your office or directly to each recipient.",
@@ -153,7 +153,7 @@
   const PAGES = {
     inicio: ["Brickroga | Furnished apartments for rent in Asunción", "Furnished studios for rent in Santa María, Asunción, from Gs. 2,500,000 a month with internet and utilities included. Also corporate Christmas baskets. Brickroga E.A.S."],
     alquileres: ["Properties for rent in Asunción and Paraguay | Brickroga", "Brickroga studios, apartments, houses and land in and around Asunción. Search by area, type, price and amenities."],
-    canastas: ["Corporate Christmas baskets in Paraguay | Brickroga", "Corporate Christmas baskets in Greater Asunción. Wicker baskets and wooden boxes with your company logo, delivery and tax invoice. Get a quote on WhatsApp."]
+    canastas: ["Corporate Christmas baskets in Paraguay | Brickroga", "Corporate Christmas baskets in Greater Asunción. Baskets in a cooler bag, backpack or travel bag with your company logo, delivery and tax invoice. Get a quote on WhatsApp."]
   };
 
   let DICT = UI;

@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css">
-<meta name="description" content="Canastas navideñas corporativas y empresariales en Asunción y Gran Asunción. Canastas de mimbre y cajas de madera con el logo de tu empresa, entrega incluida y factura legal. Cotizá por WhatsApp.">
+<meta name="description" content="Canastas navideñas corporativas y empresariales en Asunción y Gran Asunción. Canastas en bolso térmico, mochila o bolsa de viaje con el logo de tu empresa, entrega incluida y factura legal. Cotizá por WhatsApp.">
 <link rel="canonical" href="https://www.brickroga.com/canastas-navidenas-corporativas.html">
 <meta property="og:title" content="Canastas navideñas corporativas | Brickroga">
 <meta property="og:description" content="Canastas de Navidad para empresas en Asunción, con tu logo, entrega y factura con RUC.">
@@ -47,7 +47,7 @@
         { "@type": "Question", "name": "¿Cuál es el pedido mínimo de canastas navideñas corporativas?",
           "acceptedAnswer": { "@type": "Answer", "text": "El pedido mínimo es de 10 canastas. Para pedidos más grandes armamos un precio por volumen." } },
         { "@type": "Question", "name": "¿Pueden llevar el logo de mi empresa?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Sí. Todas llevan tarjeta con tu logo, y los box de madera pueden ir grabados." } },
+          "acceptedAnswer": { "@type": "Answer", "text": "Sí. Todas llevan una tarjeta con el logo de tu empresa." } },
         { "@type": "Question", "name": "¿Hacen factura legal?",
           "acceptedAnswer": { "@type": "Answer", "text": "Sí. Brickroga E.A.S. emite factura legal con RUC." } },
         { "@type": "Question", "name": "¿Dónde entregan?",
@@ -66,7 +66,7 @@
       <div>
         <p class="label">Navidad 2026 · Regalos empresariales</p>
         <h1 style="margin-top:12px">Canastas navideñas corporativas en Asunción</h1>
-        <p class="lead">Canastas de mimbre y cajas de madera para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.</p>
+        <p class="lead">Canastas en bolso térmico, mochila o bolsa de viaje para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.</p>
         <div class="xhero-actions">
           <a class="btn btn-orange" href="#cotizar">Pedir cotización</a>
           <a class="btn btn-line" id="hero-wa" data-wa="Hola Brickroga, quiero cotizar canastas navideñas corporativas." href="#">Escribir por WhatsApp</a>
@@ -121,13 +121,13 @@
     <div class="wrap" style="display:grid;gap:40px">
       <div class="prose">
         <h2>Canastas de Navidad para empresas en Paraguay</h2>
-        <p>Una canasta navideña empresarial es la forma más directa de agradecer a clientes, proveedores y colaboradores al cerrar el año. En Brickroga armamos canastas corporativas con sidra, pan dulce, vinos, turrones y bombones, presentadas en canasta de mimbre o caja de madera con la identidad de tu empresa.</p>
+        <p>Una canasta navideña empresarial es la forma más directa de agradecer a clientes, proveedores y colaboradores al cerrar el año. En Brickroga armamos canastas corporativas con sidra, pan dulce, vino, turrón, cookies y más, presentadas en bolso térmico, mochila o bolsa de viaje que tu equipo y tus clientes van a seguir usando, con la tarjeta de tu empresa.</p>
         <p>Trabajamos con empresas de Asunción, Luque, San Lorenzo, Fernando de la Mora, Lambaré y todo Gran Asunción. Podés pedir canastas iguales para todos o combinar líneas según el destinatario.</p>
       </div>
       <div class="faq">
         <h2 style="margin-bottom:8px">Preguntas frecuentes</h2>
         <details><summary>¿Cuál es el pedido mínimo?</summary><p>El pedido mínimo es de <span data-min-units>10</span> canastas. Para pedidos más grandes armamos un precio por volumen.</p></details>
-        <details><summary>¿Pueden llevar el logo de mi empresa?</summary><p>Sí. Todas llevan tarjeta con tu logo, y los box de madera pueden ir grabados.</p></details>
+        <details><summary>¿Pueden llevar el logo de mi empresa?</summary><p>Sí. Todas llevan una tarjeta con el logo de tu empresa.</p></details>
         <details><summary>¿Hacen factura legal?</summary><p>Sí. Brickroga E.A.S. emite factura legal con RUC.</p></details>
         <details><summary>¿Dónde entregan?</summary><p>Entregamos en Asunción y Gran Asunción, en tu oficina o directamente a cada destinatario.</p></details>
         <details><summary>¿Hasta cuándo puedo pedir?</summary><p>Tomamos pedidos hasta el <span data-deadline>15 de diciembre</span>. Cuanto antes pidas, más fácil es conseguir la fecha de entrega que querés.</p></details>
@@ -144,9 +144,10 @@
   document.getElementById("hero-wa").innerHTML = BRK_ICONS.wa + "Escribir por WhatsApp";
   document.querySelectorAll("[data-min-units]").forEach(e => e.textContent = info.pedido_minimo);
   document.querySelectorAll("[data-deadline]").forEach(e => e.textContent = info.fecha_limite);
-  const desde = Math.min(...D.canastas.map(c => c.precio));
+  const PX = c => c.precio ? BRK.money(c.moneda, c.precio) : "Precio a confirmar";
+  const precios = D.canastas.map(c => c.precio).filter(Boolean), desde = precios.length ? Math.min(...precios) : null;
   document.getElementById("ticks").innerHTML = [
-    ["Desde", BRK.money("Gs", desde) + " por unidad"], ["Pedido mínimo", info.pedido_minimo + " unidades"],
+    ["Desde", desde ? BRK.money("Gs", desde) + " por unidad" : "Consultá el precio"], ["Pedido mínimo", info.pedido_minimo + " unidades"],
     ["Entrega", info.zona_entrega], ["Factura", "Con RUC"], ["Pedidos hasta", info.fecha_limite]
   ].map(r => `<div><span>${r[0]}</span><b>${E(r[1])}</b></div>`).join("");
   document.getElementById("pays").innerHTML = info.pagos.map(p => `<span>${E(p)}</span>`).join("");
@@ -157,16 +158,16 @@
       <div class="tier-body">
         <span class="label">${E(c.empaque)}</span>
         <h3>${E(c.nombre)}</h3>
-        <div class="price">${BRK.money(c.moneda, c.precio)} <small>/ unidad</small></div>
+        <div class="price">${c.precio ? BRK.money(c.moneda, c.precio) + " <small>/ unidad</small>" : '<span class="consult">Precio a confirmar</span>'}</div>
         <ul>${c.contenido.map(i => "<li>" + E(i) + "</li>").join("")}</ul>
-        <a class="btn ${c.destacada ? "btn-orange" : "btn-black"}" href="${BRK.waLink("Hola Brickroga, quiero pedir la " + c.nombre + " (" + BRK.money(c.moneda, c.precio) + " por unidad) para mi empresa.")}" target="_blank" rel="noopener">${BRK_ICONS.wa}Pedir por WhatsApp</a>
+        <a class="btn ${c.destacada ? "btn-orange" : "btn-black"}" href="${BRK.waLink("Hola Brickroga, quiero pedir la " + c.nombre + (c.precio ? " (" + BRK.money(c.moneda, c.precio) + " por unidad)" : "") + " para mi empresa.")}" target="_blank" rel="noopener">${BRK_ICONS.wa}Pedir por WhatsApp</a>
       </div>
     </article>`).join("");
   const f = document.getElementById("qform"), sel = f.elements.linea;
-  sel.innerHTML = D.canastas.map(c => `<option value="${E(c.id)}">${E(c.nombre)} · ${BRK.money(c.moneda, c.precio)}</option>`).join("") + '<option value="medida">Canasta a medida</option>';
+  sel.innerHTML = D.canastas.map(c => `<option value="${E(c.id)}">${E(c.nombre)}${c.precio ? " · " + BRK.money(c.moneda, c.precio) : ""}</option>`).join("") + '<option value="medida">Canasta a medida</option>';
   function upd() {
     const c = D.canastas.find(x => x.id === sel.value), n = Math.max(0, +f.elements.cantidad.value || 0);
-    document.getElementById("q-total").textContent = c && n ? "Estimado: " + BRK.money(c.moneda, c.precio * n) : "";
+    document.getElementById("q-total").textContent = c && c.precio && n ? "Estimado: " + BRK.money(c.moneda, c.precio * n) : "";
   }
   f.addEventListener("input", upd); upd();
   f.addEventListener("submit", e => {

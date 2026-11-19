@@ -69,31 +69,34 @@ window.BRICKROGA = {
 
 
   canastas: [
+    /* Las 3 canastas que Johanna pone a la venta. precio: null muestra
+       "Precio a confirmar" hasta que se cargue el número. */
     {
-      id: "clasica", ejemplo: true,
-      nombre: "Canasta Clásica",
-      empaque: "Canasta de mimbre",
-      precio: 180000, moneda: "Gs",
-      contenido: ["Sidra 750 ml", "Pan dulce 500 g", "Turrón de maní", "Garrapiñadas", "Frutas secas", "Tarjeta con el logo de tu empresa"],
+      id: "termica",
+      nombre: "Canasta Térmica",
+      empaque: "Bolso térmico",
+      precio: null, moneda: "Gs", // PENDIENTE: precio de Johanna
+      contenido: ["Bolso térmico", "Tarjeta con el logo de tu empresa", "Pan dulce", "Sidra 710 ml", "Durazno en almíbar", "Turrón", "Cookies", "Wafer", "Aceitunas", "Maní"],
       fotos: []
     },
     {
-      id: "ejecutiva", ejemplo: true, destacada: true,
-      nombre: "Box Ejecutivo",
-      empaque: "Caja de madera con tu logo",
-      precio: 290000, moneda: "Gs",
-      contenido: ["Vino tinto reserva", "Sidra 750 ml", "Pan dulce premium", "Turrones surtidos", "Bombones", "Frutos secos"],
+      id: "mochila",
+      nombre: "Canasta Mochila",
+      empaque: "Mochila",
+      precio: null, moneda: "Gs", // PENDIENTE: precio de Johanna
+      contenido: ["Mochila", "Tarjeta con el logo de tu empresa", "Vaso térmico", "Pan dulce", "Sidra 910 ml", "Vino", "Cookies", "Wafer", "Durazno en almíbar", "Saladix", "Turrón", "Pepsi 1 L", "Aceitunas", "Dulce de batata", "Budín", "Maní"],
       fotos: []
     },
     {
-      id: "premium", ejemplo: true,
-      nombre: "Box Premium",
-      empaque: "Caja de madera grabada",
-      precio: 450000, moneda: "Gs",
-      contenido: ["Espumante", "Vino tinto reserva", "Pan dulce artesanal", "Fiambres y quesos estacionados", "Chocolates finos", "Frutos secos"],
+      id: "bolsa-viaje", ejemplo: true,
+      nombre: "Canasta Bolsa de viaje",
+      empaque: "Bolsa de viaje",
+      precio: null, moneda: "Gs", // PENDIENTE: precio y contenido de Johanna
+      contenido: ["Bolsa de viaje", "Tarjeta con el logo de tu empresa", "Contenido a confirmar"],
       fotos: []
     }
   ],
+
   canastas_info: {
     pedido_minimo: 10,               // PENDIENTE: confirmar
     fecha_limite: "15 de diciembre", // PENDIENTE: confirmar
@@ -135,11 +138,11 @@ window.BRICKROGA = {
     "Gestión de alquileres": "Rental management", "Publicamos tu inmueble, filtramos interesados, hacemos el contrato y cobramos por vos.": "We list your property, screen applicants, handle the lease and collect the rent for you.",
     "Consultoría inmobiliaria": "Real estate consulting", "Comparamos zonas, precio por m² y rentabilidad antes de que compres un terreno o un departamento.": "We compare areas, price per m² and returns before you buy land or an apartment.",
     "Terrenos en cuotas": "Land in installments", "Relevamos lotes en Central con agua, luz, acceso a ruta y seguridad evaluados uno por uno.": "We survey lots in Central department, checking water, power, road access and safety one by one.",
-    "Canasta Clásica": "Classic Basket", "Box Ejecutivo": "Executive Box", "Box Premium": "Premium Box",
-    "Sidra 750 ml": "Cider 750 ml", "Pan dulce 500 g": "Panettone 500 g", "Turrón de maní": "Peanut nougat", "Garrapiñadas": "Candied peanuts", "Frutas secas": "Dried fruit",
-    "Tarjeta con el logo de tu empresa": "Card with your company logo", "Vino tinto reserva": "Reserve red wine", "Pan dulce premium": "Premium panettone",
-    "Turrones surtidos": "Assorted nougat", "Bombones": "Chocolates", "Frutos secos": "Nuts", "Espumante": "Sparkling wine", "Pan dulce artesanal": "Artisan panettone",
-    "Fiambres y quesos estacionados": "Cured meats and aged cheeses", "Chocolates finos": "Fine chocolates"
+    "Canasta Térmica": "Cooler Bag Basket", "Canasta Mochila": "Backpack Basket", "Canasta Bolsa de viaje": "Travel Bag Basket",
+    "Bolso térmico": "Cooler bag", "Mochila": "Backpack", "Bolsa de viaje": "Travel bag", "Tarjeta con el logo de tu empresa": "Card with your company logo",
+    "Pan dulce": "Panettone", "Sidra 710 ml": "Cider 710 ml", "Sidra 910 ml": "Cider 910 ml", "Durazno en almíbar": "Peaches in syrup", "Turrón": "Nougat",
+    "Cookies": "Cookies", "Wafer": "Wafers", "Aceitunas": "Olives", "Maní": "Peanuts", "Vaso térmico": "Insulated tumbler", "Vino": "Wine",
+    "Saladix": "Saladix crackers", "Pepsi 1 L": "Pepsi 1 L", "Dulce de batata": "Sweet potato jam", "Budín": "Pound cake", "Contenido a confirmar": "Contents to be confirmed"
   },
 
   servicios: [
