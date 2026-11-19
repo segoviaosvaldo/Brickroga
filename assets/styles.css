@@ -399,3 +399,11 @@ html{scroll-behavior:smooth}
 .vwrap{position:relative}
 .snd{position:absolute;top:10px;left:10px;z-index:2;font:inherit;font-size:.8rem;font-weight:600;background:rgba(0,0,0,.65);color:#fff;border:0;padding:7px 10px;cursor:pointer}
 @media (max-width:520px){.site-header .wrap{gap:10px}.logo b{font-size:1rem}.logo svg{width:30px;height:30px}.menu-btn{padding:7px 10px}.lang-sw{margin-left:0}}
+
+/* Interactive map on the property detail */
+.map-embed{margin-top:14px;border:1px solid var(--line, #e5e5e5);aspect-ratio:16/9;max-height:420px;width:100%;background:var(--concrete)}
+.map-embed iframe{display:block;width:100%;height:100%;border:0}
+@media (max-width:640px){.map-embed{aspect-ratio:4/3}}
+.nota{margin-top:20px;max-width:66ch;padding:14px 16px;border-left:3px solid var(--orange);background:var(--concrete)}
+.nota b{display:block;margin-bottom:4px}
+.nota p{margin:0;font-size:.95rem}

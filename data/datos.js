@@ -64,7 +64,14 @@ window.BRICKROGA = {
     servicios:       ["💡", "Servicios incluidos"],
     independiente:   ["🚪", "Entrada independiente"],
     patio_techado:   ["⛱️", "Patio techado y comedor exterior"],
-    jardin:          ["🌳", "Jardín"]
+    jardin:          ["🌳", "Jardín"],
+    parrilla:        ["🔥", "Parrilla"],
+    ventilador:      ["🌀", "Ventilador de techo"],
+    agua_caliente:   ["♨️", "Agua caliente"],
+    ducha_exterior:  ["🚿", "Ducha exterior"],
+    horno:           ["🥘", "Heladera, horno y cocina a gas"],
+    camaras:         ["📹", "Cámaras de seguridad exteriores"],
+    botiquin:        ["🩹", "Botiquín de primeros auxilios"]
   },
 
 
@@ -120,6 +127,14 @@ window.BRICKROGA = {
     "Patio techado y jardín": "Covered patio and garden", "Comedor al aire libre bajo techo, rodeado de un jardín verde.": "Covered outdoor dining area surrounded by a green garden.",
     "Entorno natural y tranquilo": "Quiet natural setting", "Zona residencial calma, cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino.": "A calm residential area near Lake Ypacaraí, 15 minutes from downtown San Bernardino.",
     "Patio techado y comedor exterior": "Covered patio and outdoor dining", "Jardín": "Garden",
+    "Parrilla": "Barbecue grill", "Ventilador de techo": "Ceiling fan", "Agua caliente": "Hot water", "Ducha exterior": "Outdoor shower",
+    "Heladera, horno y cocina a gas": "Fridge, oven and gas stove", "Cámaras de seguridad exteriores": "Outdoor security cameras", "Botiquín de primeros auxilios": "First aid kit",
+    "Ubicación aproximada. Te pasamos la dirección exacta al confirmar la reserva.": "Approximate location. We send the exact address once the booking is confirmed.",
+    "Para tener en cuenta": "Good to know",
+    "No tiene lavarropas ni secarropas, y no incluye toallas, sábanas ni artículos de higiene: consultanos al reservar. Se permite fumar.": "There is no washer or dryer, and towels, bed linen and toiletries are not included: ask us when you book. Smoking is allowed.",
+    "Casa entera con 2 habitaciones y piscina privada, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene cocina totalmente equipada, Wi-Fi rápido, TV, aire acondicionado y ventilador de techo, parrilla y comedor al aire libre, y estacionamiento gratis dentro de la propiedad.": "Entire house with 2 bedrooms and a private pool, in a natural setting 15 minutes from downtown San Bernardino. It has a fully equipped kitchen, fast Wi-Fi, TV, air conditioning and ceiling fans, a barbecue grill with outdoor dining, and free parking on the property.",
+    "Comedor al aire libre y parrilla": "Outdoor dining and barbecue", "Comedor bajo techo junto a la parrilla, rodeado de un jardín verde.": "Covered dining area next to the grill, surrounded by a green garden.",
+    "Mascotas bienvenidas": "Pets welcome", "Tu perro también se puede venir. La casa tiene cámaras exteriores en la entrada, el patio y la piscina.": "Your dog can come too. The house has outdoor cameras at the entrance, the patio and the pool.",
     "Favorito entre huéspedes · Limpieza 5,0 · Ubicación 5,0 · Comunicación 5,0": "Guest favorite · Cleanliness 5.0 · Location 5.0 · Communication 5.0",
     "Piscina privada": "Private pool", "Para disfrutar el verano sin salir de la casa.": "Enjoy the summer without leaving the house.",
     "2 habitaciones, 4 camas": "2 bedrooms, 4 beds", "Habitación 1: cama doble y cama simple. Habitación 2: cama doble. Además, un sillón en la sala.": "Bedroom 1: double bed and single bed. Bedroom 2: double bed. Plus a sofa in the living room.",
@@ -234,18 +249,21 @@ window.BRICKROGA = {
     precio: null, moneda: "Gs", periodo: "noche",    // PENDIENTE: tarifa por noche
     dormitorios: 2, banos: 2, m2: 0, cochera: 1, huespedes: 6, camas: 4,
     amoblado: true,
-    comodidades: ["piscina", "patio_techado", "jardin", "wifi", "tv", "cocina", "estacionamiento", "mascotas", "amoblado"],
+    comodidades: ["piscina", "patio_techado", "parrilla", "jardin", "wifi", "tv", "aa", "ventilador", "cocina", "horno", "agua_caliente", "ducha_exterior", "estacionamiento", "independiente", "mascotas", "camaras", "botiquin", "amoblado"],
+    mapa_q: "San Bernardino, Cordillera, Paraguay", mapa_aprox: true,
     ideal_para: "Ideal para una escapada en familia o con amigos, a pasos del lago Ypacaraí.",
-    descripcion: "Casa entera para hasta 6 huéspedes, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene dos habitaciones amplias, piscina privada, cocina completamente equipada, Wi-Fi rápido y TV.",
+    descripcion: "Casa entera con 2 habitaciones y piscina privada, en un entorno natural a 15 minutos del centro de San Bernardino. Tiene cocina totalmente equipada, Wi-Fi rápido, TV, aire acondicionado y ventilador de techo, parrilla y comedor al aire libre, y estacionamiento gratis dentro de la propiedad.",
+    nota: { titulo: "Para tener en cuenta", texto: "No tiene lavarropas ni secarropas, y no incluye toallas, sábanas ni artículos de higiene: consultanos al reservar. Se permite fumar." },
     secciones: [
       { e: "🏊", titulo: "Piscina privada", texto: "Para disfrutar el verano sin salir de la casa." },
       { e: "🛏️", titulo: "2 habitaciones, 4 camas", texto: "Habitación 1: cama doble y cama simple. Habitación 2: cama doble. Además, un sillón en la sala." },
-      { e: "⛱️", titulo: "Patio techado y jardín", texto: "Comedor al aire libre bajo techo, rodeado de un jardín verde." },
+      { e: "🔥", titulo: "Comedor al aire libre y parrilla", texto: "Comedor bajo techo junto a la parrilla, rodeado de un jardín verde." },
+      { e: "🐾", titulo: "Mascotas bienvenidas", texto: "Tu perro también se puede venir. La casa tiene cámaras exteriores en la entrada, el patio y la piscina." },
       { e: "🌳", titulo: "Entorno natural y tranquilo", texto: "Zona residencial calma, cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino." }
     ],
     resenas: { nota: 4.89, cantidad: 19, fuente: "Airbnb", detalle: "Favorito entre huéspedes · Limpieza 5,0 · Ubicación 5,0 · Comunicación 5,0" },
     airbnb: "https://www.airbnb.cl/rooms/1346521144935895640",
     contacto: { nombre: "Johanna Colman", numero: "595981743522", visible: "0981 743 522" },
-    fotos: []   // PENDIENTE: fotos propias de la casa
+    fotos: [1,2,3,4,5,6,7,8].map(n => "assets/fotos/san-bernardino/sb" + n + ".webp")
   });
 })();
