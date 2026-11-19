@@ -97,7 +97,7 @@
   /* Pieces */
   function photo(p, i = 0, label = "Foto próximamente", icon = I.house) {
     const src = p.fotos && p.fotos[i];
-    return src ? `<img src="${esc(src)}" alt="${esc((p.titulo || p.nombre) + ", foto " + (i + 1))}" loading="lazy">`
+    return src ? `<img src="${esc(src)}" alt="${esc((p.titulo || p.nombre) + (p.ciudad ? " en " + p.ciudad + ", Paraguay" : "") + ", foto " + (i + 1))}" loading="lazy">`
                : `<div class="ph-empty">${icon}<span>${label}</span></div>`;
   }
   const rooms = p => p.tipo === "Terreno" ? "" : p.dormitorios === 0 ? "Monoambiente" : p.dormitorios + (p.dormitorios === 1 ? " dormitorio" : " dormitorios");
@@ -119,6 +119,8 @@
     const tel = (p.contacto && p.contacto.visible) || WA.visible;
     return `<div class="cartel"><span class="se">${signLabel(p)}</span><span class="monto">${p.precio ? money(p.moneda, p.precio) + `<small>${perLabel(p)}</small>` : `<span class="consult">Consultá la tarifa</span>`}</span><span class="tel">${esc(tel)}</span></div>`;
   }
+  /* each listing has its own indexable page (slug.html); propiedad.html#id stays as a fallback */
+  const propUrl = p => p.slug ? p.slug + ".html" : "propiedad.html#" + p.id;
   function amen(p, max) {
     const C = D.comodidades || {}, list = (p.comodidades || []).filter(k => C[k]);
     const shown = max ? list.slice(0, max) : list, more = list.length - shown.length;
@@ -128,7 +130,7 @@
     return `<div class="tags"><span class="chip chip-orange">${esc(p.operacion)}</span>${p.estado === "reservado" ? '<span class="chip chip-ej">Reservado</span>' : ""}${p.ejemplo ? '<span class="chip chip-ej">Ejemplo</span>' : ""}</div>`;
   }
   function card(p) {
-    return `<a class="card" href="propiedad.html#${esc(p.id)}">
+    return `<a class="card" href="${esc(propUrl(p))}">
       <div class="card-photo">${photo(p)}${tags(p)}${p.codigo ? `<span class="code">${esc(p.codigo)}</span>` : ""}</div>
       <div class="card-body">
         <div class="price">${priceHTML(p)}</div>
@@ -140,7 +142,7 @@
       </div></a>`;
   }
   function feature(p) { return `<div class="grid">${card(p)}</div>`; }
-  Object.assign(window.BRK, { card, photo, specs, cartel, feature, rooms, amen, priceHTML, signLabel });
+  Object.assign(window.BRK, { propUrl, card, photo, specs, cartel, feature, rooms, amen, priceHTML, signLabel });
   const visibles = () => D.propiedades.filter(p => p.estado !== "alquilado");
   window.BRK.visibles = visibles;
 

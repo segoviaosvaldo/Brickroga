@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css">
 <meta name="description" content="Ficha de propiedad de Brickroga: precio, fotos, comodidades y ubicación. Coordiná tu visita por WhatsApp.">
-<link rel="canonical" href="https://www.brickroga.com/propiedad.html">
+<link rel="canonical" href="https://www.brickroga.com/alquileres.html">
+<meta name="robots" content="noindex, follow">
 </head>
 <body data-page="alquileres" data-dyn-title>
 <header id="site-header"></header>
@@ -24,18 +25,23 @@
 <script src="assets/app.js"></script>
 <script>
   function show() {
-    const id = (location.hash || "").slice(1) || (new URLSearchParams(location.search).get("id")) || "";
+    const fixed = document.body.dataset.prop;
+    const id = fixed || (location.hash || "").slice(1) || (new URLSearchParams(location.search).get("id")) || "";
     const all = BRICKROGA.propiedades;
     const p = all.find(x => x.id === id) || all.find(x => x.id.startsWith(id + "-")) || all[0];
+    /* old links (propiedad.html#id) go to the listing's own page */
+    if (!fixed && p.slug) { location.replace(p.slug + ".html" + location.search); return; }
     const E = BRK.esc, M = n => BRK.money(p.moneda, n), K = p.contacto || { nombre: "", numero: BRK.WA.numero, visible: BRK.WA.visible };
     const T = x => window.BRK_I18N ? BRK_I18N.tr(x) : x;
-    document.title = T(p.titulo + ", " + p.ciudad) + " | Brickroga";
-    const md = document.querySelector('meta[name="description"]');
+    /* listing pages already ship an SEO title and description in Spanish; only rewrite them in English or on the generic page */
+    const keepHead = fixed && !(window.BRK_I18N && BRK_I18N.lang === "en");
+    if (!keepHead) document.title = T(p.titulo + ", " + p.ciudad) + " | Brickroga";
+    const md = keepHead ? null : document.querySelector('meta[name="description"]');
     if (md) md.content = (p.ideal_para ? p.ideal_para + " " : "") + p.titulo + ", " + p.barrio + ", " + p.ciudad + (p.precio ? ". " + M(p.precio) + " por " + p.periodo + "." : ".");
     const msg = "Hola Brickroga, me interesa " + (p.codigo ? "la propiedad " + p.codigo + ", " : "") + "\"" + p.titulo + "\"" + (p.precio ? " (" + M(p.precio) + " por " + p.periodo + ")" : "") + ". ¿Puedo coordinar una visita?";
     const wa = BRK.waLink(msg, K.numero);
     const estado = p.estado === "disponible" ? '<span class="chip chip-ok">Disponible</span>' : '<span class="chip chip-ej">' + E(p.estado) + '</span>';
-    const fotos = (p.fotos || []).length ? p.fotos.map((s, i) => `<img src="${E(s)}" alt="${E(p.titulo)}, foto ${i + 1}" loading="${i < 3 ? "eager" : "lazy"}">`).join("")
+    const fotos = (p.fotos || []).length ? p.fotos.map((s, i) => `<img src="${E(s)}" alt="${E(p.titulo)} en ${E(p.ciudad)}, Paraguay, foto ${i + 1}" loading="${i < 3 ? "eager" : "lazy"}">`).join("")
       : [0, 1, 2].map(() => '<div class="card-photo" style="aspect-ratio:9/16">' + BRK.photo(p) + '</div>').join("");
     const facts = [];
     if (p.tipo !== "Terreno") facts.push(p.dormitorios ? [p.dormitorios, p.dormitorios === 1 ? "dormitorio" : "dormitorios"] : ["Mono", "ambiente"]);

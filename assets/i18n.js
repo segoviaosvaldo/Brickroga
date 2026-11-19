@@ -7,7 +7,9 @@
   try {
     const q = new URLSearchParams(location.search).get("lang");
     if (q === "en" || q === "es") { lang = q; localStorage.setItem("brk-lang", q); }
-    else lang = localStorage.getItem("brk-lang") || ((navigator.language || "es").toLowerCase().startsWith("es") ? "es" : "en");
+    /* Spanish unless the visitor picked English (or came with ?lang=en). Not guessing from the browser
+       language keeps Google, which crawls with an English browser, reading the Spanish site. */
+    else lang = localStorage.getItem("brk-lang") || "es";
   } catch (e) {}
   if (lang !== "en") lang = "es";
   document.documentElement.lang = lang === "en" ? "en" : "es-PY";
@@ -94,10 +96,12 @@
 
     /* baskets */
     "Navidad 2026 · Regalos empresariales": "Christmas 2026 · Corporate gifts",
-    "Canastas navideñas corporativas en Asunción": "Corporate Christmas baskets in Asunción",
+    "Canastas navideñas corporativas en Asunción, Paraguay": "Corporate Christmas baskets in Asunción, Paraguay",
     "Canastas en bolso térmico, mochila o bolsa de viaje para regalar a clientes, proveedores y a tu equipo. Las personalizamos con tu logo, las entregamos donde nos digas y te facturamos con RUC.":
       "Baskets in a cooler bag, backpack or travel bag for your clients, suppliers and team. We add your logo, deliver wherever you need and issue a Paraguayan tax invoice (RUC).",
-    "Pedir cotización": "Request a quote", "Desde": "From", "Verano en San Bernardino": "Summer in San Bernardino", "Este verano,": "This summer,", "piscina propia": "your own pool", "a pasos del lago.": "steps from the lake.",
+    "Pedir cotización": "Request a quote", "Desde": "From", "Somos una empresa paraguaya con oficina en Asunción. Si buscás regalos empresariales de fin de año o canastas navideñas para tu equipo, te mandamos una muestra antes de armar todo el pedido.": "We are a Paraguayan company with an office in Asunción. If you are looking for end-of-year corporate gifts or Christmas baskets for your team, we send you a sample before putting the whole order together.", "¿Envían a otras ciudades de Paraguay?": "Do you ship to other cities in Paraguay?", "Entregamos en Asunción y Gran Asunción. Para pedidos a otras ciudades de Paraguay, consultanos por WhatsApp y vemos el envío.": "We deliver in Asunción and Greater Asunción. For orders to other cities in Paraguay, message us on WhatsApp and we will sort out shipping.", "Alquileres en Asunción, Paraguay": "Rentals in Asunción, Paraguay", "Departamentos y casas en alquiler en Asunción y San Bernardino, Paraguay.": "Apartments and houses for rent in Asunción and San Bernardino, Paraguay.",
+    "Propiedades en alquiler en Paraguay": "Properties for rent in Paraguay", "Departamentos, casas y terrenos en Asunción y alrededores. Todos con precio publicado.": "Apartments, houses and land in and around Asunción. Every listing shows its price.",
+    "Ycuá Satí, Asunción, Paraguay": "Ycuá Satí, Asunción, Paraguay", "Verano en San Bernardino": "Summer in San Bernardino", "Este verano,": "This summer,", "piscina propia": "your own pool", "a pasos del lago.": "steps from the lake.",
     "Casa entera con 2 habitaciones, piscina privada y parrilla, para hasta 6 personas. Tu perro también viene.": "Entire house with 2 bedrooms, a private pool and a grill, for up to 6 guests. Your dog can come too.",
     "Ver la casa": "See the house", "Consultar fechas": "Check dates", "Tarifa base por noche. Puede variar según la fecha y la cantidad de noches.": "Base nightly rate. It may vary with the dates and the number of nights.", "Tarifa por noche": "Nightly rate", "Ver canastas": "See the baskets", "Canastas navideñas corporativas": "Corporate Christmas baskets",
     "En bolso térmico, mochila o bolsa de viaje,": "In a cooler bag, backpack or travel bag,",
@@ -159,7 +163,7 @@
     [/^(.+), ([^,]+)$/, (m, a, b) => DICT[a] !== undefined ? DICT[a] + ", " + b : m]
   ];
   const PAGES = {
-    inicio: ["Brickroga | Furnished apartments for rent in Asunción", "Furnished studios for rent in Santa María, Asunción, from Gs. 2,500,000 a month with internet and utilities included. Also corporate Christmas baskets. Brickroga E.A.S."],
+    inicio: ["Furnished apartments for rent in Asunción, Paraguay | Brickroga", "Furnished studios for rent in Santa María, Asunción, from Gs. 2,500,000 a month with internet and utilities included. Also corporate Christmas baskets. Brickroga E.A.S."],
     alquileres: ["Properties for rent in Asunción and Paraguay | Brickroga", "Brickroga studios, apartments, houses and land in and around Asunción. Search by area, type, price and amenities."],
     canastas: ["Corporate Christmas baskets in Paraguay | Brickroga", "Corporate Christmas baskets in Greater Asunción. Baskets in a cooler bag, backpack or travel bag with your company logo, delivery and tax invoice. Get a quote on WhatsApp."]
   };

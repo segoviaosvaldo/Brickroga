@@ -21,7 +21,7 @@ window.BRICKROGA = {
     instagram: "",                           // todavía no hay cuenta: vacío = no se muestra
     oficina: "Velloso Enciso entre Raúl Carmona y Bruselas",
     oficina_referencia: "A 200 metros de la entrada posterior de Paseo La Galería",
-    oficina_barrio: "Ycuá Satí, Asunción",
+    oficina_barrio: "Ycuá Satí, Asunción, Paraguay",
     oficina_maps: "https://www.google.com/maps/search/?api=1&query=Velloso+Enciso+y+Bruselas,+Asunci%C3%B3n,+Paraguay",
     horario: "Lunes a viernes de 8 a 18 h · Sábados de 8 a 12 h", // CONFIRMAR
     sitio: "https://www.brickroga.com",
@@ -176,6 +176,7 @@ window.BRICKROGA = {
     operacion: "Alquiler",
     tipo: "Monoambiente",
     ciudad: "Asunción",
+    departamento: "Asunción",
     barrio: "Santa María",
     direccion: "Mayor Joel Estigarribia 485, Asunción",
     lat: -25.301266, lng: -57.550014,
@@ -229,6 +230,8 @@ window.BRICKROGA = {
     id: "santa-maria-" + n,
     codigo: "BRK-00" + n,
     unidad: "Unidad " + n,
+    // página propia, indexable en Google (la genera herramientas/generar-fichas.js)
+    slug: "alquiler-monoambiente-amoblado-santa-maria-asuncion-" + n,
     titulo: "Monoambiente amoblado en Santa María · Unidad " + n,
     // PENDIENTE: cuando lleguen las fotos de cada unidad, poné acá su lista propia y borrá fotos_nota
     // cada unidad abre con una foto distinta para que no se vean iguales en el listado
@@ -238,12 +241,14 @@ window.BRICKROGA = {
   P.push({
     id: "san-bernardino-casa",
     codigo: "BRK-004",
+    slug: "alquiler-casa-con-piscina-san-bernardino-paraguay",
     estado: "disponible",
     destacado: true,
     operacion: "Alquiler temporario",
     tipo: "Casa",
     titulo: "Casa con piscina en San Bernardino",
     ciudad: "San Bernardino",
+    departamento: "Cordillera",
     barrio: "Cerca del lago Ypacaraí",
     direccion: "",
     maps: "",
