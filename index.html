@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="theme-color" content="#102542">
+<meta name="theme-color" content="#111111">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css">
-<meta name="description" content="Monoambientes amoblados en alquiler en Santa María, Asunción, desde Gs. 2.500.000 por mes con internet y servicios incluidos. También canastas navideñas corporativas. Brickroga E.A.S.">
+<meta name="description" content="Alquiler de monoambientes amoblados en alquiler en Santa María, Asunción, desde Gs. 2.500.000 por mes con internet y servicios incluidos. También canastas navideñas corporativas. Brickroga E.A.S.">
 <link rel="canonical" href="https://www.brickroga.com/">
 <meta property="og:title" content="Brickroga | Alquileres con el precio a la vista">
 <meta property="og:description" content="Monoambientes amoblados en Santa María, Asunción. Gs. 2.500.000 por mes, servicios incluidos.">
@@ -24,20 +24,42 @@
 <header id="site-header"></header>
 
 <main>
-  <section class="hero">
-    <div class="wrap">
-      <div>
-        <p class="label">Alquileres en Asunción</p>
-        <h1 style="margin-top:12px">Llegás con la valija. <span class="b">El resto ya está.</span></h1>
-        <p class="lead">Monoambientes amoblados en Santa María, con internet y servicios incluidos. El precio está a la vista y la visita se coordina por WhatsApp.</p>
-        <div class="hero-row" id="hero-sign"></div>
-        <div class="hero-actions">
-          <a class="btn btn-navy" href="propiedad.html#santa-maria">Ver fotos y detalles</a>
-          <a class="btn btn-line" data-wa="Hola Brickroga, quiero coordinar una visita al monoambiente de Santa María." href="#">Coordinar una visita</a>
+  <section class="slider" id="slider" aria-roledescription="carrusel" aria-label="Destacados">
+    <div class="slides">
+      <div class="slide on" aria-hidden="false">
+        <div class="wrap">
+          <div>
+            <p class="label">Alquileres en Asunción</p>
+            <h1>Alquilá tu depto. <em>Llegás con la valija.</em></h1>
+            <p class="lead">Monoambientes amoblados en Santa María con internet y servicios incluidos. El precio está a la vista y la visita se coordina por WhatsApp.</p>
+            <div id="hero-sign"></div>
+            <div class="cta">
+              <a class="btn btn-orange" href="propiedad.html#santa-maria">Ver el departamento</a>
+              <a class="btn btn-line" data-wa="Hola Brickroga, quiero coordinar una visita al monoambiente de Santa María." href="#">Coordinar una visita</a>
+            </div>
+          </div>
+          <div class="photos" id="hero-photos" aria-hidden="true"></div>
         </div>
       </div>
-      <div class="bond" id="bond" aria-hidden="true"></div>
+      <div class="slide" aria-hidden="true">
+        <div class="wrap">
+          <div>
+            <p class="label">Navidad 2026 · Para empresas</p>
+            <p class="h1">Canastas navideñas <em>corporativas</em>, con tu logo.</p>
+            <p class="lead">Canastas de mimbre y cajas de madera para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.</p>
+            <div class="cta">
+              <a class="btn btn-orange" href="canastas-navidenas-corporativas.html" tabindex="-1">Ver canastas y precios</a>
+              <a class="btn btn-line" data-wa="Hola Brickroga, quiero cotizar canastas navideñas para mi empresa." href="#" tabindex="-1">Cotizar por WhatsApp</a>
+            </div>
+          </div>
+          <div class="photos" id="xmas-photos" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
+    <div class="slider-ui"><div class="wrap">
+      <div class="dots" role="group" aria-label="Elegir banner"><button type="button" aria-label="Banner 1: alquileres" aria-pressed="true"></button><button type="button" aria-label="Banner 2: canastas navideñas" aria-pressed="false"></button></div>
+      <div class="arrows"><button type="button" class="prev" aria-label="Banner anterior">‹</button><button type="button" class="next" aria-label="Banner siguiente">›</button></div>
+    </div></div>
   </section>
 
   <section class="section">
@@ -60,7 +82,7 @@
           <p>Para clientes, proveedores y tu equipo. Entregamos en Asunción y Gran Asunción, con factura.</p>
         </div>
         <div class="xmas-actions">
-          <a class="btn btn-brick" href="canastas-navidenas-corporativas.html">Ver canastas y precios</a>
+          <a class="btn btn-orange" href="canastas-navidenas-corporativas.html">Ver canastas y precios</a>
         </div>
       </div>
     </div>
@@ -92,13 +114,41 @@
 <script src="assets/app.js"></script>
 <script>
   (function () {
-    const p = BRICKROGA.propiedades.find(x => x.destacado) || BRICKROGA.propiedades[0];
+    const E = BRK.esc, p = BRICKROGA.propiedades.find(x => x.destacado) || BRICKROGA.propiedades[0];
     document.getElementById("gift").innerHTML = BRK_ICONS.gift;
-    if (!p) return;
-    document.getElementById("hero-sign").innerHTML = BRK.cartel(p) + (p.incluye ? `<p class="incl">${BRK.esc(p.incluye)}</p>` : "");
-    const f = p.fotos || [];
-    const cols = [[f[0], f[3]], [f[1], f[5]], [f[2], f[4]]];
-    document.getElementById("bond").innerHTML = cols.map(c => `<div class="col">${c.filter(Boolean).map(s => `<figure><img src="${BRK.esc(s)}" alt=""></figure>`).join("")}</div>`).join("");
+    if (p) {
+      document.getElementById("hero-sign").innerHTML = BRK.cartel(p);
+      const f = p.fotos || [];
+      document.getElementById("hero-photos").innerHTML = [f[0], f[1], f[2]].map(s => s ? `<figure><img src="${E(s)}" alt=""></figure>` : `<figure><div class="ph-dark">${BRK_ICONS.house}<span>Foto próximamente</span></div></figure>`).join("");
+    }
+    const cf = BRICKROGA.canastas.flatMap(c => c.fotos || []);
+    document.getElementById("xmas-photos").innerHTML = [0, 1, 2].map(i => cf[i] ? `<figure><img src="${E(cf[i])}" alt=""></figure>` : `<figure><div class="ph-dark">${BRK_ICONS.gift}<span>Foto próximamente</span></div></figure>`).join("");
+
+    /* slider: crossfade every 7 s, pauses on hover/focus and when the tab is hidden */
+    const root = document.getElementById("slider"), slides = [...root.querySelectorAll(".slide")], dots = [...root.querySelectorAll(".dots button")];
+    const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let cur = 0, tm = null;
+    function go(n) {
+      cur = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => { const on = k === cur; s.classList.toggle("on", on); s.setAttribute("aria-hidden", on ? "false" : "true"); s.querySelectorAll("a").forEach(a => on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")); });
+      dots.forEach((d, k) => { d.setAttribute("aria-pressed", k === cur ? "true" : "false"); });
+      // restart the progress bar animation
+      dots[cur].style.animation = "none"; void dots[cur].offsetWidth; dots[cur].style.animation = "";
+      plan();
+    }
+    function plan() { clearTimeout(tm); if (!RM && !root.classList.contains("paused")) tm = setTimeout(() => go(cur + 1), 7000); }
+    dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
+    root.querySelector(".prev").addEventListener("click", () => go(cur - 1));
+    root.querySelector(".next").addEventListener("click", () => go(cur + 1));
+    const pause = () => { root.classList.add("paused"); clearTimeout(tm); }, resume = () => { root.classList.remove("paused"); go(cur); };
+    root.addEventListener("mouseenter", pause); root.addEventListener("mouseleave", resume);
+    root.addEventListener("focusin", pause); root.addEventListener("focusout", e => { if (!root.contains(e.relatedTarget)) resume(); });
+    document.addEventListener("visibilitychange", () => document.hidden ? clearTimeout(tm) : plan());
+    let x0 = null;
+    root.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+    root.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1)); x0 = null; });
+    if (RM) root.classList.add("paused");
+    plan();
   })();
 </script>
 </body>

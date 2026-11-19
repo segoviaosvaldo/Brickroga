@@ -13,14 +13,16 @@ window.BRICKROGA = {
   config: {
     nombre: "Brickroga",
     razon_social: "BRICKROGA E.A.S.",
-    ruc: "",                                 // PENDIENTE: RUC de Brickroga
+    ruc: "80177512-4",
     whatsapp: [
-      { numero: "595985777252", visible: "+595 985 777 252" } // CONFIRMAR: tomado de theparaguaytax.com/rentals
+      { numero: "595981743522", visible: "0981 743 522" } // Johanna
     ],
     email: "",                               // PENDIENTE: ej. contacto@brickroga.com
     instagram: "",                           // PENDIENTE: usuario, sin @
-    oficina: "",                             // PENDIENTE: dirección de atención
-    oficina_maps: "",                        // link de Google Maps
+    oficina: "Velloso Enciso entre Raúl Carmona y Bruselas",
+    oficina_referencia: "A 200 metros de la entrada posterior de Paseo La Galería",
+    oficina_barrio: "Ycuá Satí, Asunción",
+    oficina_maps: "https://www.google.com/maps/search/?api=1&query=Velloso+Enciso+y+Bruselas,+Asunci%C3%B3n,+Paraguay",
     horario: "Lunes a viernes de 8 a 18 h · Sábados de 8 a 12 h", // CONFIRMAR
     sitio: "https://www.brickroga.com",
     version: "Versión 1.0 · 2026"
