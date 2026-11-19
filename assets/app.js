@@ -222,7 +222,7 @@
       const p = enter(w); w.style.transform = `scale(${.84 + .16 * p})`; w.style.borderRadius = (1 - p) * 28 + "px";
     }); });
     document.querySelectorAll(".promo").forEach(el => fx.push(() => { const p = enter(el); el.style.transform = `scale(${.95 + .05 * p})`; }));
-    document.querySelectorAll(".story .word").forEach(el => fx.push(() => { const p = prog(el); el.style.transform = `translate3d(${(.5 - p) * 120}px,0,0)`; }));
+    if (!MOB) document.querySelectorAll(".story .word").forEach(el => fx.push(() => { const p = prog(el); el.style.transform = `translate3d(${(.5 - p) * 120}px,0,0)`; }));
     document.querySelectorAll(".xh-art .xart, .xcard .xart, .xfig .xart").forEach((el, i) => fx.push(() => { const p = prog(el); el.style.transform = `translate3d(0,${(.5 - p) * (30 + (i % 3) * 18)}px,0)`; }));
     document.querySelectorAll("main .section-head h2").forEach(el => fx.push(() => { const p = enter(el); el.style.letterSpacing = (1 - p) * .06 + "em"; }));
     if (MOB) {

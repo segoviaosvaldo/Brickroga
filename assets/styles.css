@@ -576,3 +576,9 @@ html{scroll-behavior:smooth}
   .finder input,.finder select{min-width:0}
 }
 @media (max-width:640px){.slide .wrap{padding-bottom:112px}.slider-ui{bottom:52px}}
+
+/* never let anything (swipe rows sliding in, the big Brickróga word) widen the page on phones */
+body{overflow-x:hidden}
+@supports (overflow:clip){body{overflow-x:visible}html,body{overflow-x:clip}}
+main{max-width:100%}
+@media (max-width:640px){.story .word{font-size:clamp(2.4rem,14vw,3.6rem);max-width:100%}}
