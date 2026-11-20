@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+<title>Alquiler de departamentos, monoambientes y casas en Paraguay | Brickroga</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#111111">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+<meta name="description" content="Alquiler de monoambientes, departamentos y casas amoblados en Asunción y alrededores, Paraguay. Precio publicado en guaraníes, fotos y ubicación. Buscá por zona, tipo, precio y comodidades.">
+<link rel="canonical" href="https://www.brickroga.com/alquileres.html">
+<link rel="alternate" hreflang="es-PY" href="https://www.brickroga.com/alquileres.html">
+<link rel="alternate" hreflang="en" href="https://www.brickroga.com/alquileres.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://www.brickroga.com/alquileres.html">
+<meta name="geo.region" content="PY">
+<meta name="geo.placename" content="Asunción, Paraguay">
+<!--ITEMLIST--><script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Propiedades en alquiler en Paraguay","itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-asaje-santa-maria-studio-3-asuncion.html","name":"Monoambiente amoblado en Asaje Santa María · Studio 3"},{"@type":"ListItem","position":2,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-asaje-santa-maria-studio-5-asuncion.html","name":"Monoambiente amoblado en Asaje Santa María · Studio 5"},{"@type":"ListItem","position":3,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-asaje-santa-maria-studio-8-asuncion.html","name":"Monoambiente amoblado en Asaje Santa María · Studio 8"}]}</script><!--/ITEMLIST-->
+</head>
+<body data-page="alquileres">
+<header id="site-header"></header>
+<main class="wrap">
+  <section class="page-head">
+    <h1 style="font-size:clamp(2rem,4vw,3rem)">Propiedades en alquiler en Paraguay</h1>
+    <p>Departamentos, casas y terrenos en Asunción y alrededores. Todos con precio publicado.</p>
+  </section>
+  <form class="filters" id="filters" role="search">
+    <div class="field" style="flex:2 1 260px"><label for="f-q">Buscar</label><input id="f-q" name="q" type="search" placeholder="Barrio, ciudad, código o comodidad"></div>
+    <div class="field"><label for="f-op">Operación</label><select id="f-op" name="op"><option value="">Todas</option><option>Alquiler</option><option>Alquiler temporario</option><option>Venta</option></select></div>
+    <div class="field"><label for="f-tipo">Tipo</label><select id="f-tipo" name="tipo"><option value="">Todos</option><option>Monoambiente</option><option>Departamento</option><option>Casa</option><option>Terreno</option></select></div>
+    <div class="field"><label for="f-ciudad">Ciudad</label><select id="f-ciudad" name="ciudad"><option value="">Todas</option></select></div>
+    <div class="field"><label for="f-max">Precio máximo</label><select id="f-max" name="max"><option value="">Sin límite</option><option value="2500000">Gs. 2.500.000</option><option value="3500000">Gs. 3.500.000</option><option value="5000000">Gs. 5.000.000</option><option value="8000000">Gs. 8.000.000</option></select></div>
+    <div class="field"><label for="f-dorm">Dormitorios</label><select id="f-dorm" name="dorm"><option value="">Cualquiera</option><option value="0">Monoambiente</option><option value="1">1 o más</option><option value="2">2 o más</option><option value="3">3 o más</option></select></div>
+    <div class="field"><label for="f-orden">Ordenar</label><select id="f-orden" name="orden"><option value="asc">Menor precio</option><option value="desc">Mayor precio</option><option value="nuevo">Código</option></select></div>
+    <div class="check-row" id="checks"></div>
+  </form>
+  <p class="result-count" id="count" aria-live="polite"></p>
+  <div class="grid" id="list"></div>
+  <div style="height:64px"></div>
+</main>
+<footer id="site-footer"></footer>
+<script src="data/datos.js"></script>
+<script src="assets/i18n.js"></script>
+<script src="assets/iconos.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  const f = document.getElementById("filters"), D = BRICKROGA, E = BRK.esc;
+  const norm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  [...new Set(BRK.visibles().map(p => p.ciudad))].sort().forEach(c => f.elements.ciudad.insertAdjacentHTML("beforeend", `<option>${E(c)}</option>`));
+  const CHECKS = ["amoblado", "piscina", "mascotas", "estacionamiento", "servicios"];
+  document.getElementById("checks").innerHTML = CHECKS.filter(k => D.comodidades[k]).map(k => `<label for="c-${k}"><input type="checkbox" id="c-${k}" name="c" value="${k}"><span class="e" aria-hidden="true">${BRK_ICO(k)}</span>${E(D.comodidades[k][1])}</label>`).join("");
+  try { const q = new URLSearchParams(location.search); for (const [k, v] of q) { const el = f.elements[k]; if (el && el.tagName) el.value = v; } } catch (e) {}
+  function haystack(p) {
+    const C = D.comodidades;
+    return norm([p.titulo, p.codigo, p.tipo, p.operacion, p.barrio, p.ciudad, p.direccion, p.descripcion, (p.comodidades || []).map(k => C[k] ? C[k][1] : k).join(" ")].join(" "));
+  }
+  function render() {
+    const v = Object.fromEntries(new FormData(f)), checks = new FormData(f).getAll("c");
+    const words = norm(v.q).split(/\s+/).filter(Boolean);
+    let list = BRK.visibles().filter(p => {
+      const h = haystack(p);
+      return words.every(w => h.includes(w)) &&
+        (!v.op || p.operacion === v.op) && (!v.tipo || p.tipo === v.tipo) && (!v.ciudad || p.ciudad === v.ciudad) &&
+        (v.dorm === "" || (v.dorm === "0" ? p.dormitorios === 0 : p.dormitorios >= +v.dorm)) &&
+        (!v.max || (p.precio && p.precio <= +v.max)) &&
+        checks.every(k => (p.comodidades || []).includes(k));
+    });
+    const pr = p => p.precio || Infinity;
+    list.sort((a, b) => v.orden === "desc" ? (b.precio || 0) - (a.precio || 0) : v.orden === "nuevo" ? String(a.codigo).localeCompare(b.codigo) : pr(a) - pr(b));
+    document.getElementById("count").textContent = list.length + (list.length === 1 ? " propiedad" : " propiedades");
+    document.getElementById("list").innerHTML = list.length ? list.map(BRK.card).join("")
+      : '<div class="empty" style="grid-column:1/-1">No encontramos propiedades con esa búsqueda. Probá con menos filtros o <a href="' + BRK.waLink("Hola Brickroga, busco una propiedad y no encontré lo que necesito.") + '" target="_blank" rel="noopener">contanos qué buscás</a>.</div>';
+  }
+  f.addEventListener("input", render); f.addEventListener("change", render); f.addEventListener("submit", e => e.preventDefault()); render();
+</script>
+</body>
+</html>
