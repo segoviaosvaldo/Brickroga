@@ -9,6 +9,7 @@
     tv: '<rect x="2.5" y="5" width="19" height="12.5" rx="1.5"/><path d="M8 21h8M12 17.5V21"/>',
     pot: '<path d="M4 10h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-6Z"/><path d="M2 10h2M20 10h2M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/>',
     fridge: '<rect x="5.5" y="2.5" width="13" height="19" rx="1.5"/><path d="M5.5 10h13M8.5 6v1.5M8.5 13v2.5"/>',
+    balcony: '<path d="M4 21V12h16v9"/><path d="M4 16h16M8 12v9M12 12v9M16 12v9"/><path d="M7 12V4h10v8"/>',
     bed: '<path d="M3 19V6M3 14h18v5M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/>',
     desk: '<path d="M3 8h18M5 8v12M19 8v12M13 8v6h6"/><path d="M15 11h2"/>',
     toilet: '<path d="M6 3h6v7H6zM4 10h12a0 0 0 0 1 0 0 5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Z"/><path d="M8 15l-1 6h7l-1-6"/>',
@@ -46,7 +47,7 @@
   };
   const MAP = {
     amoblado: "sofa", wifi: "wifi", aa: "snow", tv: "tv", cocina: "pot", heladera: "fridge", cama: "bed", escritorio: "desk",
-    bano_privado: "toilet", lavarropas: "washer", patio: "leaf", estacionamiento: "car", piscina: "pool", mascotas: "paw",
+    bano_privado: "toilet", lavarropas: "washer", patio: "leaf", balcon: "balcony", estacionamiento: "car", piscina: "pool", mascotas: "paw",
     servicios: "bolt", independiente: "door", patio_techado: "umbrella", jardin: "tree", parrilla: "flame", ventilador: "fan",
     agua_caliente: "hotwater", ducha_exterior: "shower", horno: "oven", camaras: "camera", botiquin: "aid",
     "📍": "pin", "🏙️": "city", "🔌": "plug", "🏊": "pool", "🛏️": "bed", "🔥": "flame", "🐾": "paw", "🌳": "tree", "⛱️": "umbrella",

@@ -58,6 +58,7 @@ window.BRICKROGA = {
     bano_privado:    ["🚿", "Baño privado"],
     lavarropas:      ["🧺", "Lavarropas y secarropas compartidos"],
     patio:           ["🌿", "Patio propio"],
+    balcon:          ["🌇", "Balcón propio"],
     estacionamiento: ["🚗", "Estacionamiento"],
     piscina:         ["🏊", "Piscina"],
     mascotas:        ["🐾", "Acepta mascotas"],
@@ -119,6 +120,8 @@ window.BRICKROGA = {
     "Ubicación estratégica": "Strategic location", "Zona tranquila y bien ubicada en Asunción, con la comodidad de un entorno residencial.": "A quiet, well-located area of Asunción with the comfort of a residential neighborhood.",
     "Comodidad urbana": "City convenience", "Todo cerca: shoppings, supermercados y zonas corporativas. Llegás a todo en minutos.": "Everything nearby: malls, supermarkets and business areas, all a few minutes away.",
     "Conectividad total": "Fully connected", "Listo para mudarte: cama, escritorio, TV, aire acondicionado, cocina equipada, baño privado, y lavarropas y secarropas de uso compartido.": "Ready to move in: bed, desk, TV, air conditioning, equipped kitchen, private bathroom, and a shared washer and dryer.",
+    "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un balcón propio con sillón. Los departamentos son independientes y el complejo tiene amplio estacionamiento.":
+      "Furnished studio, ready to move in with just your suitcase. Porcelain tile floors, an exposed brick wall, a kitchen with counter and breakfast bar, a desk to work at and a private balcony with a chair. Each unit has its own entrance and the complex has ample parking.",
     "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Los departamentos son independientes y el complejo tiene amplio estacionamiento.":
       "Furnished studio, ready to move in with just your suitcase. Porcelain tile floors, an exposed brick wall, a kitchen with counter and breakfast bar, a desk to work at and a private patio with a table. Each unit has its own entrance and the complex has ample parking.",
     "Casa con piscina en San Bernardino": "House with pool in San Bernardino", "Cerca del lago Ypacaraí": "Near Lake Ypacaraí",
@@ -150,7 +153,7 @@ window.BRICKROGA = {
     "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Internet y servicios básicos incluidos en el alquiler.":
       "Furnished studio, ready to move in with just your suitcase. Porcelain tile floors, an exposed brick wall, a kitchen with counter and breakfast bar, a desk to work at and a private patio with a table. Internet and utilities are included in the rent.",
     "Cama con cajoneras": "Bed with drawers", "Escritorio y silla": "Desk and chair", "Aire acondicionado": "Air conditioning", "TV": "TV",
-    "Cocina equipada": "Equipped kitchen", "Heladera y microondas": "Fridge and microwave", "Baño privado": "Private bathroom", "Patio propio": "Private patio",
+    "Cocina equipada": "Equipped kitchen", "Heladera y microondas": "Fridge and microwave", "Baño privado": "Private bathroom", "Patio propio": "Private patio", "Balcón propio": "Private balcony", "Planta alta": "Upper floor",
     "Lavarropas y secarropas compartidos": "Shared washer and dryer",
     "Gestión de alquileres": "Rental management", "Publicamos tu inmueble, filtramos interesados, hacemos el contrato y cobramos por vos.": "We list your property, screen applicants, handle the lease and collect the rent for you.",
     "Consultoría inmobiliaria": "Real estate consulting", "Comparamos zonas, precio por m² y rentabilidad antes de que compres un terreno o un departamento.": "We compare areas, price per m² and returns before you buy land or an apartment.",
@@ -211,22 +214,19 @@ window.BRICKROGA = {
     video: "assets/video/romi.mp4",
     video_poster: "assets/video/romi.jpg",
     video_titulo: "Recorrido con Romi",
-    fotos_nota: "Fotos de referencia: las 3 unidades tienen el mismo equipamiento.",
-    fotos: [
-      "assets/fotos/santa-maria/fachada.jpg",
-      "assets/fotos/santa-maria/r1.webp",
-      "assets/fotos/santa-maria/r5.webp",
-      "assets/fotos/santa-maria/r4.webp",
-      "assets/fotos/santa-maria/r3.webp",
-      "assets/fotos/santa-maria/r2.webp",
-      "assets/fotos/santa-maria/r8.webp",
-      "assets/fotos/santa-maria/r9.webp",
-      "assets/fotos/santa-maria/r6.webp",
-      "assets/fotos/santa-maria/r7.webp",
-      "assets/fotos/santa-maria/pasillo.jpg"
-    ]
+    // fotos del edificio (se suman al final de cada studio)
+    fotos_comun: ["6455", "6456", "6449", "6447", "6448", "6453", "6461"].map(n => "assets/fotos/asaje/comun/" + n + ".webp"),
+    fotos_hero: ["assets/fotos/asaje/comun/6455.webp", "assets/fotos/asaje/studio-5/6375.webp", "assets/fotos/asaje/studio-8/6403.webp"]
   };
   const P = window.BRICKROGA.propiedades;
+  // fotos propias de cada studio (assets/fotos/asaje/studio-N/)
+  const FOTOS_STUDIO = { 3: "6428 6429 6436 6441 6434 6435 6437 6430 6439 6440 6446", 5: "6375 6396 6397 6386 6378 6382 6384 6383 6393 6389 6392 6398", 8: "6399 6403 6401 6402 6404 6405 6409 6413 6416 6419 6420" };
+  // diferencias por studio: el 3 está en planta alta con balcón; el 5 y el 8 en planta baja con patio
+  const EXTRA_STUDIO = {
+    3: { planta: "Planta alta",
+         comodidades: santaMaria.comodidades.map(c => c === "patio" ? "balcon" : c),
+         descripcion: santaMaria.descripcion.replace("un patio propio con mesa", "un balcón propio con sillón") }
+  };
   // Edificio "Asaje - Santa María Studios". Los próximos edificios Asaje cambian solo la zona.
   [3, 5, 8].forEach((n, i) => P.push(Object.assign({}, santaMaria, {
     id: "asaje-santa-maria-studio-" + n,
@@ -236,10 +236,8 @@ window.BRICKROGA = {
     // página propia, indexable en Google (la genera herramientas/generar-fichas.js)
     slug: "alquiler-monoambiente-amoblado-asaje-santa-maria-studio-" + n + "-asuncion",
     titulo: "Monoambiente amoblado en Asaje Santa María · Studio " + n,
-    // PENDIENTE: cuando lleguen las fotos de cada unidad, poné acá su lista propia y borrá fotos_nota
-    // cada unidad abre con una foto distinta para que no se vean iguales en el listado
-    fotos: (function () { const f = santaMaria.fotos.slice(), first = f.splice(i + 1, 1)[0]; return [first].concat(f); })()
-  })));
+    fotos: FOTOS_STUDIO[n].split(" ").map(f => "assets/fotos/asaje/studio-" + n + "/" + f + ".webp").concat(santaMaria.fotos_comun)
+  }, EXTRA_STUDIO[n] || {})));
 
   P.push({
     id: "san-bernardino-casa",

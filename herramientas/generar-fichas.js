@@ -21,7 +21,7 @@ for (const p of D.propiedades) {
   const title = `${p.operacion === "Alquiler temporario" ? "Alquiler temporario: " : "Alquiler: "}${p.titulo.replace(" · ", ", ")}${p.ciudad === "Asunción" ? ", Asunción" : ""}, Paraguay | Brickroga`;
   const desc = `${p.titulo.replace(" · ", ", ")} en ${lugar}. ${p.precio ? precio + ". " : ""}${p.incluye ? "Incluye " + p.incluye.charAt(0).toLowerCase() + p.incluye.slice(1) + " " : ""}${p.ideal_para || ""} Consultá por WhatsApp al ${C.whatsapp[0].visible}.`.replace(/\s+/g, " ").slice(0, 300);
   const amen = (p.comodidades || []).map(k => D.comodidades[k] && D.comodidades[k][1]).filter(Boolean);
-  const img = (p.fotos || [])[0] ? SITE + p.fotos[0] : SITE + "assets/fotos/santa-maria/r1.webp";
+  const img = (p.fotos || [])[0] ? SITE + p.fotos[0] : SITE + "assets/fotos/asaje/comun/6455.webp";
   const place = {
     "@type": p.tipo === "Casa" ? "House" : "Apartment",
     name: p.titulo, description: p.descripcion,

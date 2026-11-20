@@ -23,14 +23,14 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_PY">
 <meta property="og:url" content="https://www.brickroga.com/">
-<meta property="og:image" content="https://www.brickroga.com/assets/fotos/santa-maria/r1.webp">
+<meta property="og:image" content="https://www.brickroga.com/assets/fotos/asaje/comun/6455.webp">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
  {"@type":"WebSite","@id":"https://www.brickroga.com/#web","url":"https://www.brickroga.com/","name":"Brickroga","inLanguage":"es-PY",
   "potentialAction":{"@type":"SearchAction","target":"https://www.brickroga.com/alquileres.html?q={q}","query-input":"required name=q"}},
  {"@type":["RealEstateAgent","LocalBusiness"],"@id":"https://www.brickroga.com/#empresa","name":"Brickroga","legalName":"BRICKROGA E.A.S.","url":"https://www.brickroga.com/",
   "description":"Empresa paraguaya que alquila monoambientes amoblados en Asunción y casas de temporada, y arma canastas navideñas corporativas.",
-  "telephone":"+595981743522","email":"contacto.brickroga@gmail.com","taxID":"80177512-4","image":"https://www.brickroga.com/assets/fotos/santa-maria/r1.webp",
+  "telephone":"+595981743522","email":"contacto.brickroga@gmail.com","taxID":"80177512-4","image":"https://www.brickroga.com/assets/fotos/asaje/comun/6455.webp",
   "address":{"@type":"PostalAddress","streetAddress":"Velloso Enciso entre Raúl Carmona y Bruselas, Ycuá Satí","addressLocality":"Asunción","addressCountry":"PY"},
   "areaServed":[{"@type":"City","name":"Asunción"},{"@type":"Country","name":"Paraguay"}],
   "openingHours":["Mo-Fr 08:00-18:00","Sa 08:00-12:00"]}
@@ -177,7 +177,7 @@
     document.querySelectorAll("[data-deadline]").forEach(e => e.textContent = ci.fecha_limite);
     if (p) {
       document.getElementById("hero-sign").innerHTML = BRK.cartel(p);
-      const f = p.fotos || [];
+      const f = p.fotos_hero || p.fotos || [];
       document.getElementById("hero-photos").innerHTML = [f[0], f[1], f[2]].map(s => s ? `<figure><img src="${E(s)}" alt=""></figure>` : `<figure><div class="ph-dark">${BRK_ICONS.house}<span>Foto próximamente</span></div></figure>`).join("");
     }
     /* slide 3: San Bernardino summer */
