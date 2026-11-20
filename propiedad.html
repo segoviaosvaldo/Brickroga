@@ -41,7 +41,7 @@
     const msg = "Hola Brickroga, me interesa " + (p.codigo ? "la propiedad " + p.codigo + ", " : "") + "\"" + p.titulo + "\"" + (p.precio ? " (" + M(p.precio) + " por " + p.periodo + ")" : "") + ". ¿Puedo coordinar una visita?";
     const wa = BRK.waLink(msg, K.numero);
     const estado = p.estado === "disponible" ? '<span class="chip chip-ok">Disponible</span>' : '<span class="chip chip-ej">' + E(p.estado) + '</span>';
-    const fotos = (p.fotos || []).length ? p.fotos.map((s, i) => `<img src="${E(s)}" alt="${E(p.titulo)} en ${E(p.ciudad)}, Paraguay, foto ${i + 1}" loading="${i < 3 ? "eager" : "lazy"}">`).join("")
+    const fotos = (p.fotos || []).length ? p.fotos.map((s, i) => `<img src="${E(s)}" alt="${E(p.titulo)} en ${E(p.ciudad)}, Paraguay, foto ${i + 1}" loading="${i < 3 ? "eager" : "lazy"}" tabindex="0">`).join("")
       : [0, 1, 2].map(() => '<div class="card-photo" style="aspect-ratio:9/16">' + BRK.photo(p) + '</div>').join("");
     const facts = [];
     if (p.tipo !== "Terreno") facts.push(p.dormitorios ? [p.dormitorios, p.dormitorios === 1 ? "dormitorio" : "dormitorios"] : ["Mono", "ambiente"]);

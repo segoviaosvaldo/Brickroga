@@ -246,3 +246,56 @@
   });
   document.querySelectorAll("[data-wa]").forEach(el => { el.href = waLink(el.dataset.wa); el.target = "_blank"; el.rel = "noopener"; });
 })();
+
+/* Photo viewer: tap a photo in a property gallery (.strip) to open it full size,
+   then move with arrows, keys or swipe; Esc, the X or the back button closes it. */
+(function () {
+  let box, img, cnt, list = [], idx = 0, opener = null;
+  function build() {
+    box = document.createElement("div");
+    box.className = "lb"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "Fotos");
+    box.innerHTML = '<div class="lb-top"><span class="lb-cnt"></span><button class="lb-x" aria-label="Cerrar">✕</button></div>' +
+      '<button class="lb-nav lb-prev" aria-label="Foto anterior">‹</button><img class="lb-img" alt=""><button class="lb-nav lb-next" aria-label="Foto siguiente">›</button>';
+    document.body.appendChild(box);
+    img = box.querySelector(".lb-img"); cnt = box.querySelector(".lb-cnt");
+    box.querySelector(".lb-x").onclick = () => history.state && history.state.lb ? history.back() : close();
+    box.querySelector(".lb-prev").onclick = e => { e.stopPropagation(); go(-1); };
+    box.querySelector(".lb-next").onclick = e => { e.stopPropagation(); go(1); };
+    box.addEventListener("click", e => { if (e.target === box) box.querySelector(".lb-x").click(); });
+    let x0 = null;
+    box.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); x0 = null; });
+  }
+  function render() {
+    img.src = list[idx].src; img.alt = list[idx].alt;
+    cnt.textContent = (idx + 1) + " / " + list.length;
+    [list[idx + 1], list[idx - 1]].forEach(n => { if (n) new Image().src = n.src; });
+  }
+  function go(d) { idx = (idx + d + list.length) % list.length; render(); }
+  function open(imgs, i) {
+    if (!box) build();
+    list = imgs; idx = i; opener = document.activeElement; render();
+    box.classList.add("on"); document.documentElement.classList.add("lb-open");
+    history.pushState({ lb: 1 }, "");
+    box.querySelector(".lb-x").focus();
+  }
+  function close() {
+    if (!box || !box.classList.contains("on")) return;
+    box.classList.remove("on"); document.documentElement.classList.remove("lb-open");
+    if (opener && opener.focus) opener.focus();
+  }
+  addEventListener("popstate", close);
+  document.addEventListener("click", e => {
+    const t = e.target.closest(".strip img");
+    if (!t) return;
+    const imgs = [...t.closest(".strip").querySelectorAll("img")];
+    open(imgs, imgs.indexOf(t));
+  });
+  document.addEventListener("keydown", e => {
+    if (box && box.classList.contains("on")) {
+      if (e.key === "Escape") box.querySelector(".lb-x").click();
+      else if (e.key === "ArrowRight") go(1);
+      else if (e.key === "ArrowLeft") go(-1);
+    } else if (e.key === "Enter" && e.target.matches && e.target.matches(".strip img")) e.target.click();
+  });
+})();
