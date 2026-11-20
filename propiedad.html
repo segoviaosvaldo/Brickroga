@@ -77,7 +77,7 @@
           <h2 style="font-size:1.35rem;margin-top:32px">Ubicación</h2>
           <div class="addr">${p.edificio ? `<span>Edificio ${E(p.edificio)}</span>` : ""}${p.direccion ? `<b>${E(p.direccion)}</b>` : `<b>${E(p.barrio)}, ${E(p.ciudad)}</b>`}${p.maps ? `<a href="${E(p.maps)}" target="_blank" rel="noopener">Ver en Google Maps →</a>` : ""}</div>
           ${refNear ? `<p class="map-ref">${BRK_ICO("car")}<span>${refNear.min} min en auto hasta ${E(ref)} · ${String(refNear.km).replace(".", ",")} km</span></p>` : ""}
-          ${mapq ? `<div class="map-embed"><iframe title="Mapa: ${E(p.barrio)}, ${E(p.ciudad)}" src="${mapSrc}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>${p.mapa_aprox ? '<p class="muted" style="font-size:.85rem;margin-top:8px">Ubicación aproximada. Te pasamos la dirección exacta al confirmar la reserva.</p>' : ""}` : ""}
+          ${p.lat ? `<div class="map-embed"><div class="lmap" id="lmap" role="img" aria-label="Mapa: ${E(p.barrio)}, ${E(p.ciudad)}"></div></div>` : mapq ? `<div class="map-embed"><iframe title="Mapa: ${E(p.barrio)}, ${E(p.ciudad)}" src="${mapSrc}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>${p.mapa_aprox ? '<p class="muted" style="font-size:.85rem;margin-top:8px">Ubicación aproximada. Te pasamos la dirección exacta al confirmar la reserva.</p>' : ""}` : ""}
           ${p.cerca_lista ? `<ul class="near-list">${p.cerca_lista.map(c => { const s = BRK_ICO_SPLIT(c); return `<li>${s[0]}<span>${E(s[1])}</span></li>`; }).join("")}</ul>` : ""}
           ${p.cerca && p.cerca.length ? `<div class="near">${p.cerca.map(c => `<div><b>${E(c.lugar)}</b><span>${String(c.km).replace(".", ",")} km</span><span>~${c.min} min en auto</span></div>`).join("")}</div>
           <p class="muted" style="font-size:.85rem;margin-top:8px">Distancia en línea recta. Tiempos en auto, sin mucho tráfico.</p>` : ""}
@@ -103,6 +103,9 @@
         </aside>
       </div>
       ${(() => { const more = BRK.visibles().filter(x => x.id !== p.id).slice(0, 3); return more.length ? `<section style="padding-bottom:64px"><div class="section-head"><h2 style="font-size:1.6rem">Otras propiedades</h2><a class="link" href="alquileres.html">Ver todas →</a></div><div class="grid">${more.map(BRK.card).join("")}</div></section>` : ""; })()}`;
+    const lm = document.getElementById("lmap");
+    if (lm) BRK.mapa(lm, { lat: p.lat, lng: p.lng, label: p.edificio ? p.edificio.split(" - ")[0] : (p.barrio || "Acá"),
+      ref: ref ? { name: ref, lat: p.ref_lat || BRK.REF_GALERIA.lat, lng: p.ref_lng || BRK.REF_GALERIA.lng } : null }).catch(() => {});
     window.scrollTo(0, 0);
     if (window.BRK_VIDEOS_READY) BRK_VIDEOS_READY();
   }

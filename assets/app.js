@@ -299,3 +299,46 @@
     } else if (e.key === "Enter" && e.target.matches && e.target.matches(".strip img")) e.target.click();
   });
 })();
+
+/* Open-source map (Leaflet + OpenStreetMap/CARTO tiles), loaded only on pages that show one.
+   BRK.mapa(el, {lat, lng, label, ref}) draws the property and, when ref is given, the driving
+   route to it (OSRM); if the route service fails it draws a dashed straight line instead. */
+(function () {
+  // Paseo La Galería, Asunción (approximate entrance coordinates)
+  BRK.REF_GALERIA = { name: "Paseo La Galería", lat: -25.28305, lng: -57.56355 };
+  let loading = null;
+  function loadLeaflet() {
+    if (window.L) return Promise.resolve();
+    if (loading) return loading;
+    const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "assets/vendor/leaflet/leaflet.css"; document.head.appendChild(css);
+    loading = new Promise((ok, fail) => { const s = document.createElement("script"); s.src = "assets/vendor/leaflet/leaflet.js"; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
+    return loading;
+  }
+  const pin = (cls, txt) => L.divIcon({ className: "", html: `<span class="mpin ${cls}">${txt}</span>`, iconSize: null, iconAnchor: [0, 0] });
+  BRK.mapa = function (el, o) {
+    return loadLeaflet().then(() => {
+      const map = L.map(el, { scrollWheelZoom: false, attributionControl: true, zoomControl: true });
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+        maxZoom: 19, subdomains: "abcd",
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+      }).addTo(map);
+      const a = [o.lat, o.lng];
+      L.marker(a, { icon: pin("mpin-home", o.label || "Acá"), keyboard: false }).addTo(map);
+      if (!o.ref) { map.setView(a, o.zoom || 15); return map; }
+      const b = [o.ref.lat, o.ref.lng];
+      L.marker(b, { icon: pin("mpin-ref", o.ref.name), keyboard: false }).addTo(map);
+      map.fitBounds([a, b], { padding: [60, 60] });
+      const straight = () => L.polyline([a, b], { color: "#E8590C", weight: 3, dashArray: "6 8" }).addTo(map);
+      fetch(`https://router.project-osrm.org/route/v1/driving/${o.lng},${o.lat};${o.ref.lng},${o.ref.lat}?overview=full&geometries=geojson`)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(j => {
+          const c = j.routes[0].geometry.coordinates.map(p => [p[1], p[0]]);
+          L.polyline(c, { color: "#111", weight: 7, opacity: .25 }).addTo(map);
+          const line = L.polyline(c, { color: "#E8590C", weight: 4 }).addTo(map);
+          map.fitBounds(line.getBounds(), { padding: [60, 60] });
+        })
+        .catch(straight);
+      return map;
+    });
+  };
+})();
