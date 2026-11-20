@@ -583,3 +583,4 @@ body{overflow-x:hidden}
 main{max-width:100%}
 @media (max-width:640px){.story .word{font-size:clamp(2.4rem,14vw,3.6rem);max-width:100%}}
 .sub-h{font-size:.95rem;margin-top:6px}
+.slider-ui[hidden]{display:none}

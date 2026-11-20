@@ -143,7 +143,7 @@
   }
   function feature(p) { return `<div class="grid">${card(p)}</div>`; }
   Object.assign(window.BRK, { propUrl, card, photo, specs, cartel, feature, rooms, amen, priceHTML, signLabel });
-  const visibles = () => D.propiedades.filter(p => p.estado !== "alquilado");
+  const visibles = () => D.propiedades.filter(p => p.estado !== "alquilado" && !p.oculto);
   window.BRK.visibles = visibles;
 
   document.querySelectorAll("[data-list='destacados']").forEach(el => {

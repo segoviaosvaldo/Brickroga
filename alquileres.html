@@ -11,14 +11,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css">
-<meta name="description" content="Alquiler de monoambientes y departamentos amoblados en Asunción y casas de temporada en San Bernardino, Paraguay. Precio publicado en guaraníes, fotos y ubicación. Buscá por zona, tipo, precio y comodidades.">
+<meta name="description" content="Alquiler de monoambientes, departamentos y casas amoblados en Asunción y alrededores, Paraguay. Precio publicado en guaraníes, fotos y ubicación. Buscá por zona, tipo, precio y comodidades.">
 <link rel="canonical" href="https://www.brickroga.com/alquileres.html">
 <link rel="alternate" hreflang="es-PY" href="https://www.brickroga.com/alquileres.html">
 <link rel="alternate" hreflang="en" href="https://www.brickroga.com/alquileres.html?lang=en">
 <link rel="alternate" hreflang="x-default" href="https://www.brickroga.com/alquileres.html">
 <meta name="geo.region" content="PY">
 <meta name="geo.placename" content="Asunción, Paraguay">
-<!--ITEMLIST--><script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Propiedades en alquiler en Paraguay","itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-santa-maria-asuncion-1.html","name":"Monoambiente amoblado en Santa María · Unidad 1"},{"@type":"ListItem","position":2,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-santa-maria-asuncion-2.html","name":"Monoambiente amoblado en Santa María · Unidad 2"},{"@type":"ListItem","position":3,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-santa-maria-asuncion-3.html","name":"Monoambiente amoblado en Santa María · Unidad 3"},{"@type":"ListItem","position":4,"url":"https://www.brickroga.com/alquiler-casa-con-piscina-san-bernardino-paraguay.html","name":"Casa con piscina en San Bernardino"}]}</script><!--/ITEMLIST-->
+<!--ITEMLIST--><script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Propiedades en alquiler en Paraguay","itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-santa-maria-asuncion-1.html","name":"Monoambiente amoblado en Santa María · Unidad 1"},{"@type":"ListItem","position":2,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-santa-maria-asuncion-2.html","name":"Monoambiente amoblado en Santa María · Unidad 2"},{"@type":"ListItem","position":3,"url":"https://www.brickroga.com/alquiler-monoambiente-amoblado-santa-maria-asuncion-3.html","name":"Monoambiente amoblado en Santa María · Unidad 3"}]}</script><!--/ITEMLIST-->
 </head>
 <body data-page="alquileres">
 <header id="site-header"></header>
@@ -49,7 +49,7 @@
 <script>
   const f = document.getElementById("filters"), D = BRICKROGA, E = BRK.esc;
   const norm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  [...new Set(D.propiedades.map(p => p.ciudad))].sort().forEach(c => f.elements.ciudad.insertAdjacentHTML("beforeend", `<option>${E(c)}</option>`));
+  [...new Set(BRK.visibles().map(p => p.ciudad))].sort().forEach(c => f.elements.ciudad.insertAdjacentHTML("beforeend", `<option>${E(c)}</option>`));
   const CHECKS = ["amoblado", "piscina", "mascotas", "estacionamiento", "servicios"];
   document.getElementById("checks").innerHTML = CHECKS.filter(k => D.comodidades[k]).map(k => `<label for="c-${k}"><input type="checkbox" id="c-${k}" name="c" value="${k}"><span class="e" aria-hidden="true">${BRK_ICO(k)}</span>${E(D.comodidades[k][1])}</label>`).join("");
   try { const q = new URLSearchParams(location.search); for (const [k, v] of q) { const el = f.elements[k]; if (el && el.tagName) el.value = v; } } catch (e) {}

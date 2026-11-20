@@ -29,10 +29,10 @@
  {"@type":"WebSite","@id":"https://www.brickroga.com/#web","url":"https://www.brickroga.com/","name":"Brickroga","inLanguage":"es-PY",
   "potentialAction":{"@type":"SearchAction","target":"https://www.brickroga.com/alquileres.html?q={q}","query-input":"required name=q"}},
  {"@type":["RealEstateAgent","LocalBusiness"],"@id":"https://www.brickroga.com/#empresa","name":"Brickroga","legalName":"BRICKROGA E.A.S.","url":"https://www.brickroga.com/",
-  "description":"Empresa paraguaya que alquila monoambientes amoblados en Asunción y casas de temporada en San Bernardino, y arma canastas navideñas corporativas.",
+  "description":"Empresa paraguaya que alquila monoambientes amoblados en Asunción y casas de temporada, y arma canastas navideñas corporativas.",
   "telephone":"+595981743522","email":"contacto.brickroga@gmail.com","taxID":"80177512-4","image":"https://www.brickroga.com/assets/fotos/santa-maria/r1.webp",
   "address":{"@type":"PostalAddress","streetAddress":"Velloso Enciso entre Raúl Carmona y Bruselas, Ycuá Satí","addressLocality":"Asunción","addressCountry":"PY"},
-  "areaServed":[{"@type":"City","name":"Asunción"},{"@type":"City","name":"San Bernardino"},{"@type":"Country","name":"Paraguay"}],
+  "areaServed":[{"@type":"City","name":"Asunción"},{"@type":"Country","name":"Paraguay"}],
   "openingHours":["Mo-Fr 08:00-18:00","Sa 08:00-12:00"]}
 ]}
 </script>
@@ -105,7 +105,7 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <div><h2>Disponibles ahora</h2><p class="muted sub-h">Departamentos y casas en alquiler en Asunción y San Bernardino, Paraguay.</p></div>
+        <div><h2>Disponibles ahora</h2><p class="muted sub-h">Departamentos y casas en alquiler en Asunción, Paraguay.</p></div>
         <a class="link" href="alquileres.html">Ver todas las propiedades →</a>
       </div>
       <div data-list="destacados"></div>
@@ -181,8 +181,8 @@
       document.getElementById("hero-photos").innerHTML = [f[0], f[1], f[2]].map(s => s ? `<figure><img src="${E(s)}" alt=""></figure>` : `<figure><div class="ph-dark">${BRK_ICONS.house}<span>Foto próximamente</span></div></figure>`).join("");
     }
     /* slide 3: San Bernardino summer */
-    const sb = BRICKROGA.propiedades.find(x => x.id === "san-bernardino-casa");
-    if (sb) {
+    const sb = BRK.visibles().find(x => x.id === "san-bernardino-casa");
+    if (sb && (sb.fotos || []).length) {
       document.getElementById("sb-sign").innerHTML = BRK.cartel(sb);
       if (sb.resenas) document.getElementById("sb-rating").textContent = "★ " + String(sb.resenas.nota).replace(".", ",") + " en " + sb.resenas.fuente + ".";
       const sf = sb.fotos || [];
@@ -193,6 +193,7 @@
 
     /* slider: crossfade every 2 s (plus a 0.6 s fade), pauses on hover/focus and when the tab is hidden */
     const root = document.getElementById("slider"), slides = [...root.querySelectorAll(".slide")], dots = [...root.querySelectorAll(".dots button")];
+    if (slides.length < 2) { root.querySelector(".slider-ui").hidden = true; return; } // one banner: no dots, arrows or timer
     const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let cur = 0, tm = null;
     function go(n) {

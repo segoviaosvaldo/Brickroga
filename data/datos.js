@@ -242,6 +242,10 @@ window.BRICKROGA = {
     id: "san-bernardino-casa",
     codigo: "BRK-004",
     slug: "alquiler-casa-con-piscina-san-bernardino-paraguay",
+    /* OCULTA (2026-11-20): el link de Airbnb que nos pasaron era de otra casa, no la de la familia de Johanna.
+       Se borraron las fotos, la reseña y el link. El texto, las comodidades y la tarifa también salieron de ese
+       anuncio: revisarlos con Johanna cuando tengamos fotos de la casa correcta y recién ahí sacar "oculto". */
+    oculto: true,
     estado: "disponible",
     destacado: true,
     operacion: "Alquiler temporario",
@@ -252,7 +256,7 @@ window.BRICKROGA = {
     barrio: "Cerca del lago Ypacaraí",
     direccion: "",
     maps: "",
-    precio: 700000, moneda: "Gs", periodo: "noche",  // Airbnb: CLP 112.732/noche × 6,25 (BCP 19/11/2026) ≈ Gs. 704.000, redondeado. CONFIRMAR con Johanna
+    precio: null, moneda: "Gs", periodo: "noche",   // PENDIENTE: tarifa real de la casa de la familia
     precio_nota: "Tarifa base por noche. Puede variar según la fecha y la cantidad de noches.",
     dormitorios: 2, banos: 2, m2: 0, cochera: 1, huespedes: 6, camas: 4,
     amoblado: true,
@@ -268,9 +272,7 @@ window.BRICKROGA = {
       { e: "🐾", titulo: "Mascotas bienvenidas", texto: "Tu perro también se puede venir. La casa tiene cámaras exteriores en la entrada, el patio y la piscina." },
       { e: "🌳", titulo: "Entorno natural y tranquilo", texto: "Zona residencial calma, cerca del lago Ypacaraí y a 15 minutos del centro de San Bernardino." }
     ],
-    resenas: { nota: 4.89, cantidad: 19, fuente: "Airbnb", detalle: "Favorito entre huéspedes · Limpieza 5,0 · Ubicación 5,0 · Comunicación 5,0" },
-    airbnb: "https://www.airbnb.cl/rooms/1346521144935895640",
     contacto: { nombre: "Johanna Colman", numero: "595981743522", visible: "0981 743 522" },
-    fotos: [1,2,3,4,5,6,7,8].map(n => "assets/fotos/san-bernardino/sb" + n + ".webp")
+    fotos: []   // PENDIENTE: fotos de la casa correcta
   });
 })();

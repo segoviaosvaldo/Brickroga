@@ -27,7 +27,7 @@
   function show() {
     const fixed = document.body.dataset.prop;
     const id = fixed || (location.hash || "").slice(1) || (new URLSearchParams(location.search).get("id")) || "";
-    const all = BRICKROGA.propiedades;
+    const all = BRK.visibles();
     const p = all.find(x => x.id === id) || all.find(x => x.id.startsWith(id + "-")) || all[0];
     /* old links (propiedad.html#id) go to the listing's own page */
     if (!fixed && p.slug) { location.replace(p.slug + ".html" + location.search); return; }
