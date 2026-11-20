@@ -144,6 +144,7 @@ window.BRICKROGA = {
     "Estacionamiento": "Parking", "Piscina": "Pool", "Acepta mascotas": "Pets allowed", "Servicios incluidos": "Utilities included", "Entrada independiente": "Private entrance",
     "Mayor Joel Estigarribia 485, Asunción": "Mayor Joel Estigarribia 485, Asunción",
     "Monoambiente amoblado en Santa María": "Furnished studio in Santa María",
+    "Monoambiente amoblado en Asaje Santa María": "Furnished studio at Asaje Santa María",
     "Monoambiente amoblado en Santa María, Asunción": "Furnished studio in Santa María, Asunción",
     "Internet, agua, basura y luz hasta Gs. 100.000 por mes (pagás solo la diferencia).": "Internet, water, garbage collection and electricity up to Gs. 100,000 a month (you only pay any difference).",
     "Monoambiente amoblado, listo para entrar con la valija. Pisos de porcelanato, pared de ladrillo visto, cocina con mesada y desayunador, escritorio para trabajar y un patio propio con mesa. Internet y servicios básicos incluidos en el alquiler.":
@@ -226,16 +227,18 @@ window.BRICKROGA = {
     ]
   };
   const P = window.BRICKROGA.propiedades;
-  [1, 2, 3].forEach(n => P.push(Object.assign({}, santaMaria, {
-    id: "santa-maria-" + n,
-    codigo: "BRK-00" + n,
-    unidad: "Unidad " + n,
+  // Edificio "Asaje - Santa María Studios". Los próximos edificios Asaje cambian solo la zona.
+  [3, 5, 8].forEach((n, i) => P.push(Object.assign({}, santaMaria, {
+    id: "asaje-santa-maria-studio-" + n,
+    codigo: "BRK-00" + (i + 1),
+    edificio: "Asaje - Santa María Studios",
+    unidad: "Studio " + n,
     // página propia, indexable en Google (la genera herramientas/generar-fichas.js)
-    slug: "alquiler-monoambiente-amoblado-santa-maria-asuncion-" + n,
-    titulo: "Monoambiente amoblado en Santa María · Unidad " + n,
+    slug: "alquiler-monoambiente-amoblado-asaje-santa-maria-studio-" + n + "-asuncion",
+    titulo: "Monoambiente amoblado en Asaje Santa María · Studio " + n,
     // PENDIENTE: cuando lleguen las fotos de cada unidad, poné acá su lista propia y borrá fotos_nota
     // cada unidad abre con una foto distinta para que no se vean iguales en el listado
-    fotos: (function () { const f = santaMaria.fotos.slice(), first = f.splice(n, 1)[0]; return [first].concat(f); })()
+    fotos: (function () { const f = santaMaria.fotos.slice(), first = f.splice(i + 1, 1)[0]; return [first].concat(f); })()
   })));
 
   P.push({

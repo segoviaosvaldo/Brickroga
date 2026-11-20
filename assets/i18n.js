@@ -144,6 +144,7 @@
   };
   const RULES = [
     [/^(.+) · Unidad (\d+)$/, (m, a, n) => tr(a) + " · Unit " + n],
+    [/^(.+) · Studio (\d+)$/, (m, a, n) => tr(a) + " · Studio " + n],
     [/^★ ([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => "★ " + a.replace(",", ".") + " · " + n + " reviews on " + f],
     [/^([\d,]+) · (\d+) reseñas en (.+)$/, (m, a, n, f) => a.replace(",", ".") + " · " + n + " reviews on " + f],
     [/^(\d+) min en auto hasta (.+) · ([\d,]+) km$/, (m, n, l, k) => n + " min by car to " + l + " · " + k.replace(",", ".") + " km"],
